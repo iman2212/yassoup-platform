@@ -318,34 +318,32 @@ async function loadMine(){
   mine=[]; if(user&&sb){const {data}=await sb.from("works").select("*").eq("user_id",user.id).order("created_at",{ascending:false}); mine=data||[]}
   renderMine();
 }
-const MAIL_DOMAIN="yaasoub-students.com";
+const MAIL_DOMAIN="gmail.com"; /* نطاق ببريد صالح كي يقبله Supabase؛ لا تُرسل إليه رسائل عند تعطيل تأكيد البريد */
 $("aY").innerHTML=YEARS.slice(0,5).map((y,i)=>`<option value="${i+1}">${y}</option>`).join("");
 const norm=s=>s.trim().replace(/\s+/g," ").replace(/[أإآ]/g,"ا").replace(/ى/g,"ي").replace(/ة/g,"ه");
-async function cred(name,year,track){
-  const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode([norm(name),year,track].join("|")));
-  const h=[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join("");
-  return {email:h.slice(0,32)+"@"+MAIL_DOMAIN,password:h};
-}
+function h53(str,seed){let h1=0xdeadbeef^seed,h2=0x41c6ce57^seed;for(let i=0;i<str.length;i++){const c=str.charCodeAt(i);h1=Math.imul(h1^c,2654435761);h2=Math.imul(h2^c,1597334677)}h1=Math.imul(h1^(h1>>>16),2246822507)^Math.imul(h2^(h2>>>13),3266489909);h2=Math.imul(h2^(h2>>>16),2246822507)^Math.imul(h1^(h1>>>13),3266489909);return (h2>>>0).toString(16).padStart(8,"0")+(h1>>>0).toString(16).padStart(8,"0")}
+const cred=(name,year,track)=>{const k=[norm(name),year,track].join("|"),h=[1,2,3,4,5].map(i=>h53(k,i*7919)).join("");return {email:"y"+h.slice(0,30)+"@"+MAIL_DOMAIN,password:"Yq"+h.slice(0,48)}};
+const authMsg=m=>/disabled/i.test(m)?"التسجيل بالبريد غير مفعّل في Supabase (Authentication ← Providers ← Email)":/rate|seconds/i.test(m)?"محاولات كثيرة، انتظري دقيقة ثم أعيدي المحاولة":/confirm|registered/i.test(m)?"يلزم تعطيل Confirm email في إعدادات Supabase":/invalid|valid/i.test(m)?"نطاق البريد الداخلي غير مقبول، غيّري MAIL_DOMAIN في الكود":"تعذّر الدخول: "+m;
 function openAuth(){$("aErr").textContent="";$("authD").showModal()}
 $("authF").addEventListener("submit",async e=>{
   e.preventDefault(); const err=$("aErr"); err.textContent="";
-  if(!sb){err.textContent="تعذّر الاتصال بالخادم";return}
+  if(!sb){err.textContent="تعذّر الاتصال بالخادم، تأكدي من الإنترنت";return}
   const full_name=$("aName").value.trim().replace(/\s+/g," "), year=+$("aY").value, track=$("aTr").value, btn=$("aGo");
-  if(full_name.split(" ").length<4){err.textContent="اكتبي الاسم الرباعي كاملاً";return}
-  btn.disabled=true;
+  if(full_name.split(" ").length<3){err.textContent="اكتبي اسمك ثلاثياً على الأقل";return}
+  btn.disabled=true; btn.textContent="جارٍ الدخول...";
   try{
-    const c=await cred(full_name,year,track);
+    const c=cred(full_name,year,track);
     const {error}=await sb.auth.signInWithPassword(c);
-    if(error){
+    if(error&&/invalid login/i.test(error.message)){
       const r=await sb.auth.signUp({...c,options:{data:{full_name,year,track}}});
-      if(r.error){err.textContent="تعذّر التسجيل، حاولي مرة أخرى";return}
-      if(!r.data.session){err.textContent="يلزم تعطيل تأكيد البريد في إعدادات Supabase";return}
+      if(r.error){err.textContent=authMsg(r.error.message);return}
+      if(!r.data.session){err.textContent=authMsg("confirm");return}
       toast("أهلاً بك في اليعسوب");
-    }
+    }else if(error){err.textContent=authMsg(error.message);return}
     $("authD").close();
-  }finally{btn.disabled=false}
+  }catch(x){err.textContent="تحقّقي من الاتصال بالإنترنت وأعيدي المحاولة"}
+  finally{btn.disabled=false;btn.textContent="دخول / تسجيل"}
 });
-
 /* ---------- الرفع ---------- */
 $("uY").innerHTML=YEARS.map((y,i)=>`<option value="${i+1}">${y}</option>`).join("");
 $("uTy").innerHTML=Object.entries(TYPES).map(([k,v])=>`<option value="${k}">${v}</option>`).join("");
