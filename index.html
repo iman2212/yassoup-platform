@@ -3,11 +3,35 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>معرض إبداعات الطلبة</title>
+<title>اليعسوب...موطن الفن و الابتكار</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
+<style> :root {
+  --font-thuluth: 'Amiri', 'Traditional Arabic', serif; /* خط ذو طابع كلاسيكي شبيه بالثلث للعناوين الرئيسية */
+  --font-ruqaa: 'Aref Ruqaa', cursive;                /* خط الرقعة للعناوين الفرعية */
+  --font-naskh: 'Noto Naskh Arabic', Tahoma, sans-serif; /* خط النسخ لباقي نصوص الموقع */
+}
+
+/* تطبيق خط النسخ على كامل الموقع بشكل افتراضي */
+body {
+  font-family: var(--font-naskh);
+  background: var(--mist);
+  color: var(--ink);
+  line-height: 1.8;
+  font-size: 16px;
+}
+
+/* العنوان الرئيسي للموقع (خط الثلث/الأميري الكلاسيكي) */
+h1, .main-title, .site-title {
+  font-family: var(--font-thuluth);
+  font-weight: bold;
+}
+
+/* العناوين الفرعية (خط الرقعة) */
+h2, h3, h4, h5, h6, .subtitle, .section-title {
+  font-family: var(--font-ruqaa);
+}
 :root{
   --navy:#0A2540; --cobalt:#1456C8; --azure:#2F80ED; --sky:#8CC3F5; --ice:#EAF3FC; --mist:#F6FAFE;
   --ink:#10263F; --muted:#5B7089; --line:#D3E2F2;
