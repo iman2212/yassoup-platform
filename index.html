@@ -3,296 +3,380 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>اليعسوب...موطن الفن و الابتكار</title>
+<title>منصة اليعسوب لعرض إبداعات الطلاب</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style> :root {
-  --font-thuluth: 'Amiri', 'Traditional Arabic', serif; /* خط ذو طابع كلاسيكي شبيه بالثلث للعناوين الرئيسية */
-  --font-ruqaa: 'Aref Ruqaa', cursive;                /* خط الرقعة للعناوين الفرعية */
-  --font-naskh: 'Noto Naskh Arabic', Tahoma, sans-serif; /* خط النسخ لباقي نصوص الموقع */
-}
-
-/* تطبيق خط النسخ على كامل الموقع بشكل افتراضي */
-body {
-  font-family: var(--font-naskh);
-  background: var(--mist);
-  color: var(--ink);
-  line-height: 1.8;
-  font-size: 16px;
-}
-
-/* العنوان الرئيسي للموقع (خط الثلث/الأميري الكلاسيكي) */
-h1, .main-title, .site-title {
-  font-family: var(--font-thuluth);
-  font-weight: bold;
-}
-
-/* العناوين الفرعية (خط الرقعة) */
-h2, h3, h4, h5, h6, .subtitle, .section-title {
-  font-family: var(--font-ruqaa);
-}
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
 :root{
-  --navy:#0A2540; --cobalt:#1456C8; --azure:#2F80ED; --sky:#8CC3F5; --ice:#EAF3FC; --mist:#F6FAFE;
-  --ink:#10263F; --muted:#5B7089; --line:#D3E2F2;
-  --font:"IBM Plex Sans Arabic",Tahoma,"Segoe UI",system-ui,sans-serif;
+  --royal:#1F4FD8; --navy:#0B1F4B; --deep:#123A8F; --gold:#C9A227; --gold-l:#F6E7A8; --bg:#F3F5F9; --card:#fff;
+  --ink:#16233F; --muted:#5E6B85; --line:#DDE3EF; --ice:#E8EEFC;
+  --title:'Amiri',serif; --sub:'Aref Ruqaa',cursive; --body:'Noto Naskh Arabic',Tahoma,sans-serif;
 }
 *{box-sizing:border-box;margin:0}
 html{scroll-behavior:smooth}
-body{font-family:var(--font);background:var(--mist);color:var(--ink);line-height:1.8;font-size:16px}
+body{font-family:var(--body);background:var(--bg);color:var(--ink);line-height:1.9;font-size:17px}
+body.locked{overflow:hidden}
+body.locked #app{display:none}
+button,input,select{font:inherit;color:inherit}
 a{color:inherit;text-decoration:none}
-button,input,select,textarea{font:inherit;color:inherit}
-:focus-visible{outline:3px solid var(--azure);outline-offset:2px}
-.wrap{max-width:1160px;margin:auto;padding:0 20px}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+h1,h2,h3{font-weight:400}
+.wrap{max-width:1180px;margin:auto;padding:0 20px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:12px;padding:9px 22px;cursor:pointer;font-weight:600;background:var(--royal);color:#fff;transition:background .2s}
+.btn:hover{background:var(--navy)}
+.btn.gold{background:var(--gold);color:var(--navy)}
+.btn.gold:hover{background:#B38F1A}
+.btn.line{background:#fff;color:var(--royal);border:1.5px solid var(--royal)}
+.btn.line:hover{background:var(--ice)}
+.btn.wa{background:#1FA855}
+.btn.wa:hover{background:#16813F}
+.btn[disabled]{opacity:.55;cursor:not-allowed}
+
+/* gate */
+#gate{position:fixed;inset:0;z-index:100;overflow:auto;background:linear-gradient(155deg,var(--navy),var(--deep) 60%,var(--royal));display:grid;place-items:center;padding:24px}
+#gate[hidden]{display:none}
+.gbox{background:#fff;border-radius:24px;width:min(560px,100%);padding:34px 32px;box-shadow:0 30px 80px rgba(0,0,0,.35)}
+.gbox .brand{display:flex;flex-direction:column;align-items:center;text-align:center;gap:2px;margin-bottom:18px}
+.gbox h1{font-family:var(--title);font-weight:700;font-size:34px;color:var(--navy);line-height:1.4}
+.gbox .brand p{color:var(--muted);font-size:15px}
+.gbtn{width:100%;background:#fff;border:1.5px solid var(--line);color:var(--ink);gap:12px}
+.gbtn:hover{background:var(--bg)}
+.gbtn.ok{border-color:#1FA855;background:#EAF8F0}
+.or{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:14px;margin:16px 0 6px}
+.or::before,.or::after{content:"";flex:1;height:1px;background:var(--line)}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+.fg .full{grid-column:1/-1}
+label{display:block;font-weight:600;font-size:14px;margin:12px 0 2px;color:var(--navy)}
+input,select{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:8px 14px;background:var(--bg)}
+input:focus,select:focus{outline:none;border-color:var(--royal);background:#fff}
+.codebox{margin-top:14px;padding:14px;background:var(--ice);border-radius:14px}
+.codebox[hidden]{display:none}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.row .btn{flex:1}
+.err{color:#B3261E;font-size:14px;min-height:22px;margin-top:8px}
+.hint{font-size:13px;color:var(--muted)}
 
 /* header */
-header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-.bar{display:flex;align-items:center;justify-content:space-between;height:68px;gap:16px}
-.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:19px;color:var(--navy)}
-.caps{display:inline-block;width:34px;height:16px;border-radius:99px;background:linear-gradient(90deg,var(--navy) 50%,var(--sky) 50%);transform:rotate(-35deg);flex:none}
-nav{display:flex;gap:26px;font-weight:500;color:var(--muted)}
-nav a:hover{color:var(--cobalt)}
-.btn{display:inline-flex;align-items:center;gap:8px;border:0;cursor:pointer;border-radius:99px;padding:10px 24px;font-weight:600;background:var(--cobalt);color:#fff;transition:background .2s}
-.btn:hover{background:var(--navy)}
-.btn.ghost{background:#fff;color:var(--cobalt);border:1.5px solid var(--cobalt)}
-.btn.ghost:hover{background:var(--ice)}
+header{position:sticky;top:0;z-index:30;background:var(--navy);color:#fff;box-shadow:0 2px 14px rgba(11,31,75,.25)}
+.bar{display:flex;align-items:center;gap:16px;height:72px}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--title);font-weight:700;font-size:24px;white-space:nowrap}
+.logo svg{width:42px;height:42px;flex:none}
+.hs{flex:1;max-width:420px;margin-inline:auto;position:relative}
+.hs input{background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.25);color:#fff;border-radius:99px;padding-inline:20px}
+.hs input::placeholder{color:#B8C6EA}
+.hs input:focus{background:#fff;color:var(--ink)}
+.me{display:flex;align-items:center;gap:10px;font-size:14px;line-height:1.4}
+.av{width:38px;height:38px;border-radius:50%;background:var(--gold);color:var(--navy);display:grid;place-items:center;font-weight:700;font-family:var(--sub);flex:none}
+.me small{display:block;color:#B8C6EA}
+.out{background:none;border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:99px;padding:2px 14px;cursor:pointer;font-size:13px}
+.out:hover{background:rgba(255,255,255,.12)}
 
 /* hero */
-.hero{background:linear-gradient(160deg,var(--navy) 0%,#0F3C78 60%,var(--cobalt) 100%);color:#fff;overflow:hidden;position:relative}
-.hero .wrap{display:grid;grid-template-columns:1.15fr .85fr;gap:30px;align-items:center;padding-top:72px;padding-bottom:84px}
-.hero h1{font-size:clamp(32px,5vw,54px);line-height:1.35;font-weight:700;max-width:14em}
-.hero p{margin:18px 0 28px;color:#CFE4FA;max-width:34em;font-size:18px}
-.search{display:flex;background:#fff;border-radius:99px;padding:6px;max-width:520px}
-.search input{flex:1;border:0;background:none;padding:10px 20px;outline:none;color:var(--ink);min-width:0}
-.search .btn{padding:10px 26px}
-.stats{display:flex;gap:34px;margin-top:34px;color:#CFE4FA;font-size:15px}
-.stats b{display:block;color:#fff;font-size:26px;line-height:1.3}
-.art{position:relative;height:300px}
-.art i{position:absolute;display:block;border-radius:99px}
-.art .big{width:290px;height:120px;right:10%;top:90px;transform:rotate(-32deg);background:linear-gradient(90deg,#fff 50%,var(--sky) 50%);box-shadow:0 20px 50px rgba(0,0,0,.3);animation:settle 1.2s ease-out both}
-.art .m{width:120px;height:48px;left:6%;top:30px;transform:rotate(18deg);background:linear-gradient(90deg,var(--azure) 50%,var(--ice) 50%);opacity:.9}
-.art .s{width:70px;height:28px;left:20%;bottom:20px;transform:rotate(-12deg);background:var(--sky);opacity:.7}
-.art .plus{width:54px;height:54px;right:2%;top:10px;border-radius:0;background:
-  linear-gradient(var(--sky),var(--sky)) center/100% 16px no-repeat,
-  linear-gradient(var(--sky),var(--sky)) center/16px 100% no-repeat;opacity:.5}
-@keyframes settle{from{transform:rotate(-8deg) translateY(-30px);opacity:0}}
+.hero{background:linear-gradient(160deg,var(--deep),var(--royal));color:#fff;padding:46px 0 54px}
+.hero h1{font-family:var(--title);font-weight:700;font-size:clamp(34px,5vw,56px);line-height:1.4}
+.hero p{font-family:var(--sub);font-size:clamp(18px,2.4vw,24px);color:var(--gold-l);margin-top:4px}
 
-/* filters */
-.tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin:40px 0 24px}
-.tools h2{font-size:26px;color:var(--navy)}
-.pills{display:flex;flex-wrap:wrap;gap:8px}
-.pill{border:1.5px solid var(--line);background:#fff;border-radius:99px;padding:6px 18px;cursor:pointer;font-weight:500;color:var(--muted);transition:.15s}
-.pill:hover{border-color:var(--azure);color:var(--cobalt)}
-.pill[aria-pressed=true]{background:linear-gradient(90deg,var(--navy) 50%,var(--cobalt) 50%);border-color:var(--navy);color:#fff}
+/* sections */
+section{padding:46px 0 6px}
+.sh{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:22px;flex-wrap:wrap}
+.sh h2{font-family:var(--sub);font-weight:700;font-size:30px;color:var(--navy)}
+.sh span{color:var(--muted);font-size:15px}
+
+/* winners */
+.wgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px}
+.win{position:relative;background:linear-gradient(180deg,#FFFBEA,#fff 45%);border:2px solid var(--gold);border-radius:20px;overflow:hidden;display:flex;flex-direction:column;cursor:pointer;text-align:start;padding:0;box-shadow:0 10px 28px rgba(201,162,39,.18)}
+.win .thumb{height:150px}
+.medal{position:absolute;top:12px;inset-inline-start:12px;display:flex;align-items:center;gap:8px;background:var(--navy);color:var(--gold-l);border-radius:99px;padding:3px 14px 3px 6px;font-weight:700;font-size:14px;z-index:2}
+.medal b{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 35% 30%,#FFF1B0,var(--gold));color:var(--navy);font-family:var(--title);font-size:17px}
+.win.r2 .medal b{background:radial-gradient(circle at 35% 30%,#fff,#B9C2D3)}
+.win.r3 .medal b{background:radial-gradient(circle at 35% 30%,#F4D0A8,#B87333)}
+.win .body{padding:16px 20px 20px}
+.award{font-family:var(--sub);color:#8A6D0B;font-size:16px}
+
+/* years */
+.ygrid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.ycard{background:#fff;border:1.5px solid var(--line);border-radius:18px;padding:18px 10px;text-align:center;cursor:pointer;transition:.2s;display:flex;flex-direction:column;align-items:center;gap:2px}
+.ycard:hover,.ycard[aria-pressed=true]{border-color:var(--royal);background:var(--ice);transform:translateY(-3px)}
+.ycard[aria-pressed=true]{box-shadow:0 8px 20px rgba(31,79,216,.18)}
+.yn{width:54px;height:54px;border-radius:16px;background:var(--navy);color:var(--gold-l);display:grid;place-items:center;font-family:var(--title);font-weight:700;font-size:30px;margin-bottom:6px}
+.ycard h3{font-family:var(--sub);font-weight:700;font-size:19px;color:var(--navy);line-height:1.5}
+.ycard span{font-size:14px;color:var(--muted)}
+
+/* filter */
+.fbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:22px}
+.chip{border:1.5px solid var(--line);background:#fff;border-radius:99px;padding:2px 18px;cursor:pointer;font-weight:500;color:var(--muted)}
+.chip:hover{border-color:var(--royal);color:var(--royal)}
+.chip[aria-pressed=true]{background:var(--royal);border-color:var(--royal);color:#fff}
+.fbar .sep{width:1px;height:26px;background:var(--line);margin-inline:4px}
 
 /* cards */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px;padding-bottom:70px}
-.card{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;cursor:pointer;text-align:start;display:flex;flex-direction:column;padding:0;transition:transform .2s,box-shadow .2s}
-.card:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(20,86,200,.14)}
-.thumb{height:170px;position:relative;background:linear-gradient(135deg,var(--ice),var(--sky));display:grid;place-items:center}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:22px;padding-bottom:60px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s}
+.card:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(11,31,75,.12)}
+.thumb{height:168px;background:linear-gradient(135deg,var(--ice),#9DB6F2);display:grid;place-items:center;overflow:hidden}
 .thumb img{width:100%;height:100%;object-fit:cover}
-.thumb .caps{width:80px;height:34px}
-.badge{position:absolute;top:12px;inset-inline-start:12px;background:var(--navy);color:#fff;border-radius:99px;font-size:13px;padding:2px 12px 2px 10px;display:flex;align-items:center;gap:6px}
-.badge::before{content:"+";font-weight:700;color:var(--sky);font-size:17px;line-height:1}
-.body{padding:18px 20px 20px;display:flex;flex-direction:column;gap:8px;flex:1}
-.tag{align-self:flex-start;font-size:13px;font-weight:600;color:var(--cobalt);background:var(--ice);border-radius:99px;padding:0 12px}
-.body h3{font-size:19px;line-height:1.5;color:var(--navy)}
-.body p{color:var(--muted);font-size:15px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-.by{margin-top:auto;padding-top:12px;border-top:1px dashed var(--line);font-size:14px;color:var(--muted);display:flex;align-items:center;gap:10px}
-.av{width:30px;height:30px;border-radius:50%;background:var(--cobalt);color:#fff;display:grid;place-items:center;font-weight:600;font-size:14px;flex:none}
-.empty{grid-column:1/-1;text-align:center;padding:60px 0;color:var(--muted)}
+.thumb svg{width:64px;opacity:.55}
+.body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:6px;flex:1}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:13px;font-weight:600;border-radius:99px;padding:0 12px;background:var(--ice);color:var(--deep)}
+.tag.t{background:#FFF6D6;color:#7A5F00}
+.body h3{font-family:var(--sub);font-weight:700;font-size:20px;line-height:1.6;color:var(--navy)}
+.by{color:var(--muted);font-size:15px}
+.body .btn{margin-top:auto;padding:6px 16px}
+.empty{grid-column:1/-1;text-align:center;padding:50px 0;color:var(--muted)}
 
-/* dialogs */
-dialog{border:0;border-radius:22px;padding:0;width:min(640px,92vw);max-height:90vh;overflow:auto;box-shadow:0 30px 80px rgba(10,37,64,.35)}
-dialog::backdrop{background:rgba(10,37,64,.55)}
-.dh{padding:28px 30px 8px;display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
-.dh h3{font-size:24px;color:var(--navy);line-height:1.5}
-.x{border:0;background:var(--ice);width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:20px;color:var(--cobalt);flex:none}
-.db{padding:6px 30px 30px}
-.db .thumb{border-radius:14px;margin:12px 0 18px;overflow:hidden}
+/* modal */
+dialog{border:0;border-radius:22px;padding:0;width:min(640px,92vw);max-height:90vh;overflow:auto;box-shadow:0 30px 80px rgba(11,31,75,.4)}
+dialog::backdrop{background:rgba(11,31,75,.6)}
+.dh{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:24px 28px 0}
+.dh h3{font-family:var(--sub);font-weight:700;font-size:26px;color:var(--navy);line-height:1.6}
+.x{border:0;background:var(--ice);width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:22px;color:var(--royal);flex:none}
+.db{padding:10px 28px 28px}
+.db .thumb{border-radius:14px;margin:10px 0 14px}
 .db p{white-space:pre-line}
-.meta{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 18px}
-form label{display:block;font-weight:600;font-size:14px;margin:14px 0 4px;color:var(--navy)}
-form input,form select,form textarea{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:10px 14px;background:var(--mist)}
-form input:focus,form select:focus,form textarea:focus{outline:none;border-color:var(--azure);background:#fff}
-form .btn{margin-top:20px;width:100%;justify-content:center}
-.note{font-size:14px;color:var(--muted);margin-top:12px}
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;padding:12px 26px;border-radius:99px;z-index:50;opacity:0;pointer-events:none;transition:opacity .25s}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 24px;border-radius:99px;z-index:200;opacity:0;pointer-events:none;transition:opacity .25s;max-width:90vw;text-align:center}
 .toast.on{opacity:1}
+footer{background:var(--navy);color:#B8C6EA;text-align:center;padding:26px 0;font-size:15px}
 
-footer{background:var(--navy);color:#9DB8D6;padding:30px 0;text-align:center;font-size:15px}
-footer .caps{margin-inline:6px;vertical-align:middle}
-
-@media(max-width:820px){
-  nav{display:none}
-  .hero .wrap{grid-template-columns:1fr;padding-top:48px;padding-bottom:56px}
-  .art{display:none}
-}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media(max-width:900px){.ygrid{grid-template-columns:repeat(3,1fr)}.me div{display:none}}
+@media(max-width:620px){.fg{grid-template-columns:1fr}.ygrid{grid-template-columns:repeat(2,1fr)}.bar{height:auto;flex-wrap:wrap;padding:10px 0}.hs{order:3;max-width:none;flex-basis:100%}.logo{font-size:20px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
-<body>
+<body class="locked">
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="fly" viewBox="0 0 64 64">
+    <g fill="currentColor"><ellipse cx="18" cy="22" rx="16" ry="6" transform="rotate(-18 18 22)"/><ellipse cx="46" cy="22" rx="16" ry="6" transform="rotate(18 46 22)"/><ellipse cx="20" cy="33" rx="14" ry="5" transform="rotate(14 20 33)" opacity=".75"/><ellipse cx="44" cy="33" rx="14" ry="5" transform="rotate(-14 44 33)" opacity=".75"/><rect x="29" y="12" width="6" height="46" rx="3"/><circle cx="32" cy="11" r="5"/></g>
+  </symbol>
+</svg>
+
+<!-- بوابة التسجيل -->
+<div id="gate">
+  <form class="gbox" id="regForm" novalidate>
+    <div class="brand">
+      <svg width="54" height="54" style="color:var(--royal)"><use href="#fly"/></svg>
+      <h1>منصة اليعسوب</h1>
+      <p>لعرض إبداعات طلاب كلية الصيدلة · سجّلي بياناتك للدخول</p>
+    </div>
+    <button type="button" class="btn gbtn" id="gBtn">
+      <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3A12 12 0 1 1 24 12c3 0 5.8 1.1 7.9 3l5.7-5.7A20 20 0 1 0 44 24c0-1.3-.1-2.6-.4-3.9z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8A12 12 0 0 1 24 12c3 0 5.8 1.1 7.9 3l5.7-5.7A20 20 0 0 0 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2A12 12 0 0 1 12.7 28l-6.5 5A20 20 0 0 0 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3a12 12 0 0 1-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z"/></svg>
+      <span id="gTxt">تسجيل الدخول بحساب Google</span>
+    </button>
+    <div class="or">أو أكملي البيانات يدوياً</div>
+    <div class="fg">
+      <div class="full"><label for="name">الاسم الرباعي</label><input id="name" autocomplete="name" required></div>
+      <div class="full"><label for="email">البريد الإلكتروني (Gmail)</label><input id="email" type="email" autocomplete="email" placeholder="name@gmail.com" required></div>
+      <div><label for="seat">رقم الجلوس</label><input id="seat" inputmode="numeric" required></div>
+      <div><label for="year">الفرقة الدراسية</label>
+        <select id="year" required><option value="">اختاري الفرقة</option></select></div>
+      <div class="full"><label for="phone">رقم الهاتف (واتساب)</label><input id="phone" type="tel" inputmode="tel" placeholder="مثال: 201012345678" required></div>
+    </div>
+    <div class="row">
+      <button type="button" class="btn line" id="sendCode">إرسال كود التأكيد</button>
+      <button type="button" class="btn wa" id="waBtn">تأكيد الهوية عبر واتساب</button>
+    </div>
+    <div class="codebox" id="codeBox" hidden>
+      <label for="code" style="margin-top:0">كود التأكيد</label>
+      <input id="code" inputmode="numeric" maxlength="4" placeholder="أدخلي الكود المكوّن من 4 أرقام">
+      <p class="hint" style="margin-top:6px">النسخة التجريبية تعرض الكود في رسالة منبثقة. عند التشغيل الفعلي يُرسل الكود إلى واتساب الطالب من الخادم.</p>
+    </div>
+    <p class="err" id="err" role="alert"></p>
+    <button type="submit" class="btn gold" style="width:100%;padding:12px">إتمام التسجيل والدخول</button>
+  </form>
+</div>
+
+<div id="app">
 <header>
   <div class="wrap bar">
-    <a href="#top" class="logo"><span class="caps"></span>إبداع الطلبة</a>
-    <nav><a href="#projects">المشاريع</a><a href="#about">عن المنصة</a></nav>
-    <button class="btn" id="openSubmit">أضيفي مشروعك</button>
+    <a href="#top" class="logo"><svg style="color:var(--gold)"><use href="#fly"/></svg>اليعسوب</a>
+    <div class="hs"><input id="q" type="search" placeholder="ابحثي باسم الطالب أو عنوان الإبداع" aria-label="بحث"></div>
+    <div class="me">
+      <span class="av" id="meAv"></span>
+      <div><b id="meName"></b><small id="meYear"></small></div>
+      <button class="out" id="logout">خروج</button>
+    </div>
   </div>
 </header>
 
-<section class="hero" id="top">
-  <div class="wrap">
-    <div>
-      <h1>مشاريع طلابية بروح علمية، في مكان واحد</h1>
-      <p>تصفّحي أبحاث وتجارب وتصاميم الطلبة، وشاركي مشروعك ليراه الجميع.</p>
-      <form class="search" id="searchForm" role="search">
-        <input id="q" type="search" placeholder="ابحثي باسم المشروع أو الطالب" aria-label="بحث">
-        <button class="btn" type="submit">بحث</button>
-      </form>
-      <div class="stats">
-        <div><b id="sP">0</b>مشروع</div>
-        <div><b id="sA">0</b>طالب</div>
-        <div><b id="sC">0</b>مجال</div>
-      </div>
-    </div>
-    <div class="art" aria-hidden="true"><i class="big"></i><i class="m"></i><i class="s"></i><i class="plus"></i></div>
-  </div>
-</section>
+<div class="hero" id="top"><div class="wrap">
+  <h1>منصة اليعسوب لعرض إبداعات الطلاب</h1>
+  <p>كلية الصيدلة · تصاميم وأبحاث وفيديوهات ومبادرات</p>
+</div></div>
 
-<main class="wrap" id="projects">
-  <div class="tools">
-    <h2>أحدث المشاريع</h2>
-    <div class="pills" id="pills" role="group" aria-label="تصفية حسب المجال"></div>
-  </div>
-  <div class="grid" id="grid"></div>
+<main class="wrap">
+  <section id="winners">
+    <div class="sh"><h2>الإبداعات الفائزة في مسابقات الجامعة</h2><span>أعمال حصدت مراكز متقدمة</span></div>
+    <div class="wgrid" id="wgrid"></div>
+  </section>
+
+  <section id="years">
+    <div class="sh"><h2>فرق الكلية</h2><span>اختاري فرقة لعرض أعمالها</span></div>
+    <div class="ygrid" id="ygrid"></div>
+  </section>
+
+  <section id="works">
+    <div class="sh"><h2>كل الإبداعات</h2><span id="count"></span></div>
+    <div class="fbar" id="fbar"></div>
+    <div class="grid" id="grid"></div>
+  </section>
 </main>
+<footer>منصة اليعسوب · كلية الصيدلة © <span id="yr"></span></footer>
+</div>
 
-<section class="wrap" id="about" style="padding-bottom:60px">
-  <div style="background:var(--ice);border-radius:22px;padding:34px;display:flex;gap:24px;align-items:center;flex-wrap:wrap;justify-content:space-between">
-    <div style="max-width:620px">
-      <h2 style="color:var(--navy);font-size:24px">لكل مشروع مساحة يُرى فيها</h2>
-      <p style="color:var(--muted)">ترسلين مشروعك مع وصف وصورة ورابط، وتتم مراجعته قبل ظهوره في المعرض.</p>
-    </div>
-    <button class="btn ghost" id="openSubmit2">أضيفي مشروعك</button>
-  </div>
-</section>
-
-<footer><span class="caps"></span> منصة إبداعات الطلبة © <span id="yr"></span></footer>
-
-<dialog id="viewD">
-  <div class="dh"><h3 id="vT"></h3><button class="x" data-close aria-label="إغلاق">×</button></div>
-  <div class="db" id="vB"></div>
+<dialog id="dlg">
+  <div class="dh"><h3 id="dT"></h3><button class="x" data-close aria-label="إغلاق">×</button></div>
+  <div class="db" id="dB"></div>
 </dialog>
-
-<dialog id="subD">
-  <div class="dh"><h3>أضيفي مشروعك</h3><button class="x" data-close aria-label="إغلاق">×</button></div>
-  <form class="db" id="subF">
-    <label for="f_title">اسم المشروع</label><input id="f_title" name="title" required maxlength="120">
-    <label for="f_cat">المجال</label><select id="f_cat" name="category" required></select>
-    <label for="f_desc">وصف المشروع</label><textarea id="f_desc" name="description" rows="4" required maxlength="1500"></textarea>
-    <label for="f_author">اسم الطالب</label><input id="f_author" name="author_name" required maxlength="80">
-    <label for="f_dept">القسم أو الكلية</label><input id="f_dept" name="department" maxlength="80">
-    <label for="f_img">رابط صورة المشروع</label><input id="f_img" name="image_url" type="url" placeholder="https://">
-    <label for="f_link">رابط المشروع</label><input id="f_link" name="link_url" type="url" placeholder="https://">
-    <button class="btn" type="submit">إرسال للمراجعة</button>
-    <p class="note">يظهر المشروع في المعرض بعد موافقة المشرف.</p>
-  </form>
-</dialog>
-
 <div class="toast" id="toast" role="status"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <script>
-/* ===== 1) ضعي بيانات مشروعك في Supabase هنا ===== */
-const SUPABASE_URL = "";        // مثال: https://xxxx.supabase.co
-const SUPABASE_ANON_KEY = "";   // المفتاح العام anon فقط
-/* ================================================ */
+/* ===== إعدادات الربط ===== */
+const SUPABASE_URL = "https://oibsajvayvflexhqwgwt.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9pYnNhanZheXZmbGV4aHF3Z3d0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI2OTUxNjAsImV4cCI6MjEwODI3MTE2MH0.X0OW7016FvJlGaMvbHtnTUXNRt38ymnA5HCMdfiDeSk";
+const ADMIN_WHATSAPP = "201000000000"; // رقم واتساب المشرف بالصيغة الدولية بدون +
+/* ======================== */
 
-const CATS = ["أبحاث علمية","تجارب معملية","تقنية وبرمجة","تصميم وفنون","مشاريع تخرج"];
+const YEARS = ["الفرقة الأولى","الفرقة الثانية","الفرقة الثالثة","الفرقة الرابعة","الفرقة الخامسة (فارم دي)"];
+const YSHORT = ["الأولى","الثانية","الثالثة","الرابعة","الخامسة"];
+const TYPES = {design:"تصميم",research:"بحث",video:"فيديو",initiative:"مبادرة"};
 const DEMO = [
-  {id:1,title:"دليل التفاعلات الدوائية التفاعلي",description:"تطبيق ويب يساعد الطلبة على التحقق من التداخلات بين الأدوية الشائعة مع شرح مبسّط لكل حالة.",category:"تقنية وبرمجة",author_name:"سارة محمود",department:"كلية الصيدلة",featured:true},
-  {id:2,title:"استخلاص مضادات الأكسدة من قشور الرمان",description:"بحث معملي يقارن طرق الاستخلاص ويقيس فاعلية المستخلص في تثبيط الجذور الحرة.",category:"تجارب معملية",author_name:"أحمد علي",department:"قسم الكيمياء"},
-  {id:3,title:"هوية بصرية لحملة التوعية بالمضادات الحيوية",description:"مجموعة ملصقات وإنفوجرافيك لتوعية المجتمع بالاستخدام الآمن للمضادات الحيوية.",category:"تصميم وفنون",author_name:"مريم خالد",department:"كلية الفنون التطبيقية"},
-  {id:4,title:"نظام تذكير بمواعيد الدواء",description:"مشروع تخرج يربط تطبيق الهاتف بعلبة دواء ذكية ترسل تنبيهات لكبار السن ومرافقيهم.",category:"مشاريع تخرج",author_name:"يوسف حسن",department:"كلية الهندسة",featured:true},
-  {id:5,title:"تأثير النباتات الطبية على نمو البكتيريا",description:"دراسة ميدانية على خمسة مستخلصات نباتية مع تحليل إحصائي للنتائج.",category:"أبحاث علمية",author_name:"نور إبراهيم",department:"كلية العلوم"},
-  {id:6,title:"موقع تفاعلي لتعليم الجهاز المناعي",description:"رسوم متحركة وأسئلة قصيرة تشرح كيف يعمل الجهاز المناعي لطلبة المرحلة الثانوية.",category:"تقنية وبرمجة",author_name:"ليلى سامي",department:"كلية الحاسبات"}
+ {id:1,title:"بوستر التوعية بالاستخدام الآمن للمضادات الحيوية",student_name:"مريم خالد أحمد سالم",year:2,type:"design",description:"سلسلة تصاميم توعوية بألوان هادئة وخطوط عربية واضحة، عُرضت في ممرات الكلية.",award:1,award_title:"المركز الأول في مسابقة التصميم الجامعية"},
+ {id:2,title:"استخلاص مضادات الأكسدة من قشور الرمان",student_name:"أحمد علي محمود حسن",year:4,type:"research",description:"بحث معملي يقارن ثلاث طرق للاستخلاص ويقيس نشاط المستخلص ضد الجذور الحرة.",award:2,award_title:"المركز الثاني في ملتقى البحث العلمي"},
+ {id:3,title:"مبادرة «دوائي في أمان» لكبار السن",student_name:"نور إبراهيم سعيد فؤاد",year:5,type:"initiative",description:"حملة ميدانية لتنظيم أدوية كبار السن ومراجعة التداخلات الدوائية الشائعة.",award:3,award_title:"المركز الثالث في مسابقة المبادرات المجتمعية"},
+ {id:4,title:"فيديو شرح آلية عمل الأنسولين",student_name:"يوسف حسن عادل رمضان",year:3,type:"video",description:"فيديو متحرك مدته ست دقائق يبسّط مسار الإشارة داخل الخلية."},
+ {id:5,title:"جدول الجرعات المصوّر لدواء الأطفال",student_name:"ليلى سامي كمال نصر",year:1,type:"design",description:"إنفوجرافيك يوضح الفرق بين الجرعة بالوزن والجرعة بالعمر."},
+ {id:6,title:"مراجعة منهجية لتفاعلات الأدوية مع الأعشاب",student_name:"هبة محمد طارق إسماعيل",year:5,type:"research",description:"مراجعة لأكثر من أربعين دراسة منشورة مع تصنيف درجة الخطورة."},
+ {id:7,title:"مبادرة جمع الأدوية منتهية الصلاحية",student_name:"عمر خالد فتحي منصور",year:3,type:"initiative",description:"نقاط تجميع داخل الكلية وتسليمها لجهة معتمدة للتخلص الآمن."},
+ {id:8,title:"فيديو تعريفي بأقسام الصيدلية المجتمعية",student_name:"سلمى وليد حسام عبده",year:2,type:"video",description:"جولة مصورة تعرّف الطلاب الجدد بأدوار الصيدلي داخل الصيدلية."}
 ];
 
-const sb = (SUPABASE_URL && SUPABASE_ANON_KEY && window.supabase) ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+const sb = (SUPABASE_URL && SUPABASE_ANON_KEY && window.supabase) ? window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY) : null;
 const $ = id => document.getElementById(id);
-const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const safeUrl = u => /^https?:\/\//i.test(u || "") ? u : "";
-let projects = [], cat = "الكل", term = "";
+const esc = s => String(s ?? "").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const url = u => /^https?:\/\//i.test(u||"") ? u : "";
+const toast = m => {const t=$("toast");t.textContent=m;t.classList.add("on");setTimeout(()=>t.classList.remove("on"),4200)};
+const LS = "yaasoub_user";
+let works=[], fy=0, ft="", term="", pendingCode="", viaGoogle=false;
 
-function toast(m){const t=$("toast");t.textContent=m;t.classList.add("on");setTimeout(()=>t.classList.remove("on"),3200)}
+/* ---------- التسجيل ---------- */
+YEARS.forEach((y,i)=>$("year").insertAdjacentHTML("beforeend",`<option value="${i+1}">${y}</option>`));
 
-async function load(){
-  if(!sb){projects = DEMO; return render();}
-  const {data,error} = await sb.from("projects").select("*").eq("status","approved")
-    .order("featured",{ascending:false}).order("created_at",{ascending:false});
-  if(error){toast("تعذّر تحميل المشاريع، حاولي مرة أخرى");projects=[]}else projects=data;
-  render();
-}
+$("gBtn").onclick = async () => {
+  if(sb){ const {error}=await sb.auth.signInWithOAuth({provider:"google",options:{redirectTo:location.href}}); if(error)toast("تعذّر الدخول بحساب Google"); return; }
+  const g = prompt("محاكاة Google: اكتبي بريد Gmail الخاص بك");
+  if(g && /^[^\s@]+@gmail\.com$/i.test(g.trim())){
+    $("email").value=g.trim(); viaGoogle=true;
+    $("gBtn").classList.add("ok"); $("gTxt").textContent="تم الربط بحساب "+g.trim();
+  } else if(g!==null) toast("الرجاء إدخال بريد Gmail صحيح");
+};
 
-function thumb(p){
-  const u = safeUrl(p.image_url);
-  return `<div class="thumb">${u?`<img src="${esc(u)}" alt="${esc(p.title)}" loading="lazy">`:'<span class="caps"></span>'}${p.featured?'<span class="badge">مميز</span>':''}</div>`;
-}
+function phoneOk(){ return /^\d{10,15}$/.test($("phone").value.replace(/[\s+\-]/g,"")); }
+$("sendCode").onclick = () => {
+  if(!phoneOk()){ $("err").textContent="أدخلي رقم واتساب صحيحاً بالصيغة الدولية، مثل 201012345678"; return; }
+  $("err").textContent="";
+  pendingCode = String(Math.floor(1000+Math.random()*9000));
+  $("codeBox").hidden=false; $("code").focus();
+  toast("كود التأكيد التجريبي: "+pendingCode);
+};
+$("waBtn").onclick = () => {
+  const msg = `طلب تأكيد هوية - منصة اليعسوب\nالاسم: ${$("name").value}\nرقم الجلوس: ${$("seat").value}\nالفرقة: ${YEARS[$("year").value-1]||""}`;
+  window.open(`https://wa.me/${ADMIN_WHATSAPP}?text=${encodeURIComponent(msg)}`,"_blank","noopener");
+};
 
-function render(){
-  $("sP").textContent = projects.length;
-  $("sA").textContent = new Set(projects.map(p=>p.author_name)).size;
-  $("sC").textContent = new Set(projects.map(p=>p.category)).size;
-  const list = projects.filter(p => (cat==="الكل"||p.category===cat) &&
-    (!term || [p.title,p.author_name,p.description].join(" ").includes(term)));
-  $("grid").innerHTML = list.length ? list.map(p=>`
-    <button class="card" data-id="${esc(p.id)}">
-      ${thumb(p)}
-      <div class="body">
-        <span class="tag">${esc(p.category)}</span>
-        <h3>${esc(p.title)}</h3>
-        <p>${esc(p.description)}</p>
-        <div class="by"><span class="av">${esc((p.author_name||"؟").trim().charAt(0))}</span><span>${esc(p.author_name)}${p.department?" · "+esc(p.department):""}</span></div>
-      </div>
-    </button>`).join("") : '<div class="empty">لا توجد مشاريع مطابقة. جرّبي مجالاً آخر أو أضيفي مشروعك.</div>';
-}
-
-function pills(){
-  $("pills").innerHTML = ["الكل",...CATS].map(c=>`<button class="pill" aria-pressed="${c===cat}" data-c="${c}">${c}</button>`).join("");
-  $("f_cat").innerHTML = CATS.map(c=>`<option>${c}</option>`).join("");
-}
-
-$("pills").addEventListener("click",e=>{const b=e.target.closest(".pill");if(!b)return;cat=b.dataset.c;pills();render()});
-$("searchForm").addEventListener("submit",e=>{e.preventDefault();term=$("q").value.trim();render();$("projects").scrollIntoView()});
-$("grid").addEventListener("click",e=>{
-  const c=e.target.closest(".card");if(!c)return;
-  const p=projects.find(x=>String(x.id)===c.dataset.id);if(!p)return;
-  const l=safeUrl(p.link_url);
-  $("vT").textContent=p.title;
-  $("vB").innerHTML=`${thumb(p)}<div class="meta"><span class="tag">${esc(p.category)}</span></div>
-    <p>${esc(p.description)}</p>
-    <div class="by" style="margin-top:20px"><span class="av">${esc((p.author_name||"؟").trim().charAt(0))}</span><span>${esc(p.author_name)}${p.department?" · "+esc(p.department):""}</span></div>
-    ${l?`<a class="btn" style="margin-top:20px" href="${esc(l)}" target="_blank" rel="noopener noreferrer">افتحي المشروع</a>`:""}`;
-  $("viewD").showModal();
-});
-
-["openSubmit","openSubmit2"].forEach(id=>$(id).addEventListener("click",()=>$("subD").showModal()));
-document.querySelectorAll("[data-close]").forEach(b=>b.addEventListener("click",()=>b.closest("dialog").close()));
-document.querySelectorAll("dialog").forEach(d=>d.addEventListener("click",e=>{if(e.target===d)d.close()}));
-
-$("subF").addEventListener("submit",async e=>{
+$("regForm").addEventListener("submit", async e => {
   e.preventDefault();
-  if(!sb){toast("اربطي Supabase أولاً لتفعيل الإرسال");return}
-  const row = Object.fromEntries(new FormData(e.target));
-  row.status = "pending";
-  const {error} = await sb.from("projects").insert(row);
-  if(error){toast("لم يتم الإرسال، راجعي البيانات وحاولي مجدداً");return}
-  e.target.reset();$("subD").close();toast("تم إرسال مشروعك وسيظهر بعد المراجعة");
+  const u = {name:$("name").value.trim().replace(/\s+/g," "),email:$("email").value.trim(),seat:$("seat").value.trim(),year:+$("year").value,phone:$("phone").value.replace(/[\s+\-]/g,"")};
+  const err = m => {$("err").textContent=m;return};
+  if(u.name.split(" ").length<4) return err("اكتبي الاسم الرباعي كاملاً");
+  if(!/^[^\s@]+@gmail\.com$/i.test(u.email)) return err("أدخلي بريد Gmail صحيحاً");
+  if(!/^\d{3,12}$/.test(u.seat)) return err("رقم الجلوس يتكوّن من أرقام فقط");
+  if(!u.year) return err("اختاري الفرقة الدراسية");
+  if(!phoneOk()) return err("أدخلي رقم واتساب صحيحاً");
+  if(!pendingCode) return err("اضغطي «إرسال كود التأكيد» أولاً");
+  if($("code").value.trim()!==pendingCode) return err("كود التأكيد غير صحيح");
+  if(sb){ const {error}=await sb.from("students").insert({full_name:u.name,email:u.email,seat_number:u.seat,year:u.year,phone:u.phone}); if(error&&error.code!=="23505") return err("تعذّر حفظ التسجيل، حاولي مرة أخرى"); }
+  localStorage.setItem(LS,JSON.stringify(u));
+  enter(u);
 });
 
-$("yr").textContent = new Date().getFullYear();
-pills();load();
+$("logout").onclick = () => {localStorage.removeItem(LS);location.reload()};
+
+function enter(u){
+  $("gate").hidden=true; document.body.classList.remove("locked");
+  $("meAv").textContent=u.name.charAt(0);
+  $("meName").textContent=u.name.split(" ").slice(0,2).join(" ");
+  $("meYear").textContent=YEARS[u.year-1]||"";
+  loadWorks();
+}
+
+/* ---------- المحتوى ---------- */
+async function loadWorks(){
+  if(!sb){works=DEMO;return draw()}
+  const {data,error}=await sb.from("works").select("*").eq("status","approved").order("created_at",{ascending:false});
+  if(error)toast("تعذّر تحميل الإبداعات");
+  works=error?[]:data; draw();
+}
+
+function thumb(w){const u=url(w.image_url);return `<div class="thumb">${u?`<img src="${esc(u)}" alt="${esc(w.title)}" loading="lazy">`:'<svg style="color:#fff"><use href="#fly"/></svg>'}</div>`}
+function btns(w){const f=url(w.file_url);return `<button class="btn" data-id="${esc(w.id)}">التفاصيل</button>`}
+
+function draw(){
+  const win = works.filter(w=>w.award).sort((a,b)=>a.award-b.award);
+  $("winners").style.display = win.length?"":"none";
+  $("wgrid").innerHTML = win.map(w=>`
+    <button class="win r${w.award}" data-id="${esc(w.id)}">
+      <span class="medal"><b>${w.award}</b>المركز ${["","الأول","الثاني","الثالث"][w.award]||w.award}</span>
+      ${thumb(w)}
+      <div class="body"><span class="award">${esc(w.award_title)}</span><h3>${esc(w.title)}</h3><span class="by">${esc(w.student_name)} · ${YSHORT[w.year-1]?"الفرقة "+YSHORT[w.year-1]:""}</span></div>
+    </button>`).join("");
+
+  $("ygrid").innerHTML = YEARS.map((y,i)=>{const n=works.filter(w=>w.year===i+1).length;
+    return `<button class="ycard" data-y="${i+1}" aria-pressed="${fy===i+1}"><span class="yn">${i+1}</span><h3>${y.replace(" (فارم دي)","")}</h3><span>${i===4?"فارم دي · ":""}${n} عمل</span></button>`}).join("");
+
+  $("fbar").innerHTML = `<button class="chip" data-fy="0" aria-pressed="${!fy}">كل الفرق</button>`
+    + YSHORT.map((y,i)=>`<button class="chip" data-fy="${i+1}" aria-pressed="${fy===i+1}">${y}</button>`).join("")
+    + `<span class="sep"></span><button class="chip" data-ft="" aria-pressed="${!ft}">كل الأنواع</button>`
+    + Object.entries(TYPES).map(([k,v])=>`<button class="chip" data-ft="${k}" aria-pressed="${ft===k}">${v}</button>`).join("");
+
+  const list = works.filter(w=>(!fy||w.year===fy)&&(!ft||w.type===ft)&&(!term||[w.title,w.student_name,w.description].join(" ").includes(term)));
+  $("count").textContent = list.length+" عمل";
+  $("grid").innerHTML = list.length ? list.map(w=>`
+    <article class="card">${thumb(w)}
+      <div class="body">
+        <div class="tags"><span class="tag">${YSHORT[w.year-1]?"الفرقة "+YSHORT[w.year-1]:""}</span><span class="tag ${w.award?"t":""}">${esc(TYPES[w.type]||w.type)}</span></div>
+        <h3>${esc(w.title)}</h3><div class="by">${esc(w.student_name)}</div>
+        ${btns(w)}
+      </div></article>`).join("") : '<div class="empty">لا توجد أعمال مطابقة. جرّبي فرقة أو نوعاً آخر.</div>';
+}
+
+document.addEventListener("click",e=>{
+  const t=e.target;
+  const y=t.closest("[data-y]"); if(y){fy=fy===+y.dataset.y?0:+y.dataset.y;draw();$("works").scrollIntoView();return}
+  const cf=t.closest("[data-fy]"); if(cf){fy=+cf.dataset.fy;draw();return}
+  const ct=t.closest("[data-ft]"); if(ct){ft=ct.dataset.ft;draw();return}
+  const d=t.closest("[data-id]"); if(d){open(d.dataset.id);return}
+});
+$("q").addEventListener("input",e=>{term=e.target.value.trim();draw()});
+
+function open(id){
+  const w=works.find(x=>String(x.id)===String(id)); if(!w)return;
+  const f=url(w.file_url);
+  $("dT").textContent=w.title;
+  $("dB").innerHTML=`${thumb(w)}
+    <div class="tags" style="margin-bottom:10px"><span class="tag">${YEARS[w.year-1]||""}</span><span class="tag t">${esc(TYPES[w.type]||w.type)}</span>${w.award?`<span class="tag t">${esc(w.award_title)}</span>`:""}</div>
+    <p>${esc(w.description)}</p>
+    <p class="by" style="margin-top:12px">إعداد: ${esc(w.student_name)}</p>
+    ${f?`<a class="btn gold" style="margin-top:16px" href="${esc(f)}" target="_blank" rel="noopener noreferrer" download>تحميل العمل</a>`:'<p class="hint" style="margin-top:14px">لا يوجد ملف للتحميل لهذا العمل.</p>'}`;
+  $("dlg").showModal();
+}
+document.querySelectorAll("[data-close]").forEach(b=>b.onclick=()=>$("dlg").close());
+$("dlg").addEventListener("click",e=>{if(e.target===$("dlg"))$("dlg").close()});
+
+$("yr").textContent=new Date().getFullYear();
+try{const u=JSON.parse(localStorage.getItem(LS)||"null"); if(u&&u.name)enter(u);}catch(_){}
 </script>
 </body>
 </html>
