@@ -9,170 +9,196 @@
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --royal:#1F4FD8; --navy:#0B1F4B; --deep:#123A8F; --gold:#C9A227; --gold-l:#F6E7A8; --bg:#F3F5F9; --card:#fff;
+  --royal:#1F4FD8; --navy:#0B1F4B; --deep:#123A8F; --gold:#C9A227; --gold-l:#F6E7A8; --bg:#F3F5F9;
   --ink:#16233F; --muted:#5E6B85; --line:#DDE3EF; --ice:#E8EEFC;
   --title:'Amiri',serif; --sub:'Aref Ruqaa',cursive; --body:'Noto Naskh Arabic',Tahoma,sans-serif;
 }
 *{box-sizing:border-box;margin:0}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;scroll-padding-top:120px}
 body{font-family:var(--body);background:var(--bg);color:var(--ink);line-height:1.9;font-size:17px}
-body.locked{overflow:hidden}
-body.locked #app{display:none}
-button,input,select{font:inherit;color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
 a{color:inherit;text-decoration:none}
 :focus-visible{outline:3px solid var(--gold);outline-offset:2px}
 h1,h2,h3{font-weight:400}
 .wrap{max-width:1180px;margin:auto;padding:0 20px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:12px;padding:9px 22px;cursor:pointer;font-weight:600;background:var(--royal);color:#fff;transition:background .2s}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:12px;padding:8px 22px;cursor:pointer;font-weight:600;background:var(--royal);color:#fff;transition:background .2s}
 .btn:hover{background:var(--navy)}
 .btn.gold{background:var(--gold);color:var(--navy)}
 .btn.gold:hover{background:#B38F1A}
 .btn.line{background:#fff;color:var(--royal);border:1.5px solid var(--royal)}
 .btn.line:hover{background:var(--ice)}
-.btn.wa{background:#1FA855}
-.btn.wa:hover{background:#16813F}
-.btn[disabled]{opacity:.55;cursor:not-allowed}
-
-/* gate */
-#gate{position:fixed;inset:0;z-index:100;overflow:auto;background:linear-gradient(155deg,var(--navy),var(--deep) 60%,var(--royal));display:grid;place-items:center;padding:24px}
-#gate[hidden]{display:none}
-.gbox{background:#fff;border-radius:24px;width:min(560px,100%);padding:34px 32px;box-shadow:0 30px 80px rgba(0,0,0,.35)}
-.gbox .brand{display:flex;flex-direction:column;align-items:center;text-align:center;gap:2px;margin-bottom:18px}
-.gbox h1{font-family:var(--title);font-weight:700;font-size:34px;color:var(--navy);line-height:1.4}
-.gbox .brand p{color:var(--muted);font-size:15px}
-.gbtn{width:100%;background:#fff;border:1.5px solid var(--line);color:var(--ink);gap:12px}
-.gbtn:hover{background:var(--bg)}
-.gbtn.ok{border-color:#1FA855;background:#EAF8F0}
-.or{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:14px;margin:16px 0 6px}
-.or::before,.or::after{content:"";flex:1;height:1px;background:var(--line)}
-.fg{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
-.fg .full{grid-column:1/-1}
-label{display:block;font-weight:600;font-size:14px;margin:12px 0 2px;color:var(--navy)}
-input,select{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:8px 14px;background:var(--bg)}
-input:focus,select:focus{outline:none;border-color:var(--royal);background:#fff}
-.codebox{margin-top:14px;padding:14px;background:var(--ice);border-radius:14px}
-.codebox[hidden]{display:none}
-.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
-.row .btn{flex:1}
-.err{color:#B3261E;font-size:14px;min-height:22px;margin-top:8px}
-.hint{font-size:13px;color:var(--muted)}
+.btn.sm{padding:3px 16px;font-size:15px}
+.btn[disabled]{opacity:.55;cursor:wait}
 
 /* header */
 header{position:sticky;top:0;z-index:30;background:var(--navy);color:#fff;box-shadow:0 2px 14px rgba(11,31,75,.25)}
-.bar{display:flex;align-items:center;gap:16px;height:72px}
+.bar{display:flex;align-items:center;gap:14px;min-height:68px;flex-wrap:wrap;padding-block:6px}
 .logo{display:flex;align-items:center;gap:10px;font-family:var(--title);font-weight:700;font-size:24px;white-space:nowrap}
-.logo svg{width:42px;height:42px;flex:none}
-.hs{flex:1;max-width:420px;margin-inline:auto;position:relative}
-.hs input{background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.25);color:#fff;border-radius:99px;padding-inline:20px}
+.logo svg{width:40px;height:40px;color:var(--gold)}
+.nav{display:flex;gap:4px}
+.nav a{padding:2px 14px;border-radius:99px;color:#C9D6F5;font-family:var(--sub);font-size:17px;white-space:nowrap}
+.nav a:hover{background:rgba(255,255,255,.12);color:#fff}
+.nav a.g{color:var(--gold-l)}
+.hs{flex:1;min-width:160px;max-width:340px;margin-inline-start:auto}
+.hs input{background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.25);color:#fff;border-radius:99px;padding:6px 18px;width:100%}
 .hs input::placeholder{color:#B8C6EA}
-.hs input:focus{background:#fff;color:var(--ink)}
-.me{display:flex;align-items:center;gap:10px;font-size:14px;line-height:1.4}
-.av{width:38px;height:38px;border-radius:50%;background:var(--gold);color:var(--navy);display:grid;place-items:center;font-weight:700;font-family:var(--sub);flex:none}
-.me small{display:block;color:#B8C6EA}
-.out{background:none;border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:99px;padding:2px 14px;cursor:pointer;font-size:13px}
+.hs input:focus{background:#fff;color:var(--ink);outline:none}
+.me{display:flex;align-items:center;gap:8px;font-size:14px}
+.av{width:36px;height:36px;border-radius:50%;background:var(--gold);color:var(--navy);display:grid;place-items:center;font-weight:700;font-family:var(--sub);flex:none}
+.out{background:none;border:1px solid rgba(255,255,255,.35);color:#fff;border-radius:99px;padding:0 14px;cursor:pointer;font-size:14px}
 .out:hover{background:rgba(255,255,255,.12)}
 
 /* hero */
-.hero{background:linear-gradient(160deg,var(--deep),var(--royal));color:#fff;padding:46px 0 54px}
-.hero h1{font-family:var(--title);font-weight:700;font-size:clamp(34px,5vw,56px);line-height:1.4}
-.hero p{font-family:var(--sub);font-size:clamp(18px,2.4vw,24px);color:var(--gold-l);margin-top:4px}
+.hero{background:linear-gradient(160deg,var(--deep),var(--royal));color:#fff;padding:44px 0 52px}
+.hero h1{font-family:var(--title);font-weight:700;font-size:clamp(32px,5vw,54px);line-height:1.4}
+.hero p{font-family:var(--sub);font-size:clamp(18px,2.4vw,23px);color:var(--gold-l);margin-top:4px}
 
-/* sections */
-section{padding:46px 0 6px}
-.sh{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:22px;flex-wrap:wrap}
+section{padding:44px 0 4px}
+.sh{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:20px;flex-wrap:wrap}
 .sh h2{font-family:var(--sub);font-weight:700;font-size:30px;color:var(--navy)}
 .sh span{color:var(--muted);font-size:15px}
 
 /* winners */
-.wgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px}
-.win{position:relative;background:linear-gradient(180deg,#FFFBEA,#fff 45%);border:2px solid var(--gold);border-radius:20px;overflow:hidden;display:flex;flex-direction:column;cursor:pointer;text-align:start;padding:0;box-shadow:0 10px 28px rgba(201,162,39,.18)}
-.win .thumb{height:150px}
+.wsec{background:linear-gradient(180deg,#FFF8DB,var(--bg));border-block:2px solid var(--gold);padding:40px 0 34px;margin-top:40px}
+.wsec .sh h2{color:#7A5F00}
+.wgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:22px}
+.win{position:relative;background:#fff;border:2px solid var(--gold);border-radius:20px;overflow:hidden;display:flex;flex-direction:column;cursor:pointer;text-align:start;padding:0;box-shadow:0 10px 28px rgba(201,162,39,.2)}
 .medal{position:absolute;top:12px;inset-inline-start:12px;display:flex;align-items:center;gap:8px;background:var(--navy);color:var(--gold-l);border-radius:99px;padding:3px 14px 3px 6px;font-weight:700;font-size:14px;z-index:2}
-.medal b{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 35% 30%,#FFF1B0,var(--gold));color:var(--navy);font-family:var(--title);font-size:17px}
+.medal b{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 35% 30%,#FFF1B0,var(--gold));color:var(--navy);font-family:var(--sub);font-size:17px}
 .win.r2 .medal b{background:radial-gradient(circle at 35% 30%,#fff,#B9C2D3)}
 .win.r3 .medal b{background:radial-gradient(circle at 35% 30%,#F4D0A8,#B87333)}
-.win .body{padding:16px 20px 20px}
-.award{font-family:var(--sub);color:#8A6D0B;font-size:16px}
+.award{font-family:var(--sub);color:#8A6D0B;font-size:16px;display:flex;gap:6px;align-items:center}
+.ic{width:34px;height:34px;color:var(--gold);vertical-align:-8px;margin-inline-end:8px}
+.ic.s{width:20px;height:20px;vertical-align:-4px;margin:0;flex:none}
+.win{transition:transform .2s}.win:hover{transform:translateY(-5px)}
+.win .thumb{background:linear-gradient(135deg,#FFF1B0,var(--gold))}
+.win.r1{border-width:3px;box-shadow:0 16px 40px rgba(201,162,39,.4)}
+.win.r1::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 35%,rgba(255,241,176,.5) 50%,transparent 65%);transform:translateX(120%);animation:shine 3.5s 1s 1;pointer-events:none}
+@keyframes shine{to{transform:translateX(-120%)}}
+.cpath{display:flex;gap:10px;overflow-x:auto;margin:-6px 0 22px;padding-bottom:6px}
+.ci{flex:1;min-width:96px;display:flex;flex-direction:column;align-items:center;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.22);border-radius:16px;padding:10px 6px;color:#fff;cursor:pointer;text-align:center;font-family:var(--sub);font-size:16px;line-height:1.6}
+.ci:hover{background:rgba(255,255,255,.16)}
+.ci .yn{margin:0 0 2px;width:44px;height:44px;font-size:24px}
+.ci.cur{border-color:var(--gold)}.ci.cur .yn,
+.ycard.cl .yn{background:var(--gold);color:var(--navy)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+.stats div{background:var(--ice);border-radius:14px;padding:6px 8px;text-align:center;font-size:14px;color:var(--muted)}
+.stats b{display:block;font-family:var(--sub);font-size:26px;color:var(--navy);line-height:1.5}
 
 /* years */
-.ygrid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
-.ycard{background:#fff;border:1.5px solid var(--line);border-radius:18px;padding:18px 10px;text-align:center;cursor:pointer;transition:.2s;display:flex;flex-direction:column;align-items:center;gap:2px}
+.ygrid{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+.ycard{background:#fff;border:1.5px solid var(--line);border-radius:18px;padding:16px 8px;text-align:center;cursor:pointer;transition:.2s;display:flex;flex-direction:column;align-items:center}
 .ycard:hover,.ycard[aria-pressed=true]{border-color:var(--royal);background:var(--ice);transform:translateY(-3px)}
-.ycard[aria-pressed=true]{box-shadow:0 8px 20px rgba(31,79,216,.18)}
-.yn{width:54px;height:54px;border-radius:16px;background:var(--navy);color:var(--gold-l);display:grid;place-items:center;font-family:var(--title);font-weight:700;font-size:30px;margin-bottom:6px}
-.ycard h3{font-family:var(--sub);font-weight:700;font-size:19px;color:var(--navy);line-height:1.5}
+.yn{width:52px;height:52px;border-radius:16px;background:var(--navy);color:var(--gold-l);display:grid;place-items:center;font-family:var(--sub);font-weight:700;font-size:28px;margin-bottom:4px}
+.ycard h3{font-family:var(--sub);font-weight:700;font-size:18px;color:var(--navy);line-height:1.6}
 .ycard span{font-size:14px;color:var(--muted)}
 
-/* filter */
-.fbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:22px}
-.chip{border:1.5px solid var(--line);background:#fff;border-radius:99px;padding:2px 18px;cursor:pointer;font-weight:500;color:var(--muted)}
+.fbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:20px}
+.chip{border:1.5px solid var(--line);background:#fff;border-radius:99px;padding:0 16px;cursor:pointer;font-weight:500;color:var(--muted)}
 .chip:hover{border-color:var(--royal);color:var(--royal)}
 .chip[aria-pressed=true]{background:var(--royal);border-color:var(--royal);color:#fff}
-.fbar .sep{width:1px;height:26px;background:var(--line);margin-inline:4px}
+.sep{width:1px;height:24px;background:var(--line);margin-inline:4px}
 
 /* cards */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:22px;padding-bottom:60px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:20px;padding-bottom:30px}
 .card{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s}
 .card:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(11,31,75,.12)}
-.thumb{height:168px;background:linear-gradient(135deg,var(--ice),#9DB6F2);display:grid;place-items:center;overflow:hidden}
+.thumb{height:160px;background:linear-gradient(135deg,var(--ice),#9DB6F2);display:grid;place-items:center;overflow:hidden}
 .thumb img{width:100%;height:100%;object-fit:cover}
-.thumb svg{width:64px;opacity:.55}
-.body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:6px;flex:1}
+.thumb svg{width:62px;height:62px;color:#fff;opacity:.6}
+.body{padding:14px 18px 18px;display:flex;flex-direction:column;gap:6px;flex:1}
 .tags{display:flex;gap:6px;flex-wrap:wrap}
 .tag{font-size:13px;font-weight:600;border-radius:99px;padding:0 12px;background:var(--ice);color:var(--deep)}
-.tag.t{background:#FFF6D6;color:#7A5F00}
+.tag.t{background:#FFF1BF;color:#7A5F00}
+.tag.ok{background:#DDF4E6;color:#17683A}
+.tag.wait{background:#FFEFD2;color:#8A5A00}
+.tag.no{background:#FCE0DE;color:#9B2118}
 .body h3{font-family:var(--sub);font-weight:700;font-size:20px;line-height:1.6;color:var(--navy)}
 .by{color:var(--muted);font-size:15px}
-.body .btn{margin-top:auto;padding:6px 16px}
-.empty{grid-column:1/-1;text-align:center;padding:50px 0;color:var(--muted)}
+.body .btn{margin-top:auto;align-self:flex-start}
+.empty{grid-column:1/-1;text-align:center;padding:40px 0;color:var(--muted)}
 
-/* modal */
-dialog{border:0;border-radius:22px;padding:0;width:min(640px,92vw);max-height:90vh;overflow:auto;box-shadow:0 30px 80px rgba(11,31,75,.4)}
+/* clinical */
+.clin{background:linear-gradient(150deg,var(--navy),var(--deep));color:#fff;border-radius:26px;padding:34px 28px 18px;margin-top:20px}
+.clin .sh h2{color:#fff}
+.clin .sh span{color:#B8C6EA}
+.clin .card{border:0}
+
+/* mine */
+.mine{background:#fff;border:1.5px dashed #9DB6F2;border-radius:22px;padding:26px 24px}
+.mine .top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.mine .top p{color:var(--muted)}
+.mine .grid{padding-bottom:0}
+
+/* dialogs */
+dialog{border:0;border-radius:22px;padding:0;width:min(600px,94vw);max-height:92vh;overflow:auto;box-shadow:0 30px 80px rgba(11,31,75,.4)}
 dialog::backdrop{background:rgba(11,31,75,.6)}
-.dh{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:24px 28px 0}
+.dh{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:22px 26px 0}
 .dh h3{font-family:var(--sub);font-weight:700;font-size:26px;color:var(--navy);line-height:1.6}
 .x{border:0;background:var(--ice);width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:22px;color:var(--royal);flex:none}
-.db{padding:10px 28px 28px}
-.db .thumb{border-radius:14px;margin:10px 0 14px}
+.db{padding:8px 26px 26px}
+.db .thumb{border-radius:14px;margin:8px 0 12px}
 .db p{white-space:pre-line}
+label{display:block;font-weight:600;font-size:14px;margin:12px 0 2px;color:var(--navy)}
+input:not([type=checkbox]),select,textarea{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:7px 14px;background:var(--bg)}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--royal);background:#fff}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+.chk{display:flex;gap:10px;align-items:center;margin-top:14px;background:#FFF8DB;border:1.5px solid var(--gold);border-radius:12px;padding:8px 14px;cursor:pointer}
+.chk input{width:20px;height:20px;accent-color:var(--gold)}
+.tabs{display:flex;gap:6px;margin:14px 0 4px}
+.tabs button{flex:1;border:0;background:var(--ice);border-radius:12px;padding:5px;cursor:pointer;font-weight:600;color:var(--royal)}
+.tabs button[aria-selected=true]{background:var(--royal);color:#fff}
+.err{color:#B3261E;font-size:14px;min-height:22px;margin-top:8px}
+.hint{font-size:13px;color:var(--muted)}
+.or{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:14px;margin:14px 0 4px}
+.or::before,.or::after{content:"";flex:1;height:1px;background:var(--line)}
 .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 24px;border-radius:99px;z-index:200;opacity:0;pointer-events:none;transition:opacity .25s;max-width:90vw;text-align:center}
 .toast.on{opacity:1}
-footer{background:var(--navy);color:#B8C6EA;text-align:center;padding:26px 0;font-size:15px}
+footer{background:var(--navy);color:#B8C6EA;text-align:center;padding:26px 0;font-size:15px;margin-top:40px}
 
-@media(max-width:900px){.ygrid{grid-template-columns:repeat(3,1fr)}.me div{display:none}}
-@media(max-width:620px){.fg{grid-template-columns:1fr}.ygrid{grid-template-columns:repeat(2,1fr)}.bar{height:auto;flex-wrap:wrap;padding:10px 0}.hs{order:3;max-width:none;flex-basis:100%}.logo{font-size:20px}}
-@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+@media(max-width:900px){.ygrid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:700px){
+  .bar{gap:8px}.logo{font-size:21px}
+  .nav{order:5;flex-basis:100%;overflow-x:auto;padding-bottom:4px}
+  .hs{order:4;flex-basis:100%;max-width:none}
+  .me span.nm{display:none}
+  .two{grid-template-columns:1fr}.ygrid{grid-template-columns:repeat(2,1fr)}.stats{grid-template-columns:repeat(2,1fr)}
+  .clin{padding:24px 16px 8px}.mine{padding:20px 16px}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
 <body>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <symbol id="fly" viewBox="0 0 64 64">
-    <g fill="currentColor"><ellipse cx="18" cy="22" rx="16" ry="6" transform="rotate(-18 18 22)"/><ellipse cx="46" cy="22" rx="16" ry="6" transform="rotate(18 46 22)"/><ellipse cx="20" cy="33" rx="14" ry="5" transform="rotate(14 20 33)" opacity=".75"/><ellipse cx="44" cy="33" rx="14" ry="5" transform="rotate(-14 44 33)" opacity=".75"/><rect x="29" y="12" width="6" height="46" rx="3"/><circle cx="32" cy="11" r="5"/></g>
-  </symbol>
+  <symbol id="cup" viewBox="0 0 64 64"><g fill="currentColor"><path d="M18 8h28v14c0 9-6 16-14 16S18 31 18 22z"/><path d="M18 12H8c0 10 4 16 12 18l1-5c-5-2-8-5-8-9h5zM46 12h10c0 10-4 16-12 18l-1-5c5-2 8-5 8-9h-5z" opacity=".7"/><rect x="29" y="38" width="6" height="10"/><rect x="20" y="48" width="24" height="7" rx="2"/></g></symbol>
+  <symbol id="fly" viewBox="0 0 64 64"><g fill="currentColor"><ellipse cx="18" cy="22" rx="16" ry="6" transform="rotate(-18 18 22)"/><ellipse cx="46" cy="22" rx="16" ry="6" transform="rotate(18 46 22)"/><ellipse cx="20" cy="33" rx="14" ry="5" transform="rotate(14 20 33)" opacity=".75"/><ellipse cx="44" cy="33" rx="14" ry="5" transform="rotate(-14 44 33)" opacity=".75"/><rect x="29" y="12" width="6" height="46" rx="3"/><circle cx="32" cy="11" r="5"/></g></symbol>
 </svg>
 
-<div id="app">
 <header>
   <div class="wrap bar">
-    <a href="#top" class="logo"><svg style="color:var(--gold)"><use href="#fly"/></svg>اليعسوب</a>
-    <div class="hs"><input id="q" type="search" placeholder="ابحثي باسم الطالب أو عنوان الإبداع" aria-label="بحث"></div>
+    <a href="#top" class="logo"><svg><use href="#fly"/></svg>اليعسوب</a>
+    <nav class="nav">
+      <a href="#winners" class="g">الفائزة</a><a href="#years">الفرق</a><a href="#clinical">فارم دي كلينكال</a><a href="#mine">مساحتي</a>
+    </nav>
+    <div class="hs"><input id="q" type="search" placeholder="ابحثي باسم الطالبة أو المشروع" aria-label="بحث"></div>
+    <div class="me" id="authBox"></div>
   </div>
 </header>
 
 <div class="hero" id="top"><div class="wrap">
   <h1>منصة اليعسوب لعرض إبداعات الطلاب</h1>
-  <p>كلية الصيدلة · تصاميم وأبحاث وفيديوهات ومبادرات</p>
+  <p>مرجع أكاديمي لطلاب كلية الصيدلة · تصاميم وأبحاث وفيديوهات ومبادرات</p>
+</div></div>
+
+<div class="wsec" id="winners"><div class="wrap">
+  <div class="sh"><h2><svg class="ic"><use href="#cup"/></svg>ركن المشاريع الفائزة</h2><span>إبداعات حصدت مراكز متقدمة في مسابقات الجامعة</span></div>
+  <div class="wgrid" id="wgrid"></div>
 </div></div>
 
 <main class="wrap">
-  <section id="winners">
-    <div class="sh"><h2>الإبداعات الفائزة في مسابقات الجامعة</h2><span>أعمال حصدت مراكز متقدمة</span></div>
-    <div class="wgrid" id="wgrid"></div>
-  </section>
-
   <section id="years">
-    <div class="sh"><h2>فرق الكلية</h2><span>اختاري فرقة لعرض أعمالها</span></div>
+    <div class="sh"><h2>الفرق الدراسية</h2><span>اختاري فرقة لعرض أعمالها</span></div>
     <div class="ygrid" id="ygrid"></div>
   </section>
 
@@ -181,109 +207,236 @@ footer{background:var(--navy);color:#B8C6EA;text-align:center;padding:26px 0;fon
     <div class="fbar" id="fbar"></div>
     <div class="grid" id="grid"></div>
   </section>
+
+  <section id="clinical">
+    <div class="clin">
+      <div class="sh"><h2>ركن فارم دي كلينكال</h2><span>مشاريع وحالات طلاب PharmD Clinical</span></div>
+      <div class="cpath" id="cpath"></div>
+      <div class="grid" id="cgrid"></div>
+    </div>
+  </section>
+
+  <section id="mine">
+    <div class="sh"><h2>مساحتي</h2><span>ارفعي مشروعك وتابعي مشاريعك</span></div>
+    <div class="mine" id="mineBox"></div>
+  </section>
 </main>
 <footer>منصة اليعسوب · كلية الصيدلة © <span id="yr"></span></footer>
-</div>
 
+<!-- تفاصيل -->
 <dialog id="dlg">
   <div class="dh"><h3 id="dT"></h3><button class="x" data-close aria-label="إغلاق">×</button></div>
   <div class="db" id="dB"></div>
+</dialog>
+
+<!-- دخول -->
+<dialog id="authD">
+  <div class="dh"><h3>مرحباً بك في اليعسوب</h3><button class="x" data-close aria-label="إغلاق">×</button></div>
+  <form class="db" id="authF">
+    <p class="hint">أدخلي بياناتك للدخول، وتُنشأ مساحتك تلقائياً في أول مرة.</p>
+    <label for="aName">الاسم الرباعي</label><input id="aName" autocomplete="name" required maxlength="100">
+    <div class="two">
+      <div><label for="aY">الفرقة</label><select id="aY" required></select></div>
+      <div><label for="aTr">الشعبة</label><select id="aTr" required><option value="pharmd">فارم دي</option><option value="clinical">كلينكال</option></select></div>
+    </div>
+    <p class="err" id="aErr" role="alert"></p>
+    <button class="btn" style="width:100%" id="aGo" type="submit">دخول / تسجيل</button>
+  </form>
+</dialog>
+
+<!-- رفع -->
+<dialog id="upD">
+  <div class="dh"><h3>رفع مشروع جديد</h3><button class="x" data-close aria-label="إغلاق">×</button></div>
+  <form class="db" id="upF">
+    <label for="uT">عنوان المشروع</label><input id="uT" required maxlength="140">
+    <label for="uN">اسم الطالبة</label><input id="uN" required maxlength="100">
+    <div class="two">
+      <div><label for="uY">الفرقة / التخصص</label><select id="uY" required></select></div>
+      <div><label for="uTy">نوع الإبداع</label><select id="uTy" required></select></div>
+    </div>
+    <label for="uD">وصف مختصر</label><textarea id="uD" rows="3" required maxlength="1200"></textarea>
+    <label for="uL">رابط المشروع أو التصميم (اختياري)</label><input id="uL" type="url" placeholder="https://">
+    <label for="uF">أو ارفعي ملفاً (صورة أو PDF أو فيديو، حتى 20 ميجا)</label><input id="uF" type="file" accept="image/*,application/pdf,video/*">
+    <label class="chk"><input type="checkbox" id="uA"> هذا المشروع فاز بجائزة</label>
+    <div id="awWrap" hidden><label for="uAT">اسم المسابقة والمركز</label><input id="uAT" maxlength="140" placeholder="مثال: المركز الأول في مسابقة التصميم"></div>
+    <p class="hint" style="margin-top:8px">يظهر المشروع بعد مراجعة المشرف. وتُعتمد الجوائز بعد التحقق منها.</p>
+    <p class="err" id="uErr" role="alert"></p>
+    <button class="btn gold" style="width:100%" id="uGo" type="submit">إرسال للمراجعة</button>
+  </form>
 </dialog>
 <div class="toast" id="toast" role="status"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <script>
-/* ===== إعدادات الربط ===== */
 const SUPABASE_URL = "https://oibsajvayvflexhqwgwt.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9pYnNhanZheXZmbGV4aHF3Z3d0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI2OTUxNjAsImV4cCI6MjEwODI3MTE2MH0.X0OW7016FvJlGaMvbHtnTUXNRt38ymnA5HCMdfiDeSk";
-/* ======================== */
+const BUCKET = "works";
 
-const YEARS = ["الفرقة الأولى","الفرقة الثانية","الفرقة الثالثة","الفرقة الرابعة","الفرقة الخامسة (فارم دي)"];
+const YEARS = ["الفرقة الأولى","الفرقة الثانية","الفرقة الثالثة","الفرقة الرابعة","الفرقة الخامسة فارم دي","فارم دي كلينكال"];
 const YSHORT = ["الأولى","الثانية","الثالثة","الرابعة","الخامسة"];
 const TYPES = {design:"تصميم",research:"بحث",video:"فيديو",initiative:"مبادرة"};
+const STATUS = {pending:["wait","قيد المراجعة"],approved:["ok","معتمد"],rejected:["no","مرفوض"]};
 const DEMO = [
- {id:1,title:"بوستر التوعية بالاستخدام الآمن للمضادات الحيوية",student_name:"مريم خالد أحمد سالم",year:2,type:"design",description:"سلسلة تصاميم توعوية بألوان هادئة وخطوط عربية واضحة، عُرضت في ممرات الكلية.",award:1,award_title:"المركز الأول في مسابقة التصميم الجامعية"},
- {id:2,title:"استخلاص مضادات الأكسدة من قشور الرمان",student_name:"أحمد علي محمود حسن",year:4,type:"research",description:"بحث معملي يقارن ثلاث طرق للاستخلاص ويقيس نشاط المستخلص ضد الجذور الحرة.",award:2,award_title:"المركز الثاني في ملتقى البحث العلمي"},
- {id:3,title:"مبادرة «دوائي في أمان» لكبار السن",student_name:"نور إبراهيم سعيد فؤاد",year:5,type:"initiative",description:"حملة ميدانية لتنظيم أدوية كبار السن ومراجعة التداخلات الدوائية الشائعة.",award:3,award_title:"المركز الثالث في مسابقة المبادرات المجتمعية"},
- {id:4,title:"فيديو شرح آلية عمل الأنسولين",student_name:"يوسف حسن عادل رمضان",year:3,type:"video",description:"فيديو متحرك مدته ست دقائق يبسّط مسار الإشارة داخل الخلية."},
- {id:5,title:"جدول الجرعات المصوّر لدواء الأطفال",student_name:"ليلى سامي كمال نصر",year:1,type:"design",description:"إنفوجرافيك يوضح الفرق بين الجرعة بالوزن والجرعة بالعمر."},
- {id:6,title:"مراجعة منهجية لتفاعلات الأدوية مع الأعشاب",student_name:"هبة محمد طارق إسماعيل",year:5,type:"research",description:"مراجعة لأكثر من أربعين دراسة منشورة مع تصنيف درجة الخطورة."},
- {id:7,title:"مبادرة جمع الأدوية منتهية الصلاحية",student_name:"عمر خالد فتحي منصور",year:3,type:"initiative",description:"نقاط تجميع داخل الكلية وتسليمها لجهة معتمدة للتخلص الآمن."},
- {id:8,title:"فيديو تعريفي بأقسام الصيدلية المجتمعية",student_name:"سلمى وليد حسام عبده",year:2,type:"video",description:"جولة مصورة تعرّف الطلاب الجدد بأدوار الصيدلي داخل الصيدلية."}
+ {id:1,title:"بوستر التوعية بالمضادات الحيوية",student_name:"مريم خالد أحمد",year:2,type:"design",description:"تصاميم توعوية بألوان هادئة وخطوط عربية واضحة.",award:1,award_title:"المركز الأول في مسابقة التصميم الجامعية"},
+ {id:2,title:"استخلاص مضادات الأكسدة من قشور الرمان",student_name:"أحمد علي محمود",year:4,type:"research",description:"بحث معملي يقارن ثلاث طرق للاستخلاص.",award:2,award_title:"المركز الثاني في ملتقى البحث العلمي"},
+ {id:3,title:"مبادرة «دوائي في أمان»",student_name:"نور إبراهيم سعيد",year:6,type:"initiative",description:"حملة ميدانية لمراجعة أدوية كبار السن.",award:3,award_title:"المركز الثالث في مسابقة المبادرات"},
+ {id:4,title:"فيديو شرح آلية عمل الأنسولين",student_name:"يوسف حسن عادل",year:3,type:"video",description:"فيديو متحرك يبسّط مسار الإشارة داخل الخلية."}
 ];
 
-const sb = (SUPABASE_URL && SUPABASE_ANON_KEY && window.supabase) ? window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY) : null;
+const sb = window.supabase ? window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY) : null;
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? "").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const url = u => /^https?:\/\//i.test(u||"") ? u : "";
-const toast = m => {const t=$("toast");t.textContent=m;t.classList.add("on");setTimeout(()=>t.classList.remove("on"),4200)};
-let works=[], fy=0, ft="", term="";
+const toast = m => {const t=$("toast");t.textContent=m;t.classList.add("on");setTimeout(()=>t.classList.remove("on"),4000)};
+const yname = y => YEARS[y-1]||"";
+let works=[], mine=[], user=null, fy=0, ft="", term="", mf="";
 
-/* ---------- المحتوى ---------- */
+/* ---------- الحساب ---------- */
+function renderAuth(){
+  if(!user){ $("authBox").innerHTML='<button class="btn gold sm" id="inBtn">دخول</button>'; $("inBtn").onclick=()=>openAuth(); return; }
+  const n=(user.user_metadata?.full_name||user.email||"؟");
+  $("authBox").innerHTML=`<span class="av">${esc(n.charAt(0))}</span><span class="nm">${esc(n.split(" ").slice(0,2).join(" "))}</span><button class="out" id="outBtn">خروج</button>`;
+  $("outBtn").onclick=async()=>{await sb.auth.signOut()};
+}
+function renderMine(){
+  const box=$("mineBox");
+  if(!user){ box.innerHTML='<div class="top"><p>سجّلي دخولك لرفع مشروعك ومتابعة حالة مشاريعك.</p><button class="btn" id="mIn">تسجيل الدخول</button></div>'; $("mIn").onclick=()=>openAuth(); return; }
+  const m=user.user_metadata||{}, n=(m.full_name||"").split(" ")[0], c=s=>mine.filter(w=>w.status===s).length;
+  const list=mine.filter(w=>!mf||w.status===mf);
+  box.innerHTML=`<div class="top"><p>أهلاً ${esc(n)}، ${esc(yname(m.year))}${m.track==="clinical"?" · كلينكال":""}. هذه مساحتك لرفع المشاريع ومتابعتها.</p><button class="btn gold" id="mUp">+ رفع مشروع جديد</button></div>
+   <div class="stats"><div><b>${mine.length}</b>مشاريعي</div><div><b>${c("approved")}</b>معتمدة</div><div><b>${c("pending")}</b>قيد المراجعة</div><div><b>${mine.filter(w=>w.claims_award).length}</b>بجائزة</div></div>
+   <div class="fbar">${[["","الكل"],["approved","معتمد"],["pending","قيد المراجعة"],["rejected","مرفوض"]].map(([k,v])=>`<button class="chip" data-ms="${k}" aria-pressed="${mf===k}">${v}</button>`).join("")}</div>
+   <h3 style="font-family:var(--sub);color:var(--navy);margin-bottom:10px">مشاريعي المرفوعة (${list.length})</h3>
+   <div class="grid">${list.length?list.map(w=>{const s=STATUS[w.status]||STATUS.pending;return `
+    <article class="card">${thumb(w)}<div class="body">
+      <div class="tags"><span class="tag ${s[0]}">${s[1]}</span><span class="tag">${esc(yname(w.year))}</span>${w.claims_award?`<span class="tag t">${w.award?"فائز":"ادّعاء جائزة قيد التحقق"}</span>`:""}</div>
+      <h3>${esc(w.title)}</h3><button class="btn line sm" data-id="${esc(w.id)}" data-src="mine">عرض</button></div></article>`}).join(""):`<div class="empty">${mine.length?"لا توجد مشاريع بهذه الحالة.":"لم ترفعي أي مشروع بعد. ابدئي برفع أول مشروع."}</div>`}</div>`;
+  $("mUp").onclick=openUpload;
+}
+function setUser(u){user=u;renderAuth();loadMine()}
+async function loadMine(){
+  mine=[]; if(user&&sb){const {data}=await sb.from("works").select("*").eq("user_id",user.id).order("created_at",{ascending:false}); mine=data||[]}
+  renderMine();
+}
+const MAIL_DOMAIN="yaasoub-students.com";
+$("aY").innerHTML=YEARS.slice(0,5).map((y,i)=>`<option value="${i+1}">${y}</option>`).join("");
+const norm=s=>s.trim().replace(/\s+/g," ").replace(/[أإآ]/g,"ا").replace(/ى/g,"ي").replace(/ة/g,"ه");
+async function cred(name,year,track){
+  const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode([norm(name),year,track].join("|")));
+  const h=[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join("");
+  return {email:h.slice(0,32)+"@"+MAIL_DOMAIN,password:h};
+}
+function openAuth(){$("aErr").textContent="";$("authD").showModal()}
+$("authF").addEventListener("submit",async e=>{
+  e.preventDefault(); const err=$("aErr"); err.textContent="";
+  if(!sb){err.textContent="تعذّر الاتصال بالخادم";return}
+  const full_name=$("aName").value.trim().replace(/\s+/g," "), year=+$("aY").value, track=$("aTr").value, btn=$("aGo");
+  if(full_name.split(" ").length<4){err.textContent="اكتبي الاسم الرباعي كاملاً";return}
+  btn.disabled=true;
+  try{
+    const c=await cred(full_name,year,track);
+    const {error}=await sb.auth.signInWithPassword(c);
+    if(error){
+      const r=await sb.auth.signUp({...c,options:{data:{full_name,year,track}}});
+      if(r.error){err.textContent="تعذّر التسجيل، حاولي مرة أخرى";return}
+      if(!r.data.session){err.textContent="يلزم تعطيل تأكيد البريد في إعدادات Supabase";return}
+      toast("أهلاً بك في اليعسوب");
+    }
+    $("authD").close();
+  }finally{btn.disabled=false}
+});
+
+/* ---------- الرفع ---------- */
+$("uY").innerHTML=YEARS.map((y,i)=>`<option value="${i+1}">${y}</option>`).join("");
+$("uTy").innerHTML=Object.entries(TYPES).map(([k,v])=>`<option value="${k}">${v}</option>`).join("");
+$("uA").onchange=e=>{$("awWrap").hidden=!e.target.checked};
+function openUpload(){ const m=user?.user_metadata||{}; $("uN").value=m.full_name||""; $("uY").value=m.track==="clinical"?6:(m.year||1); $("uErr").textContent=""; $("upD").showModal(); }
+$("upF").addEventListener("submit",async e=>{
+  e.preventDefault(); const err=$("uErr"); err.textContent="";
+  if(!user){err.textContent="سجّلي دخولك أولاً";return}
+  const file=$("uF").files[0], link=$("uL").value.trim(), claims=$("uA").checked;
+  if(file&&file.size>20*1024*1024){err.textContent="حجم الملف أكبر من 20 ميجا";return}
+  if(!file&&!link){err.textContent="أضيفي رابطاً أو ارفعي ملفاً";return}
+  if(claims&&!$("uAT").value.trim()){err.textContent="اكتبي اسم المسابقة والمركز";return}
+  const btn=$("uGo"); btn.disabled=true; btn.textContent="جارٍ الرفع...";
+  try{
+    let file_url=link||null, image_url=null;
+    if(file){
+      const ext=(file.name.split(".").pop()||"bin").replace(/[^a-z0-9]/gi,"").toLowerCase();
+      const path=`${user.id}/${Date.now()}.${ext}`;
+      const up=await sb.storage.from(BUCKET).upload(path,file,{contentType:file.type});
+      if(up.error){err.textContent="تعذّر رفع الملف، تأكدي من إعداد التخزين";return}
+      file_url=sb.storage.from(BUCKET).getPublicUrl(path).data.publicUrl;
+      if(file.type.startsWith("image/")) image_url=file_url;
+    }
+    const row={title:$("uT").value.trim(),student_name:$("uN").value.trim(),year:+$("uY").value,type:$("uTy").value,description:$("uD").value.trim(),file_url,image_url,claims_award:claims,award_title:claims?$("uAT").value.trim():null};
+    const {error}=await sb.from("works").insert(row);
+    if(error){err.textContent="تعذّر حفظ المشروع، حاولي مرة أخرى";return}
+    e.target.reset();$("awWrap").hidden=true;$("upD").close();toast("تم الإرسال، وسيظهر بعد مراجعة المشرف");loadMine();
+  }finally{btn.disabled=false;btn.textContent="إرسال للمراجعة"}
+});
+
+/* ---------- العرض ---------- */
 async function loadWorks(){
   if(!sb){works=DEMO;return draw()}
   const {data,error}=await sb.from("works").select("*").eq("status","approved").order("created_at",{ascending:false});
   if(error)toast("تعذّر تحميل الإبداعات");
   works=error?[]:data; draw();
 }
-
-function thumb(w){const u=url(w.image_url);return `<div class="thumb">${u?`<img src="${esc(u)}" alt="${esc(w.title)}" loading="lazy">`:'<svg style="color:#fff"><use href="#fly"/></svg>'}</div>`}
-function btns(w){const f=url(w.file_url);return `<button class="btn" data-id="${esc(w.id)}">التفاصيل</button>`}
+const thumb=w=>{const u=url(w.image_url);return `<div class="thumb">${u?`<img src="${esc(u)}" alt="${esc(w.title)}" loading="lazy">`:'<svg><use href="#fly"/></svg>'}</div>`};
+const card=w=>`<article class="card">${thumb(w)}<div class="body">
+  <div class="tags"><span class="tag">${esc(yname(w.year))}</span><span class="tag">${esc(TYPES[w.type]||w.type)}</span>${w.award?'<span class="tag t">فائز</span>':""}</div>
+  <h3>${esc(w.title)}</h3><div class="by">${esc(w.student_name)}</div><button class="btn sm" data-id="${esc(w.id)}">التفاصيل</button></div></article>`;
+const match=w=>!term||[w.title,w.student_name,w.description].join(" ").includes(term);
 
 function draw(){
-  const win = works.filter(w=>w.award).sort((a,b)=>a.award-b.award);
-  $("winners").style.display = win.length?"":"none";
-  $("wgrid").innerHTML = win.map(w=>`
-    <button class="win r${w.award}" data-id="${esc(w.id)}">
-      <span class="medal"><b>${w.award}</b>المركز ${["","الأول","الثاني","الثالث"][w.award]||w.award}</span>
-      ${thumb(w)}
-      <div class="body"><span class="award">${esc(w.award_title)}</span><h3>${esc(w.title)}</h3><span class="by">${esc(w.student_name)} · ${YSHORT[w.year-1]?"الفرقة "+YSHORT[w.year-1]:""}</span></div>
-    </button>`).join("");
+  const win=works.filter(w=>w.award&&match(w)).sort((a,b)=>a.award-b.award);
+  $("winners").style.display=works.some(w=>w.award)?"":"none";
+  $("wgrid").innerHTML=win.length?win.map(w=>`
+    <article class="win r${w.award}" data-id="${esc(w.id)}" tabindex="0" role="button" aria-label="${esc(w.title)}"><span class="medal"><b>${w.award}</b>المركز ${["","الأول","الثاني","الثالث"][w.award]||w.award}</span>${thumb(w)}
+    <div class="body"><span class="award"><svg class="ic s"><use href="#cup"/></svg>${esc(w.award_title)}</span><h3>${esc(w.title)}</h3><span class="by">${esc(w.student_name)} · ${esc(yname(w.year))}</span></div></article>`).join(""):'<div class="empty">لا نتائج مطابقة.</div>';
 
-  $("ygrid").innerHTML = YEARS.map((y,i)=>{const n=works.filter(w=>w.year===i+1).length;
-    return `<button class="ycard" data-y="${i+1}" aria-pressed="${fy===i+1}"><span class="yn">${i+1}</span><h3>${y.replace(" (فارم دي)","")}</h3><span>${i===4?"فارم دي · ":""}${n} عمل</span></button>`}).join("");
+  $("ygrid").innerHTML=YEARS.slice(0,5).map((y,i)=>`<button class="ycard" data-y="${i+1}" aria-pressed="${fy===i+1}"><span class="yn">${i+1}</span><h3>${i===4?"الخامسة فارم دي":"الفرقة "+YSHORT[i]}</h3><span>${works.filter(w=>w.year===i+1).length} عمل</span></button>`).join("")+`<a class="ycard cl" href="#clinical"><span class="yn">℞</span><h3>فارم دي كلينكال</h3><span>${works.filter(w=>w.year===6).length} عمل</span></a>`;
 
-  $("fbar").innerHTML = `<button class="chip" data-fy="0" aria-pressed="${!fy}">كل الفرق</button>`
-    + YSHORT.map((y,i)=>`<button class="chip" data-fy="${i+1}" aria-pressed="${fy===i+1}">${y}</button>`).join("")
-    + `<span class="sep"></span><button class="chip" data-ft="" aria-pressed="${!ft}">كل الأنواع</button>`
-    + Object.entries(TYPES).map(([k,v])=>`<button class="chip" data-ft="${k}" aria-pressed="${ft===k}">${v}</button>`).join("");
+  $("fbar").innerHTML=`<button class="chip" data-fy="0" aria-pressed="${!fy}">كل الفرق</button>`
+   +YSHORT.map((y,i)=>`<button class="chip" data-fy="${i+1}" aria-pressed="${fy===i+1}">${y}</button>`).join("")
+   +`<span class="sep"></span><button class="chip" data-ft="" aria-pressed="${!ft}">كل الأنواع</button>`
+   +Object.entries(TYPES).map(([k,v])=>`<button class="chip" data-ft="${k}" aria-pressed="${ft===k}">${v}</button>`).join("");
 
-  const list = works.filter(w=>(!fy||w.year===fy)&&(!ft||w.type===ft)&&(!term||[w.title,w.student_name,w.description].join(" ").includes(term)));
-  $("count").textContent = list.length+" عمل";
-  $("grid").innerHTML = list.length ? list.map(w=>`
-    <article class="card">${thumb(w)}
-      <div class="body">
-        <div class="tags"><span class="tag">${YSHORT[w.year-1]?"الفرقة "+YSHORT[w.year-1]:""}</span><span class="tag ${w.award?"t":""}">${esc(TYPES[w.type]||w.type)}</span></div>
-        <h3>${esc(w.title)}</h3><div class="by">${esc(w.student_name)}</div>
-        ${btns(w)}
-      </div></article>`).join("") : '<div class="empty">لا توجد أعمال مطابقة. جرّبي فرقة أو نوعاً آخر.</div>';
+  const list=works.filter(w=>w.year<=5&&(!fy||w.year===fy)&&(!ft||w.type===ft)&&match(w));
+  $("count").textContent=list.length+" عمل";
+  $("grid").innerHTML=list.length?list.map(card).join(""):'<div class="empty">لا توجد أعمال مطابقة.</div>';
+
+  $("cpath").innerHTML=YSHORT.map((y,i)=>`<button class="ci" data-y="${i+1}"><span class="yn">${i+1}</span>${i===4?"الخامسة فارم دي":"الفرقة "+y}</button>`).join("")+'<a class="ci cur" href="#clinical" aria-current="true"><span class="yn">℞</span>فارم دي كلينكال</a>';
+  const cl=works.filter(w=>w.year===6&&match(w));
+  $("cgrid").innerHTML=cl.length?cl.map(card).join(""):'<div class="empty" style="color:#B8C6EA">لا توجد مشاريع في هذا الركن بعد.</div>';
 }
 
+document.addEventListener("keydown",e=>{const d=e.target.closest&&e.target.closest(".win");if(d&&(e.key==="Enter"||e.key===" ")){e.preventDefault();show(d.dataset.id)}});
 document.addEventListener("click",e=>{
-  const t=e.target;
-  const y=t.closest("[data-y]"); if(y){fy=fy===+y.dataset.y?0:+y.dataset.y;draw();$("works").scrollIntoView();return}
+  const t=e.target, y=t.closest("[data-y]"); if(y){fy=fy===+y.dataset.y?0:+y.dataset.y;draw();$("works").scrollIntoView();return}
+  const ms=t.closest("[data-ms]"); if(ms){mf=ms.dataset.ms;renderMine();return}
   const cf=t.closest("[data-fy]"); if(cf){fy=+cf.dataset.fy;draw();return}
   const ct=t.closest("[data-ft]"); if(ct){ft=ct.dataset.ft;draw();return}
-  const d=t.closest("[data-id]"); if(d){open(d.dataset.id);return}
+  const d=t.closest("[data-id]"); if(d)show(d.dataset.id,d.dataset.src);
 });
 $("q").addEventListener("input",e=>{term=e.target.value.trim();draw()});
 
-function open(id){
-  const w=works.find(x=>String(x.id)===String(id)); if(!w)return;
+function show(id,src){
+  const w=(src==="mine"?mine:works).find(x=>String(x.id)===String(id)); if(!w)return;
   const f=url(w.file_url);
   $("dT").textContent=w.title;
-  $("dB").innerHTML=`${thumb(w)}
-    <div class="tags" style="margin-bottom:10px"><span class="tag">${YEARS[w.year-1]||""}</span><span class="tag t">${esc(TYPES[w.type]||w.type)}</span>${w.award?`<span class="tag t">${esc(w.award_title)}</span>`:""}</div>
-    <p>${esc(w.description)}</p>
-    <p class="by" style="margin-top:12px">إعداد: ${esc(w.student_name)}</p>
-    ${f?`<a class="btn gold" style="margin-top:16px" href="${esc(f)}" target="_blank" rel="noopener noreferrer" download>تحميل العمل</a>`:'<p class="hint" style="margin-top:14px">لا يوجد ملف للتحميل لهذا العمل.</p>'}`;
+  $("dB").innerHTML=`${thumb(w)}<div class="tags" style="margin-bottom:10px"><span class="tag">${esc(yname(w.year))}</span><span class="tag">${esc(TYPES[w.type]||w.type)}</span>${w.award?`<span class="tag t">${esc(w.award_title)}</span>`:""}</div>
+   <p>${esc(w.description)}</p><p class="by" style="margin-top:10px">إعداد: ${esc(w.student_name)}</p>
+   ${f?`<a class="btn gold" style="margin-top:14px" href="${esc(f)}" target="_blank" rel="noopener noreferrer">فتح / تحميل العمل</a>`:""}`;
   $("dlg").showModal();
 }
-document.querySelectorAll("[data-close]").forEach(b=>b.onclick=()=>$("dlg").close());
-$("dlg").addEventListener("click",e=>{if(e.target===$("dlg"))$("dlg").close()});
+document.querySelectorAll("[data-close]").forEach(b=>b.onclick=()=>b.closest("dialog").close());
+document.querySelectorAll("dialog").forEach(d=>d.addEventListener("click",e=>{if(e.target===d)d.close()}));
 
 $("yr").textContent=new Date().getFullYear();
-loadWorks();
+renderAuth();renderMine();loadWorks();
+if(sb){sb.auth.getSession().then(({data})=>setUser(data.session?.user||null));sb.auth.onAuthStateChange((_e,s)=>setUser(s?.user||null))}
 </script>
 </body>
 </html>
