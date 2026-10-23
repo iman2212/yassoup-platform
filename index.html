@@ -166,6 +166,20 @@ footer{background:var(--navy);color:#B8C6EA;text-align:center;padding:26px 0;fon
   .clin{padding:24px 16px 8px}.mine{padding:20px 16px}
 }
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+.dz{border:2px dashed var(--royal);border-radius:16px;padding:22px 14px;text-align:center;background:var(--ice);cursor:pointer;transition:.2s}
+.dz.on,.dz:hover{background:#fff;border-color:var(--gold)}
+.dz b{display:block;font-family:var(--sub);color:var(--navy);font-size:18px}
+.dz span{font-size:13px;color:var(--muted)}
+.fl{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:8px}
+.fl li{display:flex;align-items:center;gap:10px;border:1.5px solid var(--line);border-radius:12px;padding:6px 10px;background:#fff}
+.fl img,.fl .fi{width:44px;height:44px;border-radius:8px;object-fit:cover;background:var(--ice);display:grid;place-items:center;flex:none;font-size:11px;color:var(--royal);font-weight:700}
+.fl .fn{flex:1;min-width:0;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fl .fn small{display:block;color:var(--muted)}
+.fl button{border:0;background:none;color:#B3261E;font-size:24px;cursor:pointer}
+.pg{height:8px;border-radius:99px;background:var(--line);overflow:hidden;margin-top:10px}
+.pg i{display:block;height:100%;width:0;background:var(--gold);transition:width .2s}
+.fv{display:grid;gap:10px;margin-top:12px}
+.fv img,.fv video{width:100%;border-radius:12px;max-height:60vh;background:#000;object-fit:contain}
 </style>
 </head>
 <body>
@@ -255,8 +269,11 @@ footer{background:var(--navy);color:#B8C6EA;text-align:center;padding:26px 0;fon
       <div><label for="uTy">نوع الإبداع</label><select id="uTy" required></select></div>
     </div>
     <label for="uD">وصف مختصر</label><textarea id="uD" rows="3" required maxlength="1200"></textarea>
-    <label for="uL">رابط المشروع أو التصميم (اختياري)</label><input id="uL" type="url" placeholder="https://">
-    <label for="uF">أو ارفعي ملفاً (صورة أو PDF أو فيديو، حتى 20 ميجا)</label><input id="uF" type="file" accept="image/png,image/jpeg,image/webp,image/gif,.png,.jpg,.jpeg,.webp,.gif,application/pdf,video/*">
+    <label for="uL">أو أضيفي رابط المشروع (Drive / YouTube – اختياري)</label><input id="uL" type="url" placeholder="https://">
+    <label>ملفات المشروع (صور · فيديو · PDF · Word · PowerPoint · Excel · ZIP)</label>
+    <div class="dz" id="dz" tabindex="0" role="button"><b>اسحبي الملفات هنا أو اضغطي للاختيار</b><span>حتى 8 ملفات · الملف الواحد حتى 50 ميجا · من المعرض أو الكاميرا</span></div>
+    <input id="uF" type="file" multiple hidden accept="image/*,video/*,.pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.zip,.rar,.txt">
+    <ul class="fl" id="fl"></ul><div class="pg" id="pg" hidden><i></i></div>
     <label class="chk"><input type="checkbox" id="uA"> هذا المشروع فاز بجائزة</label>
     <div id="awWrap" hidden><label for="uAT">اسم المسابقة والمركز</label><input id="uAT" maxlength="140" placeholder="مثال: المركز الأول في مسابقة التصميم"></div>
     <p class="hint" style="margin-top:8px">يظهر المشروع بعد مراجعة المشرف. وتُعتمد الجوائز بعد التحقق منها.</p>
@@ -345,44 +362,108 @@ $("authF").addEventListener("submit",async e=>{
   finally{btn.disabled=false;btn.textContent="دخول / تسجيل"}
 });
 /* ---------- الرفع ---------- */
+const MAXF=50*1024*1024, MAXN=8;
+const MIME={pdf:"application/pdf",doc:"application/msword",docx:"application/vnd.openxmlformats-officedocument.wordprocessingml.document",ppt:"application/vnd.ms-powerpoint",pptx:"application/vnd.openxmlformats-officedocument.presentationml.presentation",xls:"application/vnd.ms-excel",xlsx:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",zip:"application/zip",rar:"application/vnd.rar",txt:"text/plain",mp4:"video/mp4",mov:"video/quicktime",webm:"video/webm",m4v:"video/mp4",jpg:"image/jpeg",jpeg:"image/jpeg",png:"image/png",webp:"image/webp",gif:"image/gif",heic:"image/heic",heif:"image/heif"};
+const extOf=n=>((n.split(".").pop()||"bin").replace(/[^a-z0-9]/gi,"").toLowerCase())||"bin";
+const typeOf=f=>f.type||MIME[extOf(f.name)]||"application/octet-stream";
+const kind=t=>t.startsWith("image/")?"image":t.startsWith("video/")?"video":"file";
+const fmt=b=>b>1048576?(b/1048576).toFixed(1)+" ميجا":Math.max(1,Math.round(b/1024))+" كيلو";
+let picked=[];
+function addFiles(list){
+  const err=$("uErr"); err.textContent="";
+  for(const f of list){
+    if(picked.length>=MAXN){err.textContent="الحد الأقصى "+MAXN+" ملفات";break}
+    if(f.size>MAXF){err.textContent="«"+f.name+"» أكبر من 50 ميجا، ارفعيه على Drive أو YouTube وضعي الرابط";continue}
+    if(picked.some(p=>p.name===f.name&&p.size===f.size))continue;
+    picked.push(f);
+  }
+  drawFiles();
+}
+function drawFiles(){
+  $("fl").innerHTML=picked.map((f,i)=>{const t=typeOf(f),k=kind(t);
+    const th=k==="image"&&!/hei[cf]/.test(t)?`<img src="${URL.createObjectURL(f)}" alt="">`:`<div class="fi">${k==="video"?"فيديو":esc(extOf(f.name).toUpperCase().slice(0,4))}</div>`;
+    return `<li>${th}<div class="fn">${esc(f.name)}<small>${fmt(f.size)}</small></div><button type="button" data-rm="${i}" aria-label="حذف">×</button></li>`}).join("");
+}
+const dz=$("dz"), inp=$("uF");
+dz.onclick=()=>inp.click();
+dz.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();inp.click()}};
+inp.onchange=()=>{addFiles([...inp.files]);inp.value=""};
+["dragenter","dragover"].forEach(v=>dz.addEventListener(v,e=>{e.preventDefault();dz.classList.add("on")}));
+["dragleave","drop"].forEach(v=>dz.addEventListener(v,e=>{e.preventDefault();dz.classList.remove("on")}));
+dz.addEventListener("drop",e=>addFiles([...e.dataTransfer.files]));
+$("fl").onclick=e=>{const b=e.target.closest("[data-rm]");if(b){picked.splice(+b.dataset.rm,1);drawFiles()}};
+
 async function shrink(file){
-  if(!file.type.startsWith("image/")||/gif|svg/.test(file.type))return file;
+  const t=typeOf(file);
+  if(kind(t)!=="image"||/gif|svg|hei[cf]/.test(t)||file.size<1.5*1048576)return file;
   try{
     const b=await createImageBitmap(file), r=Math.min(1,1920/Math.max(b.width,b.height));
     const cv=document.createElement("canvas"); cv.width=Math.round(b.width*r); cv.height=Math.round(b.height*r);
     const cx=cv.getContext("2d"); cx.fillStyle="#fff"; cx.fillRect(0,0,cv.width,cv.height); cx.drawImage(b,0,0,cv.width,cv.height);
     const blob=await new Promise(res=>cv.toBlob(res,"image/jpeg",.86));
-    return blob?new File([blob],"image.jpg",{type:"image/jpeg"}):file;
+    return blob&&blob.size<file.size?new File([blob],file.name.replace(/\.\w+$/,"")+".jpg",{type:"image/jpeg"}):file;
   }catch(x){return file}
 }
+function poster(file){return new Promise(res=>{
+  const v=document.createElement("video"),u=URL.createObjectURL(file);let done=false;
+  const fin=b=>{if(done)return;done=true;URL.revokeObjectURL(u);res(b)};
+  v.muted=true;v.playsInline=true;v.preload="metadata";v.src=u;
+  v.onloadeddata=()=>{v.currentTime=Math.min(1,(v.duration||1)/2)};
+  v.onseeked=()=>{try{const r=Math.min(1,960/Math.max(v.videoWidth,v.videoHeight)),c=document.createElement("canvas");c.width=Math.round(v.videoWidth*r);c.height=Math.round(v.videoHeight*r);c.getContext("2d").drawImage(v,0,0,c.width,c.height);c.toBlob(fin,"image/jpeg",.8)}catch(x){fin(null)}};
+  v.onerror=()=>fin(null); setTimeout(()=>fin(null),6000);
+})}
+async function putFile(file,path,onp){
+  const {data:{session}}=await sb.auth.getSession();
+  return new Promise((res,rej)=>{
+    const x=new XMLHttpRequest();
+    x.open("POST",`${SUPABASE_URL}/storage/v1/object/${BUCKET}/${path}`);
+    x.setRequestHeader("apikey",SUPABASE_ANON_KEY);
+    x.setRequestHeader("Authorization","Bearer "+(session?.access_token||SUPABASE_ANON_KEY));
+    x.setRequestHeader("Content-Type",typeOf(file));
+    x.setRequestHeader("x-upsert","false");
+    x.upload.onprogress=e=>e.lengthComputable&&onp(e.loaded);
+    x.onload=()=>{if(x.status<300)res();else{let m="";try{m=JSON.parse(x.responseText).message||""}catch(_){}rej(new Error(m||"HTTP "+x.status))}};
+    x.onerror=()=>rej(new Error("network"));
+    x.send(file);
+  });
+}
+const upErr=m=>/mime|type/i.test(m)?"نوع الملف غير مسموح في إعدادات الـ Bucket":/size|large|exceed|payload/i.test(m)?"الحجم أكبر من المسموح في Supabase":/policy|security|permission|row-level|unauthorized/i.test(m)?"صلاحيات الرفع تحتاج ضبط Policy (شغّلي ملف supabase-setup.sql)":/network/.test(m)?"انقطع الاتصال أثناء الرفع، أعيدي المحاولة":m;
+
 $("uY").innerHTML=YEARS.map((y,i)=>`<option value="${i+1}">${y}</option>`).join("");
 $("uTy").innerHTML=Object.entries(TYPES).map(([k,v])=>`<option value="${k}">${v}</option>`).join("");
 $("uA").onchange=e=>{$("awWrap").hidden=!e.target.checked};
-function openUpload(){ const m=user?.user_metadata||{}; $("uN").value=m.full_name||""; $("uY").value=m.track==="clinical"?6:(m.year||1); $("uErr").textContent=""; $("upD").showModal(); }
+function openUpload(){ const m=user?.user_metadata||{}; picked=[];drawFiles(); $("uN").value=m.full_name||""; $("uY").value=m.track==="clinical"?6:(m.year||1); $("uErr").textContent=""; $("pg").hidden=true; $("upD").showModal(); }
 $("upF").addEventListener("submit",async e=>{
   e.preventDefault(); const err=$("uErr"); err.textContent="";
   if(!user){err.textContent="سجّلي دخولك أولاً";return}
-  let file=$("uF").files[0]; const link=$("uL").value.trim(), claims=$("uA").checked;
-  if(file)file=await shrink(file);
-  if(file&&file.size>20*1024*1024){err.textContent="حجم الملف أكبر من 20 ميجا";return}
-  if(!file&&!link){err.textContent="أضيفي رابطاً أو ارفعي ملفاً";return}
+  if(!sb){err.textContent="تعذّر الاتصال بالخادم، حدّثي الصفحة";return}
+  const link=$("uL").value.trim(), claims=$("uA").checked;
+  if(!picked.length&&!link){err.textContent="أضيفي ملفاً أو رابطاً";return}
   if(claims&&!$("uAT").value.trim()){err.textContent="اكتبي اسم المسابقة والمركز";return}
-  const btn=$("uGo"); btn.disabled=true; btn.textContent="جارٍ الرفع...";
+  const btn=$("uGo"), pg=$("pg"), bar=pg.firstElementChild;
+  btn.disabled=true; pg.hidden=false; bar.style.width="0";
+  const total=picked.reduce((a,f)=>a+f.size,0)||1; let done=0;
   try{
-    let file_url=link||null, image_url=null;
-    if(file){
-      const ext=(file.name.split(".").pop()||"bin").replace(/[^a-z0-9]/gi,"").toLowerCase();
-      const path=`${user.id}/${Date.now()}.${ext}`;
-      const up=await sb.storage.from(BUCKET).upload(path,file,{contentType:file.type});
-      if(up.error){const m=up.error.message||"";err.textContent="تعذّر رفع الملف: "+(/mime|type/i.test(m)?"نوع الملف غير مسموح في إعدادات التخزين":/size|large|exceed/i.test(m)?"الحجم أكبر من المسموح في التخزين":/policy|security|permission|row-level/i.test(m)?"صلاحيات التخزين تحتاج ضبط Policy":m);return}
-      file_url=sb.storage.from(BUCKET).getPublicUrl(path).data.publicUrl;
-      if(file.type.startsWith("image/")) image_url=file_url;
+    const files=[]; let image_url=null;
+    for(let i=0;i<picked.length;i++){
+      btn.textContent=`جارٍ رفع ${i+1} من ${picked.length}...`;
+      const orig=picked[i], f=await shrink(orig), t=typeOf(f), base=`${user.id}/${Date.now()}_${i}`, path=`${base}.${extOf(f.name)}`;
+      try{await putFile(f,path,l=>bar.style.width=Math.min(100,Math.round((done+l)/total*100))+"%")}
+      catch(x){err.textContent=`تعذّر رفع «${orig.name}»: `+upErr(x.message);return}
+      done+=orig.size;
+      const pub=sb.storage.from(BUCKET).getPublicUrl(path).data.publicUrl;
+      files.push({url:pub,name:orig.name,type:t,size:f.size});
+      if(!image_url&&kind(t)==="image")image_url=pub;
+      if(!image_url&&kind(t)==="video"){const p=await poster(f);if(p){try{await putFile(p,`${base}_poster.jpg`,()=>{});image_url=sb.storage.from(BUCKET).getPublicUrl(`${base}_poster.jpg`).data.publicUrl}catch(_){}}}
     }
-    const row={title:$("uT").value.trim(),student_name:$("uN").value.trim(),year:+$("uY").value,type:$("uTy").value,description:$("uD").value.trim(),file_url,image_url,claims_award:claims,award_title:claims?$("uAT").value.trim():null};
-    const {error}=await sb.from("works").insert(row);
-    if(error){err.textContent="تعذّر حفظ المشروع، حاولي مرة أخرى";return}
-    e.target.reset();$("awWrap").hidden=true;$("upD").close();toast("تم الإرسال، وسيظهر بعد مراجعة المشرف");loadMine();
-  }finally{btn.disabled=false;btn.textContent="إرسال للمراجعة"}
+    bar.style.width="100%";
+    if(link)files.push({url:link,name:"رابط المشروع",type:"link"});
+    const row={title:$("uT").value.trim(),student_name:$("uN").value.trim(),year:+$("uY").value,type:$("uTy").value,description:$("uD").value.trim(),file_url:files[0]?.url||null,image_url,claims_award:claims,award_title:claims?$("uAT").value.trim():null};
+    let r=await sb.from("works").insert({...row,files});
+    if(r.error&&/files|column|schema/i.test(r.error.message)) r=await sb.from("works").insert(row);
+    if(r.error){err.textContent="تعذّر حفظ المشروع: "+r.error.message;return}
+    e.target.reset();picked=[];drawFiles();$("awWrap").hidden=true;$("upD").close();toast("تم الإرسال، وسيظهر بعد مراجعة المشرف");loadMine();
+  }finally{btn.disabled=false;btn.textContent="إرسال للمراجعة";pg.hidden=true}
 });
 
 /* ---------- العرض ---------- */
@@ -433,11 +514,11 @@ $("q").addEventListener("input",e=>{term=e.target.value.trim();draw()});
 
 function show(id,src){
   const w=(src==="mine"?mine:works).find(x=>String(x.id)===String(id)); if(!w)return;
-  const f=url(w.file_url);
+  const fl=(Array.isArray(w.files)&&w.files.length?w.files:(url(w.file_url)?[{url:w.file_url,name:"فتح / تحميل العمل",type:""}]:[])).filter(x=>url(x.url));
+  const fv=fl.map(x=>{const k=kind(x.type||""),u=esc(x.url);return k==="image"?`<img src="${u}" alt="${esc(x.name)}" loading="lazy">`:k==="video"?`<video src="${u}" controls playsinline preload="metadata"></video>`:`<a class="btn gold" href="${u}" target="_blank" rel="noopener noreferrer">${esc(x.type==="link"?"فتح الرابط":(x.type?"تحميل: ":"")+(x.name||"ملف"))}</a>`}).join("");
   $("dT").textContent=w.title;
-  $("dB").innerHTML=`${thumb(w)}<div class="tags" style="margin-bottom:10px"><span class="tag">${esc(yname(w.year))}</span><span class="tag">${esc(TYPES[w.type]||w.type)}</span>${w.award?`<span class="tag t">${esc(w.award_title)}</span>`:""}</div>
-   <p>${esc(w.description)}</p><p class="by" style="margin-top:10px">إعداد: ${esc(w.student_name)}</p>
-   ${f?`<a class="btn gold" style="margin-top:14px" href="${esc(f)}" target="_blank" rel="noopener noreferrer">فتح / تحميل العمل</a>`:""}`;
+  $("dB").innerHTML=`${fl.some(x=>kind(x.type||"")!=="file")?"":thumb(w)}<div class="tags" style="margin-bottom:10px"><span class="tag">${esc(yname(w.year))}</span><span class="tag">${esc(TYPES[w.type]||w.type)}</span>${w.award?`<span class="tag t">${esc(w.award_title)}</span>`:""}</div>
+   <p>${esc(w.description)}</p><p class="by" style="margin-top:10px">إعداد: ${esc(w.student_name)}</p><div class="fv">${fv}</div>`;
   $("dlg").showModal();
 }
 document.querySelectorAll("[data-close]").forEach(b=>b.onclick=()=>b.closest("dialog").close());
