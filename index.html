@@ -3,6 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="منصة اليعسوب: مرجع أكاديمي لعرض تصاميم وأبحاث وفيديوهات ومبادرات طلاب كلية الصيدلة، والمشاريع الفائزة بالمسابقات.">
+<meta name="theme-color" content="#0B1F4B">
+<meta property="og:title" content="منصة اليعسوب لعرض إبداعات الطلاب">
+<meta property="og:description" content="تصاميم وأبحاث وفيديوهات ومبادرات طلاب كلية الصيدلة، والمشاريع الفائزة.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%2064%2064%27%3E%3Crect%20width=%2764%27%20height=%2764%27%20rx=%2714%27%20fill=%27%230B1F4B%27/%3E%3Cg%20fill=%27%23C9A227%27%3E%3Cellipse%20cx=%2720%27%20cy=%2724%27%20rx=%2715%27%20ry=%276%27%20transform=%27rotate%28-14%2020%2024%29%27/%3E%3Cellipse%20cx=%2744%27%20cy=%2724%27%20rx=%2715%27%20ry=%276%27%20transform=%27rotate%2814%2044%2024%29%27/%3E%3Cellipse%20cx=%2721%27%20cy=%2734%27%20rx=%2713%27%20ry=%275%27%20opacity=%27.7%27/%3E%3Cellipse%20cx=%2743%27%20cy=%2734%27%20rx=%2713%27%20ry=%275%27%20opacity=%27.7%27/%3E%3Crect%20x=%2729%27%20y=%2713%27%20width=%276%27%20height=%2742%27%20rx=%273%27/%3E%3Ccircle%20cx=%2732%27%20cy=%2712%27%20r=%275%27/%3E%3C/g%3E%3C/svg%3E">
 <title>منصة اليعسوب لعرض إبداعات الطلاب</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -156,6 +162,27 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--royal);b
 .toast.on{opacity:1}
 footer{background:var(--navy);color:#B8C6EA;text-align:center;padding:26px 0;font-size:15px;margin-top:40px}
 
+
+/* winners empty state / upload / media */
+.win-empty{padding:34px 0 26px;color:#7A5F00}
+.win-empty .ic{width:58px;height:58px;opacity:.55;margin:0 0 6px}
+.win-empty p{font-family:var(--sub);font-size:19px}
+.drop{display:flex;flex-direction:column;align-items:center;gap:2px;border:2px dashed #9DB6F2;border-radius:16px;padding:16px;text-align:center;cursor:pointer;background:var(--bg);margin:6px 0 0;font-weight:600;color:var(--royal);position:relative}
+.drop small{font-weight:400;color:var(--muted)}
+.drop:hover,.drop.on,.drop:focus-within{background:var(--ice);border-color:var(--royal)}
+.drop input.sr{position:absolute!important;width:1px!important;height:1px!important;opacity:0;padding:0!important;border:0!important;overflow:hidden}
+.flist{list-style:none;padding:0;margin:8px 0 0;display:grid;gap:6px}
+.flist li{display:flex;align-items:center;gap:10px;background:var(--ice);border-radius:10px;padding:2px 12px;font-size:14px}
+.flist li span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.flist li small{color:var(--muted);white-space:nowrap}
+.flist button{border:0;background:none;color:#9B2118;cursor:pointer;font-size:20px;line-height:1}
+.media{display:block;width:100%;max-height:60vh;border-radius:14px;margin:10px 0;background:var(--navy);object-fit:contain}
+.yt{aspect-ratio:16/9;height:auto;border:0}
+.fl{display:flex;align-items:center;gap:10px;justify-content:space-between;flex-wrap:wrap;background:var(--ice);border-radius:12px;padding:6px 14px;margin-top:10px;font-size:15px}
+.thumb video{width:100%;height:100%;object-fit:cover;pointer-events:none}
+.empty .btn{margin-inline-start:8px}
+
+.pin{font-family:var(--title);font-weight:700;font-size:58px;letter-spacing:.35em;padding-left:.35em;text-align:center;background:var(--ice);border-radius:16px;color:var(--navy);margin:14px 0;line-height:1.5}
 @media(max-width:900px){.ygrid{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:700px){
   .bar{gap:8px}.logo{font-size:21px}
@@ -166,20 +193,6 @@ footer{background:var(--navy);color:#B8C6EA;text-align:center;padding:26px 0;fon
   .clin{padding:24px 16px 8px}.mine{padding:20px 16px}
 }
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
-.dz{border:2px dashed var(--royal);border-radius:16px;padding:22px 14px;text-align:center;background:var(--ice);cursor:pointer;transition:.2s}
-.dz.on,.dz:hover{background:#fff;border-color:var(--gold)}
-.dz b{display:block;font-family:var(--sub);color:var(--navy);font-size:18px}
-.dz span{font-size:13px;color:var(--muted)}
-.fl{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:8px}
-.fl li{display:flex;align-items:center;gap:10px;border:1.5px solid var(--line);border-radius:12px;padding:6px 10px;background:#fff}
-.fl img,.fl .fi{width:44px;height:44px;border-radius:8px;object-fit:cover;background:var(--ice);display:grid;place-items:center;flex:none;font-size:11px;color:var(--royal);font-weight:700}
-.fl .fn{flex:1;min-width:0;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.fl .fn small{display:block;color:var(--muted)}
-.fl button{border:0;background:none;color:#B3261E;font-size:24px;cursor:pointer}
-.pg{height:8px;border-radius:99px;background:var(--line);overflow:hidden;margin-top:10px}
-.pg i{display:block;height:100%;width:0;background:var(--gold);transition:width .2s}
-.fv{display:grid;gap:10px;margin-top:12px}
-.fv img,.fv video{width:100%;border-radius:12px;max-height:60vh;background:#000;object-fit:contain}
 </style>
 </head>
 <body>
@@ -191,7 +204,7 @@ footer{background:var(--navy);color:#B8C6EA;text-align:center;padding:26px 0;fon
 
 <header>
   <div class="wrap bar">
-    <a href="#top" class="logo"><svg><use href="#fly"/></svg>اليعسوب</a>
+    <a href="#top" class="logo" aria-label="اليعسوب - الصفحة الرئيسية"><svg aria-hidden="true"><use href="#fly"/></svg>اليعسوب</a>
     <nav class="nav">
       <a href="#winners" class="g">الفائزة</a><a href="#years">الفرق</a><a href="#clinical">فارم دي كلينكال</a><a href="#mine">مساحتي</a>
     </nav>
@@ -206,7 +219,7 @@ footer{background:var(--navy);color:#B8C6EA;text-align:center;padding:26px 0;fon
 </div></div>
 
 <div class="wsec" id="winners"><div class="wrap">
-  <div class="sh"><h2><svg class="ic"><use href="#cup"/></svg>ركن المشاريع الفائزة</h2><span>إبداعات حصدت مراكز متقدمة في مسابقات الجامعة</span></div>
+  <div class="sh"><h2><svg class="ic" aria-hidden="true"><use href="#cup"/></svg>ركن المشاريع الفائزة</h2><span>إبداعات حصدت مراكز متقدمة في مسابقات الجامعة</span></div>
   <div class="wgrid" id="wgrid"></div>
 </div></div>
 
@@ -238,29 +251,32 @@ footer{background:var(--navy);color:#B8C6EA;text-align:center;padding:26px 0;fon
 <footer>منصة اليعسوب · كلية الصيدلة © <span id="yr"></span></footer>
 
 <!-- تفاصيل -->
-<dialog id="dlg">
+<dialog id="dlg" aria-labelledby="dT">
   <div class="dh"><h3 id="dT"></h3><button class="x" data-close aria-label="إغلاق">×</button></div>
   <div class="db" id="dB"></div>
 </dialog>
 
 <!-- دخول -->
-<dialog id="authD">
-  <div class="dh"><h3>مرحباً بك في اليعسوب</h3><button class="x" data-close aria-label="إغلاق">×</button></div>
+<dialog id="authD" aria-labelledby="aT">
+  <div class="dh"><h3 id="aT">مرحباً بك في اليعسوب</h3><button class="x" data-close aria-label="إغلاق">×</button></div>
   <form class="db" id="authF">
-    <p class="hint">أدخلي بياناتك للدخول، وتُنشأ مساحتك تلقائياً في أول مرة.</p>
+    <p class="hint">أول مرة؟ اكتبي بياناتك واتركي خانة كلمة السر فارغة، وسنعطيكِ كلمة سر من 4 أرقام لتحفظيها. دخلتِ قبل كده؟ اكتبي نفس الاسم والفرقة وكلمة سرك.</p>
     <label for="aName">الاسم الرباعي</label><input id="aName" autocomplete="name" required maxlength="100">
     <div class="two">
       <div><label for="aY">الفرقة</label><select id="aY" required></select></div>
       <div><label for="aTr">الشعبة</label><select id="aTr" required><option value="pharmd">فارم دي</option><option value="clinical">كلينكال</option></select></div>
     </div>
+    <label for="aPin">كلمة السر (4 أرقام) — اتركيها فارغة لو أول مرة</label>
+    <input id="aPin" type="password" inputmode="numeric" maxlength="4" autocomplete="current-password" dir="ltr" placeholder="••••">
+    <p class="hint" style="margin-top:6px">نسيتِ كلمة السر؟ تواصلي مع مشرفة المنصة.</p>
     <p class="err" id="aErr" role="alert"></p>
     <button class="btn" style="width:100%" id="aGo" type="submit">دخول / تسجيل</button>
   </form>
 </dialog>
 
 <!-- رفع -->
-<dialog id="upD">
-  <div class="dh"><h3>رفع مشروع جديد</h3><button class="x" data-close aria-label="إغلاق">×</button></div>
+<dialog id="upD" aria-labelledby="uTt">
+  <div class="dh"><h3 id="uTt">رفع مشروع جديد</h3><button class="x" data-close aria-label="إغلاق">×</button></div>
   <form class="db" id="upF">
     <label for="uT">عنوان المشروع</label><input id="uT" required maxlength="140">
     <label for="uN">اسم الطالبة</label><input id="uN" required maxlength="100">
@@ -269,17 +285,28 @@ footer{background:var(--navy);color:#B8C6EA;text-align:center;padding:26px 0;fon
       <div><label for="uTy">نوع الإبداع</label><select id="uTy" required></select></div>
     </div>
     <label for="uD">وصف مختصر</label><textarea id="uD" rows="3" required maxlength="1200"></textarea>
-    <label for="uL">أو أضيفي رابط المشروع (Drive / YouTube – اختياري)</label><input id="uL" type="url" placeholder="https://">
-    <label>ملفات المشروع (صور · فيديو · PDF · Word · PowerPoint · Excel · ZIP)</label>
-    <div class="dz" id="dz" tabindex="0" role="button"><b>اسحبي الملفات هنا أو اضغطي للاختيار</b><span>حتى 8 ملفات · الملف الواحد حتى 50 ميجا · من المعرض أو الكاميرا</span></div>
-    <input id="uF" type="file" multiple hidden accept="image/*,video/*,.pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.zip,.rar,.txt">
-    <ul class="fl" id="fl"></ul><div class="pg" id="pg" hidden><i></i></div>
+    <label for="uL">رابط المشروع (اختياري) — YouTube أو Drive</label><input id="uL" type="text" inputmode="url" dir="ltr" placeholder="https://" autocomplete="off">
+    <label for="uF">ملفات المشروع</label>
+    <label class="drop" id="drop" for="uF">📎 اسحبي الملفات هنا أو اضغطي للاختيار<small>صور · فيديو · PDF · Word · PowerPoint · Excel · ZIP — حتى 8 ملفات، الملف الواحد حتى 50 ميجا</small>
+      <input class="sr" id="uF" type="file" multiple accept="image/*,video/*,audio/*,application/pdf,.pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.zip,.rar,.7z,.txt,.heic,.heif"></label>
+    <ul class="flist" id="uList" aria-live="polite"></ul>
     <label class="chk"><input type="checkbox" id="uA"> هذا المشروع فاز بجائزة</label>
     <div id="awWrap" hidden><label for="uAT">اسم المسابقة والمركز</label><input id="uAT" maxlength="140" placeholder="مثال: المركز الأول في مسابقة التصميم"></div>
-    <p class="hint" style="margin-top:8px">يظهر المشروع بعد مراجعة المشرف. وتُعتمد الجوائز بعد التحقق منها.</p>
+    <p class="hint" style="margin-top:8px">يظهر المشروع بعد مراجعة المشرف. وتُعتمد الجوائز بعد التحقق منها. للفيديوهات الكبيرة جداً ضعي رابط YouTube أو Drive بدل الرفع.</p>
     <p class="err" id="uErr" role="alert"></p>
     <button class="btn gold" style="width:100%" id="uGo" type="submit">إرسال للمراجعة</button>
   </form>
+</dialog>
+<!-- كلمة السر الجديدة -->
+<dialog id="pinD" aria-labelledby="pT">
+  <div class="dh"><h3 id="pT">تم إنشاء مساحتك 🎉</h3></div>
+  <div class="db">
+    <p>هذه <b>كلمة سرك</b> للدخول في المرات القادمة. احفظيها الآن (اكتبيها أو صوّري الشاشة) لأنها <b>لن تظهر مرة أخرى</b>.</p>
+    <div class="pin" id="pinV" dir="ltr" aria-live="polite"></div>
+    <button class="btn line" type="button" id="pinCopy" style="width:100%">نسخ كلمة السر</button>
+    <label class="chk"><input type="checkbox" id="pinOk"> حفظتُ كلمة السر</label>
+    <button class="btn gold" type="button" id="pinGo" style="width:100%;margin-top:14px" disabled>متابعة</button>
+  </div>
 </dialog>
 <div class="toast" id="toast" role="status"></div>
 
@@ -288,25 +315,65 @@ footer{background:var(--navy);color:#B8C6EA;text-align:center;padding:26px 0;fon
 const SUPABASE_URL = "https://oibsajvayvflexhqwgwt.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9pYnNhanZheXZmbGV4aHF3Z3d0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI2OTUxNjAsImV4cCI6MjEwODI3MTE2MH0.X0OW7016FvJlGaMvbHtnTUXNRt38ymnA5HCMdfiDeSk";
 const BUCKET = "works";
-
 const YEARS = ["الفرقة الأولى","الفرقة الثانية","الفرقة الثالثة","الفرقة الرابعة","الفرقة الخامسة فارم دي","فارم دي كلينكال"];
 const YSHORT = ["الأولى","الثانية","الثالثة","الرابعة","الخامسة"];
 const TYPES = {design:"تصميم",research:"بحث",video:"فيديو",initiative:"مبادرة"};
 const STATUS = {pending:["wait","قيد المراجعة"],approved:["ok","معتمد"],rejected:["no","مرفوض"]};
-const DEMO = [
- {id:1,title:"بوستر التوعية بالمضادات الحيوية",student_name:"مريم خالد أحمد",year:2,type:"design",description:"تصاميم توعوية بألوان هادئة وخطوط عربية واضحة.",award:1,award_title:"المركز الأول في مسابقة التصميم الجامعية"},
- {id:2,title:"استخلاص مضادات الأكسدة من قشور الرمان",student_name:"أحمد علي محمود",year:4,type:"research",description:"بحث معملي يقارن ثلاث طرق للاستخلاص.",award:2,award_title:"المركز الثاني في ملتقى البحث العلمي"},
- {id:3,title:"مبادرة «دوائي في أمان»",student_name:"نور إبراهيم سعيد",year:6,type:"initiative",description:"حملة ميدانية لمراجعة أدوية كبار السن.",award:3,award_title:"المركز الثالث في مسابقة المبادرات"},
- {id:4,title:"فيديو شرح آلية عمل الأنسولين",student_name:"يوسف حسن عادل",year:3,type:"video",description:"فيديو متحرك يبسّط مسار الإشارة داخل الخلية."}
-];
+const MAX_FILES = 8, MAX_MB = 50;
+const MIME = {pdf:"application/pdf",doc:"application/msword",docx:"application/vnd.openxmlformats-officedocument.wordprocessingml.document",ppt:"application/vnd.ms-powerpoint",pptx:"application/vnd.openxmlformats-officedocument.presentationml.presentation",xls:"application/vnd.ms-excel",xlsx:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",zip:"application/zip",rar:"application/vnd.rar","7z":"application/x-7z-compressed",txt:"text/plain",mp4:"video/mp4",mov:"video/quicktime",webm:"video/webm",mp3:"audio/mpeg",heic:"image/heic",heif:"image/heif"};
 
 const sb = window.supabase ? window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY) : null;
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? "").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const url = u => /^https?:\/\//i.test(u||"") ? u : "";
-const toast = m => {const t=$("toast");t.textContent=m;t.classList.add("on");setTimeout(()=>t.classList.remove("on"),4000)};
+const safeUrl = u => /^https?:\/\//i.test(u||"") ? u : "";
+let toastT; const toast = m => {const t=$("toast");t.textContent=m;t.classList.add("on");clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove("on"),4500)};
 const yname = y => YEARS[y-1]||"";
-let works=[], mine=[], user=null, fy=0, ft="", term="", mf="";
+const norm = s => String(s||"").trim().replace(/\s+/g," ").replace(/[أإآ]/g,"ا").replace(/ى/g,"ي").replace(/ة/g,"ه");
+const fold = s => norm(s).toLowerCase();
+const normAward = w => {const a=Math.round(+w.award);return {...w,award:(a>=1&&a<=3)?a:0}};
+let works=[], mine=[], user=null, fy=0, ft="", term="", mf="", state="loading", picked=[];
+
+/* ---------- الملفات والوسائط ---------- */
+const extOf = f => ((f.name||f.url||"").split("?")[0].split("#")[0].split(".").pop()||"").toLowerCase();
+const ytId = u => {const m=String(u||"").match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?(?:[^#]*&)?v=|embed\/|shorts\/|live\/))([\w-]{11})/);return m?m[1]:""};
+const isImg = f => /^image\//.test(f.type||"") || /^(png|jpe?g|webp|gif|avif|bmp)$/.test(extOf(f));
+const isVid = f => /^video\//.test(f.type||"") || /^(mp4|webm|mov|m4v|ogv)$/.test(extOf(f));
+const isAud = f => /^audio\//.test(f.type||"") || /^(mp3|wav|m4a|ogg)$/.test(extOf(f));
+function itemsOf(w){
+  const out=[], seen=new Set();
+  const add=(u,name,type,size)=>{u=safeUrl(u);if(!u||seen.has(u))return;seen.add(u);out.push({url:u,name:name||"",type:type||"",size:size||0})};
+  add(w.file_url);
+  (Array.isArray(w.files)?w.files:[]).forEach(f=>f&&add(f.url,f.name,f.type,f.size));
+  add(w.image_url);
+  return out;
+}
+const fmt = b => b>=1048576?(b/1048576).toFixed(1)+" MB":Math.max(1,Math.round(b/1024))+" KB";
+const KIND = {pdf:"ملف PDF",doc:"مستند Word",docx:"مستند Word",ppt:"عرض PowerPoint",pptx:"عرض PowerPoint",xls:"جدول Excel",xlsx:"جدول Excel",zip:"ملف مضغوط",rar:"ملف مضغوط","7z":"ملف مضغوط",txt:"ملف نصي"};
+function mediaHtml(f){
+  const y=ytId(f.url);
+  if(y) return `<iframe class="media yt" src="https://www.youtube-nocookie.com/embed/${y}" title="فيديو المشروع" loading="lazy" allow="accelerometer;encrypted-media;picture-in-picture;fullscreen" allowfullscreen></iframe>`;
+  if(isVid(f)) return `<video class="media" controls playsinline preload="metadata" src="${esc(f.url)}"></video>`;
+  if(isAud(f)) return `<audio class="media" style="max-height:60px" controls preload="metadata" src="${esc(f.url)}"></audio>`;
+  if(isImg(f)) return `<a href="${esc(f.url)}" target="_blank" rel="noopener noreferrer"><img class="media" style="object-fit:contain;background:var(--ice)" src="${esc(f.url)}" alt="صورة من المشروع" loading="lazy"></a>`;
+  return "";
+}
+function linkHtml(f){
+  const k=KIND[extOf(f)]||(f.name?"ملف مرفق":"رابط المشروع");
+  return `<div class="fl"><span>${esc(k)}${f.name?" · "+esc(f.name):""}${f.size?" · "+fmt(f.size):""}</span><a class="btn gold sm" href="${esc(f.url)}" target="_blank" rel="noopener noreferrer">فتح / تحميل</a></div>`;
+}
+const thumb = w => {
+  let inner;
+  const u=safeUrl(w.image_url);
+  if(u) inner=`<img src="${esc(u)}" alt="${esc(w.title)}" loading="lazy" onerror="this.style.display='none'">`;
+  else{
+    const its=itemsOf(w), y=its.map(f=>ytId(f.url)).find(Boolean), v=its.find(isVid), im=its.find(isImg);
+    inner = y?`<img src="https://i.ytimg.com/vi/${y}/hqdefault.jpg" alt="${esc(w.title)}" loading="lazy" onerror="this.style.display='none'">`
+         : im?`<img src="${esc(im.url)}" alt="${esc(w.title)}" loading="lazy" onerror="this.style.display='none'">`
+         : v?`<video src="${esc(v.url)}#t=0.5" preload="metadata" muted playsinline aria-hidden="true"></video>`
+         : '<svg aria-hidden="true"><use href="#fly"/></svg>';
+  }
+  return `<div class="thumb">${inner}</div>`;
+};
 
 /* ---------- الحساب ---------- */
 function renderAuth(){
@@ -321,172 +388,179 @@ function renderMine(){
   const m=user.user_metadata||{}, n=(m.full_name||"").split(" ")[0], c=s=>mine.filter(w=>w.status===s).length;
   const list=mine.filter(w=>!mf||w.status===mf);
   box.innerHTML=`<div class="top"><p>أهلاً ${esc(n)}، ${esc(yname(m.year))}${m.track==="clinical"?" · كلينكال":""}. هذه مساحتك لرفع المشاريع ومتابعتها.</p><button class="btn gold" id="mUp">+ رفع مشروع جديد</button></div>
-   <div class="stats"><div><b>${mine.length}</b>مشاريعي</div><div><b>${c("approved")}</b>معتمدة</div><div><b>${c("pending")}</b>قيد المراجعة</div><div><b>${mine.filter(w=>w.claims_award).length}</b>بجائزة</div></div>
+   <div class="stats"><div><b>${mine.length}</b>مشاريعي</div><div><b>${c("approved")}</b>معتمدة</div><div><b>${c("pending")}</b>قيد المراجعة</div><div><b>${mine.filter(w=>w.award).length}</b>بجائزة</div></div>
    <div class="fbar">${[["","الكل"],["approved","معتمد"],["pending","قيد المراجعة"],["rejected","مرفوض"]].map(([k,v])=>`<button class="chip" data-ms="${k}" aria-pressed="${mf===k}">${v}</button>`).join("")}</div>
    <h3 style="font-family:var(--sub);color:var(--navy);margin-bottom:10px">مشاريعي المرفوعة (${list.length})</h3>
    <div class="grid">${list.length?list.map(w=>{const s=STATUS[w.status]||STATUS.pending;return `
     <article class="card">${thumb(w)}<div class="body">
-      <div class="tags"><span class="tag ${s[0]}">${s[1]}</span><span class="tag">${esc(yname(w.year))}</span>${w.claims_award?`<span class="tag t">${w.award?"فائز":"ادّعاء جائزة قيد التحقق"}</span>`:""}</div>
+      <div class="tags"><span class="tag ${s[0]}">${s[1]}</span><span class="tag">${esc(yname(w.year))}</span>${w.award?'<span class="tag t">فائز</span>':w.claims_award?'<span class="tag t">ادّعاء جائزة قيد التحقق</span>':""}</div>
       <h3>${esc(w.title)}</h3><button class="btn line sm" data-id="${esc(w.id)}" data-src="mine">عرض</button></div></article>`}).join(""):`<div class="empty">${mine.length?"لا توجد مشاريع بهذه الحالة.":"لم ترفعي أي مشروع بعد. ابدئي برفع أول مشروع."}</div>`}</div>`;
   $("mUp").onclick=openUpload;
 }
 function setUser(u){user=u;renderAuth();loadMine()}
 async function loadMine(){
-  mine=[]; if(user&&sb){const {data}=await sb.from("works").select("*").eq("user_id",user.id).order("created_at",{ascending:false}); mine=data||[]}
+  mine=[];
+  if(user&&sb){
+    try{const {data,error}=await sb.from("works").select("*").eq("user_id",user.id).order("created_at",{ascending:false});
+      if(error)throw error; mine=(data||[]).map(normAward)}
+    catch(x){toast("تعذّر تحميل مشاريعك، حدّثي الصفحة")}
+  }
   renderMine();
 }
 const MAIL_DOMAIN="gmail.com"; /* نطاق ببريد صالح كي يقبله Supabase؛ لا تُرسل إليه رسائل عند تعطيل تأكيد البريد */
 $("aY").innerHTML=YEARS.slice(0,5).map((y,i)=>`<option value="${i+1}">${y}</option>`).join("");
-const norm=s=>s.trim().replace(/\s+/g," ").replace(/[أإآ]/g,"ا").replace(/ى/g,"ي").replace(/ة/g,"ه");
 function h53(str,seed){let h1=0xdeadbeef^seed,h2=0x41c6ce57^seed;for(let i=0;i<str.length;i++){const c=str.charCodeAt(i);h1=Math.imul(h1^c,2654435761);h2=Math.imul(h2^c,1597334677)}h1=Math.imul(h1^(h1>>>16),2246822507)^Math.imul(h2^(h2>>>13),3266489909);h2=Math.imul(h2^(h2>>>16),2246822507)^Math.imul(h1^(h1>>>13),3266489909);return (h2>>>0).toString(16).padStart(8,"0")+(h1>>>0).toString(16).padStart(8,"0")}
-const cred=(name,year,track)=>{const k=[norm(name),year,track].join("|"),h=[1,2,3,4,5].map(i=>h53(k,i*7919)).join("");return {email:"y"+h.slice(0,30)+"@"+MAIL_DOMAIN,password:"Yq"+h.slice(0,48)}};
+const toPin=s=>String(s||"").replace(/[٠-٩]/g,d=>d.charCodeAt(0)-1632).replace(/[۰-۹]/g,d=>d.charCodeAt(0)-1776).replace(/\D/g,"");
+const newPin=()=>String(crypto.getRandomValues(new Uint32Array(1))[0]%10000).padStart(4,"0");
+/* البريد يُشتق من الاسم+الفرقة+الشعبة. كلمة السر تُشتق منها مع الـPIN. وإذا pin=null فهي كلمة السر القديمة (للحسابات المسجلة قبل إضافة الـPIN) */
+const cred=(name,year,track,pin=null)=>{const k=[norm(name),year,track].join("|"),h=[1,2,3,4,5].map(i=>h53(k,i*7919)).join("");
+  const email="y"+h.slice(0,30)+"@"+MAIL_DOMAIN;
+  if(pin==null)return {email,password:"Yq"+h.slice(0,48)};
+  const h2=[1,2,3,4,5].map(i=>h53(k+"|pin:"+pin,i*7919)).join("");
+  return {email,password:"Yp"+h2.slice(0,48)}};
 const authMsg=m=>/disabled/i.test(m)?"التسجيل بالبريد غير مفعّل في Supabase (Authentication ← Providers ← Email)":/rate|seconds/i.test(m)?"محاولات كثيرة، انتظري دقيقة ثم أعيدي المحاولة":/confirm|registered/i.test(m)?"يلزم تعطيل Confirm email في إعدادات Supabase":/invalid|valid/i.test(m)?"نطاق البريد الداخلي غير مقبول، غيّري MAIL_DOMAIN في الكود":"تعذّر الدخول: "+m;
 function openAuth(){$("aErr").textContent="";$("authD").showModal()}
+function showPin(pin){
+  $("pinV").textContent=pin; $("pinOk").checked=false; $("pinGo").disabled=true;
+  $("pinD").showModal();
+}
+$("pinOk").onchange=e=>{$("pinGo").disabled=!e.target.checked};
+$("pinGo").onclick=()=>{$("pinD").close();$("pinV").textContent="";toast("أهلاً بك في اليعسوب، احتفظي بكلمة سرك")};
+$("pinCopy").onclick=async()=>{try{await navigator.clipboard.writeText($("pinV").textContent);toast("تم نسخ كلمة السر")}catch(x){toast("انسخيها يدوياً أو صوّري الشاشة")}};
+$("pinD").addEventListener("cancel",e=>e.preventDefault()); /* لا تُغلق إلا بعد تأكيد الحفظ */
+window.addEventListener("beforeunload",e=>{if($("pinD").open){e.preventDefault();e.returnValue=""}});
+const needPin=()=>{$("aErr").textContent="هذا الاسم مسجّل من قبل. اكتبي كلمة السر المكوّنة من 4 أرقام التي حصلتِ عليها عند أول تسجيل.";$("aPin").focus()};
 $("authF").addEventListener("submit",async e=>{
   e.preventDefault(); const err=$("aErr"); err.textContent="";
   if(!sb){err.textContent="تعذّر الاتصال بالخادم، تأكدي من الإنترنت";return}
-  const full_name=$("aName").value.trim().replace(/\s+/g," "), year=+$("aY").value, track=$("aTr").value, btn=$("aGo");
+  const full_name=$("aName").value.trim().replace(/\s+/g," "), year=+$("aY").value, track=$("aTr").value, btn=$("aGo"), pinIn=toPin($("aPin").value);
   if(full_name.split(" ").length<3){err.textContent="اكتبي اسمك ثلاثياً على الأقل";return}
+  if($("aPin").value.trim()&&pinIn.length!==4){err.textContent="كلمة السر مكوّنة من 4 أرقام";return}
   btn.disabled=true; btn.textContent="جارٍ الدخول...";
   try{
-    const c=cred(full_name,year,track);
-    const {error}=await sb.auth.signInWithPassword(c);
-    if(error&&/invalid login/i.test(error.message)){
-      const r=await sb.auth.signUp({...c,options:{data:{full_name,year,track}}});
-      if(r.error){err.textContent=authMsg(r.error.message);return}
-      if(!r.data.session){err.textContent=authMsg("confirm");return}
-      toast("أهلاً بك في اليعسوب");
-    }else if(error){err.textContent=authMsg(error.message);return}
-    $("authD").close();
+    if(pinIn){ /* دخول بكلمة السر */
+      const {error}=await sb.auth.signInWithPassword(cred(full_name,year,track,pinIn));
+      if(error){err.textContent=/invalid login/i.test(error.message)?"كلمة السر غير صحيحة، أو الاسم مكتوب بشكل مختلف عن أول مرة. لو هذه أول مرة لكِ اتركي خانة كلمة السر فارغة.":authMsg(error.message);return}
+      $("authD").close(); $("aPin").value=""; return;
+    }
+    /* بدون كلمة سر: إما حساب قديم يُرقّى، أو تسجيل جديد */
+    const lg=await sb.auth.signInWithPassword(cred(full_name,year,track,null));
+    if(!lg.error){
+      const pin=newPin(), up=await sb.auth.updateUser({password:cred(full_name,year,track,pin).password});
+      if(up.error){await sb.auth.signOut();err.textContent="تعذّر إنشاء كلمة السر، حاولي مرة أخرى";return}
+      $("authD").close(); showPin(pin); return;
+    }
+    if(!/invalid login/i.test(lg.error.message)){err.textContent=authMsg(lg.error.message);return}
+    const pin=newPin(), r=await sb.auth.signUp({...cred(full_name,year,track,pin),options:{data:{full_name,year,track}}});
+    if(r.error){ if(/already|registered|exists/i.test(r.error.message)){needPin();return} err.textContent=authMsg(r.error.message);return }
+    if(r.data.user&&Array.isArray(r.data.user.identities)&&r.data.user.identities.length===0){needPin();return}
+    if(!r.data.session){err.textContent=authMsg("confirm");return}
+    $("authD").close(); showPin(pin);
   }catch(x){err.textContent="تحقّقي من الاتصال بالإنترنت وأعيدي المحاولة"}
   finally{btn.disabled=false;btn.textContent="دخول / تسجيل"}
 });
 /* ---------- الرفع ---------- */
-const MAXF=50*1024*1024, MAXN=8;
-const MIME={pdf:"application/pdf",doc:"application/msword",docx:"application/vnd.openxmlformats-officedocument.wordprocessingml.document",ppt:"application/vnd.ms-powerpoint",pptx:"application/vnd.openxmlformats-officedocument.presentationml.presentation",xls:"application/vnd.ms-excel",xlsx:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",zip:"application/zip",rar:"application/vnd.rar",txt:"text/plain",mp4:"video/mp4",mov:"video/quicktime",webm:"video/webm",m4v:"video/mp4",jpg:"image/jpeg",jpeg:"image/jpeg",png:"image/png",webp:"image/webp",gif:"image/gif",heic:"image/heic",heif:"image/heif"};
-const extOf=n=>((n.split(".").pop()||"bin").replace(/[^a-z0-9]/gi,"").toLowerCase())||"bin";
-const typeOf=f=>f.type||MIME[extOf(f.name)]||"application/octet-stream";
-const kind=t=>t.startsWith("image/")?"image":t.startsWith("video/")?"video":"file";
-const fmt=b=>b>1048576?(b/1048576).toFixed(1)+" ميجا":Math.max(1,Math.round(b/1024))+" كيلو";
-let picked=[];
-function addFiles(list){
-  const err=$("uErr"); err.textContent="";
-  for(const f of list){
-    if(picked.length>=MAXN){err.textContent="الحد الأقصى "+MAXN+" ملفات";break}
-    if(f.size>MAXF){err.textContent="«"+f.name+"» أكبر من 50 ميجا، ارفعيه على Drive أو YouTube وضعي الرابط";continue}
-    if(picked.some(p=>p.name===f.name&&p.size===f.size))continue;
-    picked.push(f);
-  }
-  drawFiles();
-}
-function drawFiles(){
-  $("fl").innerHTML=picked.map((f,i)=>{const t=typeOf(f),k=kind(t);
-    const th=k==="image"&&!/hei[cf]/.test(t)?`<img src="${URL.createObjectURL(f)}" alt="">`:`<div class="fi">${k==="video"?"فيديو":esc(extOf(f.name).toUpperCase().slice(0,4))}</div>`;
-    return `<li>${th}<div class="fn">${esc(f.name)}<small>${fmt(f.size)}</small></div><button type="button" data-rm="${i}" aria-label="حذف">×</button></li>`}).join("");
-}
-const dz=$("dz"), inp=$("uF");
-dz.onclick=()=>inp.click();
-dz.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();inp.click()}};
-inp.onchange=()=>{addFiles([...inp.files]);inp.value=""};
-["dragenter","dragover"].forEach(v=>dz.addEventListener(v,e=>{e.preventDefault();dz.classList.add("on")}));
-["dragleave","drop"].forEach(v=>dz.addEventListener(v,e=>{e.preventDefault();dz.classList.remove("on")}));
-dz.addEventListener("drop",e=>addFiles([...e.dataTransfer.files]));
-$("fl").onclick=e=>{const b=e.target.closest("[data-rm]");if(b){picked.splice(+b.dataset.rm,1);drawFiles()}};
-
 async function shrink(file){
-  const t=typeOf(file);
-  if(kind(t)!=="image"||/gif|svg|hei[cf]/.test(t)||file.size<1.5*1048576)return file;
+  const heic=/hei[cf]/i.test(file.type)||/\.hei[cf]$/i.test(file.name);
+  if(!file.type.startsWith("image/")&&!heic)return file;
+  if(/gif|svg/.test(file.type))return file;
   try{
     const b=await createImageBitmap(file), r=Math.min(1,1920/Math.max(b.width,b.height));
     const cv=document.createElement("canvas"); cv.width=Math.round(b.width*r); cv.height=Math.round(b.height*r);
     const cx=cv.getContext("2d"); cx.fillStyle="#fff"; cx.fillRect(0,0,cv.width,cv.height); cx.drawImage(b,0,0,cv.width,cv.height);
     const blob=await new Promise(res=>cv.toBlob(res,"image/jpeg",.86));
-    return blob&&blob.size<file.size?new File([blob],file.name.replace(/\.\w+$/,"")+".jpg",{type:"image/jpeg"}):file;
-  }catch(x){return file}
+    return blob?new File([blob],(file.name.replace(/\.[^.]+$/,"")||"image")+".jpg",{type:"image/jpeg"}):file;
+  }catch(x){
+    if(heic) throw {user:"صيغة HEIC غير مدعومة في هذا المتصفح، احفظي الصورة بصيغة JPG ثم ارفعيها"};
+    return file;
+  }
 }
-function poster(file){return new Promise(res=>{
-  const v=document.createElement("video"),u=URL.createObjectURL(file);let done=false;
-  const fin=b=>{if(done)return;done=true;URL.revokeObjectURL(u);res(b)};
-  v.muted=true;v.playsInline=true;v.preload="metadata";v.src=u;
-  v.onloadeddata=()=>{v.currentTime=Math.min(1,(v.duration||1)/2)};
-  v.onseeked=()=>{try{const r=Math.min(1,960/Math.max(v.videoWidth,v.videoHeight)),c=document.createElement("canvas");c.width=Math.round(v.videoWidth*r);c.height=Math.round(v.videoHeight*r);c.getContext("2d").drawImage(v,0,0,c.width,c.height);c.toBlob(fin,"image/jpeg",.8)}catch(x){fin(null)}};
-  v.onerror=()=>fin(null); setTimeout(()=>fin(null),6000);
-})}
-async function putFile(file,path,onp){
-  const {data:{session}}=await sb.auth.getSession();
-  return new Promise((res,rej)=>{
-    const x=new XMLHttpRequest();
-    x.open("POST",`${SUPABASE_URL}/storage/v1/object/${BUCKET}/${path}`);
-    x.setRequestHeader("apikey",SUPABASE_ANON_KEY);
-    x.setRequestHeader("Authorization","Bearer "+(session?.access_token||SUPABASE_ANON_KEY));
-    x.setRequestHeader("Content-Type",typeOf(file));
-    x.setRequestHeader("x-upsert","false");
-    x.upload.onprogress=e=>e.lengthComputable&&onp(e.loaded);
-    x.onload=()=>{if(x.status<300)res();else{let m="";try{m=JSON.parse(x.responseText).message||""}catch(_){}rej(new Error(m||"HTTP "+x.status))}};
-    x.onerror=()=>rej(new Error("network"));
-    x.send(file);
-  });
-}
-const upErr=m=>/mime|type/i.test(m)?"نوع الملف غير مسموح في إعدادات الـ Bucket":/size|large|exceed|payload/i.test(m)?"الحجم أكبر من المسموح في Supabase":/policy|security|permission|row-level|unauthorized/i.test(m)?"صلاحيات الرفع تحتاج ضبط Policy (شغّلي ملف supabase-setup.sql)":/network/.test(m)?"انقطع الاتصال أثناء الرفع، أعيدي المحاولة":m;
-
 $("uY").innerHTML=YEARS.map((y,i)=>`<option value="${i+1}">${y}</option>`).join("");
 $("uTy").innerHTML=Object.entries(TYPES).map(([k,v])=>`<option value="${k}">${v}</option>`).join("");
 $("uA").onchange=e=>{$("awWrap").hidden=!e.target.checked};
-function openUpload(){ const m=user?.user_metadata||{}; picked=[];drawFiles(); $("uN").value=m.full_name||""; $("uY").value=m.track==="clinical"?6:(m.year||1); $("uErr").textContent=""; $("pg").hidden=true; $("upD").showModal(); }
+function renderPicked(){$("uList").innerHTML=picked.map((f,i)=>`<li><span>${esc(f.name)}</span><small>${fmt(f.size)}</small><button type="button" data-rm="${i}" aria-label="حذف ${esc(f.name)}">×</button></li>`).join("")}
+function addFiles(list){
+  const err=$("uErr"); err.textContent="";
+  for(const f of Array.from(list)){
+    if(picked.length>=MAX_FILES){err.textContent="الحد الأقصى "+MAX_FILES+" ملفات للمشروع الواحد";break}
+    if(f.size>MAX_MB*1048576){err.textContent="«"+f.name+"» أكبر من "+MAX_MB+" ميجا. للفيديوهات الكبيرة ضعي رابط YouTube أو Drive";continue}
+    if(picked.some(p=>p.name===f.name&&p.size===f.size&&p.lastModified===f.lastModified))continue;
+    picked.push(f);
+  }
+  renderPicked();
+}
+$("uF").addEventListener("change",e=>{addFiles(e.target.files);e.target.value=""});
+const drop=$("drop");
+["dragenter","dragover"].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add("on")}));
+["dragleave","drop"].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove("on")}));
+drop.addEventListener("drop",e=>addFiles(e.dataTransfer.files));
+function openUpload(){ const m=user?.user_metadata||{}; $("uN").value=m.full_name||""; $("uY").value=m.track==="clinical"?6:(m.year||1); $("uErr").textContent=""; $("upD").showModal(); }
+const upMsg=m=>/mime|type|not allowed/i.test(m)?"نوع الملف غير مسموح في إعدادات التخزين":/size|large|exceed|too big|payload/i.test(m)?"حجم الملف أكبر من المسموح في إعدادات التخزين":/policy|security|permission|row-level|unauthori/i.test(m)?"صلاحيات التخزين تحتاج ضبط Policy":m;
 $("upF").addEventListener("submit",async e=>{
   e.preventDefault(); const err=$("uErr"); err.textContent="";
-  if(!user){err.textContent="سجّلي دخولك أولاً";return}
-  if(!sb){err.textContent="تعذّر الاتصال بالخادم، حدّثي الصفحة";return}
-  const link=$("uL").value.trim(), claims=$("uA").checked;
-  if(!picked.length&&!link){err.textContent="أضيفي ملفاً أو رابطاً";return}
+  if(!user||!sb){err.textContent="سجّلي دخولك أولاً";return}
+  let link=$("uL").value.trim(); const claims=$("uA").checked;
+  if(link&&!/^https?:\/\//i.test(link))link="https://"+link;
+  if(link){try{new URL(link)}catch(x){err.textContent="الرابط غير صحيح، تأكدي من نسخه كاملاً";return}}
+  if(!picked.length&&!link){err.textContent="أضيفي رابطاً أو ارفعي ملفاً واحداً على الأقل";return}
   if(claims&&!$("uAT").value.trim()){err.textContent="اكتبي اسم المسابقة والمركز";return}
-  const btn=$("uGo"), pg=$("pg"), bar=pg.firstElementChild;
-  btn.disabled=true; pg.hidden=false; bar.style.width="0";
-  const total=picked.reduce((a,f)=>a+f.size,0)||1; let done=0;
+  const btn=$("uGo"); btn.disabled=true; btn.textContent="جارٍ الرفع...";
+  const uploaded=[];
   try{
-    const files=[]; let image_url=null;
     for(let i=0;i<picked.length;i++){
-      btn.textContent=`جارٍ رفع ${i+1} من ${picked.length}...`;
-      const orig=picked[i], f=await shrink(orig), t=typeOf(f), base=`${user.id}/${Date.now()}_${i}`, path=`${base}.${extOf(f.name)}`;
-      try{await putFile(f,path,l=>bar.style.width=Math.min(100,Math.round((done+l)/total*100))+"%")}
-      catch(x){err.textContent=`تعذّر رفع «${orig.name}»: `+upErr(x.message);return}
-      done+=orig.size;
-      const pub=sb.storage.from(BUCKET).getPublicUrl(path).data.publicUrl;
-      files.push({url:pub,name:orig.name,type:t,size:f.size});
-      if(!image_url&&kind(t)==="image")image_url=pub;
-      if(!image_url&&kind(t)==="video"){const p=await poster(f);if(p){try{await putFile(p,`${base}_poster.jpg`,()=>{});image_url=sb.storage.from(BUCKET).getPublicUrl(`${base}_poster.jpg`).data.publicUrl}catch(_){}}}
+      btn.textContent=picked.length>1?`جارٍ رفع الملف ${i+1} من ${picked.length}…`:"جارٍ رفع الملف…";
+      const f=await shrink(picked[i]);
+      if(f.size>MAX_MB*1048576)throw {user:"«"+picked[i].name+"» أكبر من "+MAX_MB+" ميجا"};
+      const ext=(f.name.split(".").pop()||"bin").replace(/[^a-z0-9]/gi,"").toLowerCase()||"bin";
+      const type=f.type||MIME[ext]||"application/octet-stream";
+      const path=`${user.id}/${Date.now()}-${i}.${ext}`;
+      const up=await sb.storage.from(BUCKET).upload(path,f,{contentType:type});
+      if(up.error)throw {user:"تعذّر رفع «"+picked[i].name+"»: "+upMsg(up.error.message||"")};
+      uploaded.push({path,url:sb.storage.from(BUCKET).getPublicUrl(path).data.publicUrl,name:picked[i].name,type,size:f.size});
     }
-    bar.style.width="100%";
-    if(link)files.push({url:link,name:"رابط المشروع",type:"link"});
-    const row={title:$("uT").value.trim(),student_name:$("uN").value.trim(),year:+$("uY").value,type:$("uTy").value,description:$("uD").value.trim(),file_url:files[0]?.url||null,image_url,claims_award:claims,award_title:claims?$("uAT").value.trim():null};
-    let r=await sb.from("works").insert({...row,files});
-    if(r.error&&/files|column|schema/i.test(r.error.message)) r=await sb.from("works").insert(row);
-    if(r.error){err.textContent="تعذّر حفظ المشروع: "+r.error.message;return}
-    e.target.reset();picked=[];drawFiles();$("awWrap").hidden=true;$("upD").close();toast("تم الإرسال، وسيظهر بعد مراجعة المشرف");loadMine();
-  }finally{btn.disabled=false;btn.textContent="إرسال للمراجعة";pg.hidden=true}
+    const imgs=uploaded.filter(u=>u.type.startsWith("image/")), doc=uploaded.find(u=>!u.type.startsWith("image/"));
+    const row={title:$("uT").value.trim(),student_name:$("uN").value.trim(),year:+$("uY").value,type:$("uTy").value,description:$("uD").value.trim(),
+      file_url:link||(doc||imgs[0]||{}).url||null,image_url:(imgs[0]||{}).url||null,claims_award:claims,award_title:claims?$("uAT").value.trim():null};
+    const files=uploaded.map(({url,name,type,size})=>({url,name,type,size}));
+    let ins=await sb.from("works").insert({...row,files});
+    if(ins.error&&/files/i.test(ins.error.message||"")&&/column|schema/i.test(ins.error.message||"")) ins=await sb.from("works").insert(row); /* عمود files غير مضاف بعد */
+    if(ins.error)throw {user:"تعذّر حفظ المشروع: "+(ins.error.message||"خطأ غير معروف")};
+    e.target.reset(); picked=[]; renderPicked(); $("awWrap").hidden=true; $("upD").close();
+    toast("تم الإرسال، وسيظهر بعد مراجعة المشرف"); loadMine();
+  }catch(x){
+    err.textContent=x&&x.user?x.user:"حدث خطأ أثناء الرفع، تأكدي من الاتصال وحاولي مرة أخرى";
+    if(uploaded.length)sb.storage.from(BUCKET).remove(uploaded.map(u=>u.path)).catch(()=>{});
+  }finally{btn.disabled=false;btn.textContent="إرسال للمراجعة"}
 });
 
 /* ---------- العرض ---------- */
 async function loadWorks(){
-  if(!sb){works=DEMO;return draw()}
-  const {data,error}=await sb.from("works").select("*").eq("status","approved").order("created_at",{ascending:false});
-  if(error)toast("تعذّر تحميل الإبداعات");
-  works=error?[]:data; draw();
+  state="loading"; draw();
+  try{
+    if(!sb)throw new Error("no client");
+    const {data,error}=await sb.from("works").select("*").eq("status","approved").order("created_at",{ascending:false});
+    if(error)throw error;
+    works=(data||[]).map(normAward); state="ok";
+  }catch(x){works=[]; state="error"; toast("تعذّر تحميل الإبداعات")}
+  draw();
 }
-const thumb=w=>{const u=url(w.image_url);return `<div class="thumb">${u?`<img src="${esc(u)}" alt="${esc(w.title)}" loading="lazy">`:'<svg><use href="#fly"/></svg>'}</div>`};
 const card=w=>`<article class="card">${thumb(w)}<div class="body">
   <div class="tags"><span class="tag">${esc(yname(w.year))}</span><span class="tag">${esc(TYPES[w.type]||w.type)}</span>${w.award?'<span class="tag t">فائز</span>':""}</div>
   <h3>${esc(w.title)}</h3><div class="by">${esc(w.student_name)}</div><button class="btn sm" data-id="${esc(w.id)}">التفاصيل</button></div></article>`;
-const match=w=>!term||[w.title,w.student_name,w.description].join(" ").includes(term);
+const match=w=>{const t=fold(term);return !t||fold([w.title,w.student_name,w.description,w.award_title].join(" ")).includes(t)};
+const stateMsg=(style="")=>state==="loading"?`<div class="empty" style="${style}">جارٍ التحميل…</div>`
+  :state==="error"?`<div class="empty" style="${style}">تعذّر تحميل الإبداعات، تأكدي من الاتصال بالإنترنت. <button class="btn sm" data-retry>إعادة المحاولة</button></div>`:"";
+const cnt=n=>state==="ok"?n+" عمل":"…";
 
 function draw(){
-  const win=works.filter(w=>w.award&&match(w)).sort((a,b)=>a.award-b.award);
-  $("winners").style.display=works.some(w=>w.award)?"":"none";
-  $("wgrid").innerHTML=win.length?win.map(w=>`
-    <article class="win r${w.award}" data-id="${esc(w.id)}" tabindex="0" role="button" aria-label="${esc(w.title)}"><span class="medal"><b>${w.award}</b>المركز ${["","الأول","الثاني","الثالث"][w.award]||w.award}</span>${thumb(w)}
-    <div class="body"><span class="award"><svg class="ic s"><use href="#cup"/></svg>${esc(w.award_title)}</span><h3>${esc(w.title)}</h3><span class="by">${esc(w.student_name)} · ${esc(yname(w.year))}</span></div></article>`).join(""):'<div class="empty">لا نتائج مطابقة.</div>';
+  const winners=works.filter(w=>w.award).sort((a,b)=>a.award-b.award), shown=winners.filter(match);
+  $("wgrid").innerHTML=state!=="ok"?stateMsg()
+    :shown.length?shown.map(w=>`
+    <article class="win r${w.award}" data-id="${esc(w.id)}" tabindex="0" role="button" aria-label="${esc(w.title)}"><span class="medal"><b>${w.award}</b>المركز ${["","الأول","الثاني","الثالث"][w.award]}</span>${thumb(w)}
+    <div class="body"><span class="award"><svg class="ic s" aria-hidden="true"><use href="#cup"/></svg>${esc(w.award_title||"مشروع فائز")}</span><h3>${esc(w.title)}</h3><span class="by">${esc(w.student_name)} · ${esc(yname(w.year))}</span></div></article>`).join("")
+    :`<div class="empty win-empty"><svg class="ic" aria-hidden="true"><use href="#cup"/></svg><p>${winners.length?"لا نتائج مطابقة للبحث.":"ستظهر المشاريع الفائزة هنا فور اعتمادها."}</p></div>`;
 
-  $("ygrid").innerHTML=YEARS.slice(0,5).map((y,i)=>`<button class="ycard" data-y="${i+1}" aria-pressed="${fy===i+1}"><span class="yn">${i+1}</span><h3>${i===4?"الخامسة فارم دي":"الفرقة "+YSHORT[i]}</h3><span>${works.filter(w=>w.year===i+1).length} عمل</span></button>`).join("")+`<a class="ycard cl" href="#clinical"><span class="yn">℞</span><h3>فارم دي كلينكال</h3><span>${works.filter(w=>w.year===6).length} عمل</span></a>`;
+  $("ygrid").innerHTML=YEARS.slice(0,5).map((y,i)=>`<button class="ycard" data-y="${i+1}" aria-pressed="${fy===i+1}"><span class="yn">${i+1}</span><h3>${i===4?"الخامسة فارم دي":"الفرقة "+YSHORT[i]}</h3><span>${cnt(works.filter(w=>w.year===i+1).length)}</span></button>`).join("")+`<a class="ycard cl" href="#clinical"><span class="yn">℞</span><h3>فارم دي كلينكال</h3><span>${cnt(works.filter(w=>w.year===6).length)}</span></a>`;
 
   $("fbar").innerHTML=`<button class="chip" data-fy="0" aria-pressed="${!fy}">كل الفرق</button>`
    +YSHORT.map((y,i)=>`<button class="chip" data-fy="${i+1}" aria-pressed="${fy===i+1}">${y}</button>`).join("")
@@ -494,39 +568,44 @@ function draw(){
    +Object.entries(TYPES).map(([k,v])=>`<button class="chip" data-ft="${k}" aria-pressed="${ft===k}">${v}</button>`).join("");
 
   const list=works.filter(w=>w.year<=5&&(!fy||w.year===fy)&&(!ft||w.type===ft)&&match(w));
-  $("count").textContent=list.length+" عمل";
-  $("grid").innerHTML=list.length?list.map(card).join(""):'<div class="empty">لا توجد أعمال مطابقة.</div>';
+  $("count").textContent=state==="ok"?list.length+" عمل":"";
+  $("grid").innerHTML=state!=="ok"?stateMsg():list.length?list.map(card).join(""):'<div class="empty">لا توجد أعمال مطابقة.</div>';
 
   $("cpath").innerHTML=YSHORT.map((y,i)=>`<button class="ci" data-y="${i+1}"><span class="yn">${i+1}</span>${i===4?"الخامسة فارم دي":"الفرقة "+y}</button>`).join("")+'<a class="ci cur" href="#clinical" aria-current="true"><span class="yn">℞</span>فارم دي كلينكال</a>';
   const cl=works.filter(w=>w.year===6&&match(w));
-  $("cgrid").innerHTML=cl.length?cl.map(card).join(""):'<div class="empty" style="color:#B8C6EA">لا توجد مشاريع في هذا الركن بعد.</div>';
+  $("cgrid").innerHTML=state!=="ok"?stateMsg("color:#B8C6EA"):cl.length?cl.map(card).join(""):'<div class="empty" style="color:#B8C6EA">لا توجد مشاريع في هذا الركن بعد.</div>';
 }
 
 document.addEventListener("keydown",e=>{const d=e.target.closest&&e.target.closest(".win");if(d&&(e.key==="Enter"||e.key===" ")){e.preventDefault();show(d.dataset.id)}});
 document.addEventListener("click",e=>{
-  const t=e.target, y=t.closest("[data-y]"); if(y){fy=fy===+y.dataset.y?0:+y.dataset.y;draw();$("works").scrollIntoView();return}
+  const t=e.target;
+  if(t.closest("[data-retry]")){loadWorks();return}
+  const rm=t.closest("[data-rm]"); if(rm){picked.splice(+rm.dataset.rm,1);renderPicked();return}
+  const y=t.closest("[data-y]"); if(y){fy=fy===+y.dataset.y?0:+y.dataset.y;draw();$("works").scrollIntoView();return}
   const ms=t.closest("[data-ms]"); if(ms){mf=ms.dataset.ms;renderMine();return}
   const cf=t.closest("[data-fy]"); if(cf){fy=+cf.dataset.fy;draw();return}
   const ct=t.closest("[data-ft]"); if(ct){ft=ct.dataset.ft;draw();return}
   const d=t.closest("[data-id]"); if(d)show(d.dataset.id,d.dataset.src);
 });
 $("q").addEventListener("input",e=>{term=e.target.value.trim();draw()});
+$("q").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();(term?$("works"):$("winners")).scrollIntoView()}});
 
 function show(id,src){
   const w=(src==="mine"?mine:works).find(x=>String(x.id)===String(id)); if(!w)return;
-  const fl=(Array.isArray(w.files)&&w.files.length?w.files:(url(w.file_url)?[{url:w.file_url,name:"فتح / تحميل العمل",type:""}]:[])).filter(x=>url(x.url));
-  const fv=fl.map(x=>{const k=kind(x.type||""),u=esc(x.url);return k==="image"?`<img src="${u}" alt="${esc(x.name)}" loading="lazy">`:k==="video"?`<video src="${u}" controls playsinline preload="metadata"></video>`:`<a class="btn gold" href="${u}" target="_blank" rel="noopener noreferrer">${esc(x.type==="link"?"فتح الرابط":(x.type?"تحميل: ":"")+(x.name||"ملف"))}</a>`}).join("");
+  const its=itemsOf(w), vis=its.filter(f=>ytId(f.url)||isVid(f)||isAud(f)||isImg(f)), oth=its.filter(f=>!vis.includes(f));
   $("dT").textContent=w.title;
-  $("dB").innerHTML=`${fl.some(x=>kind(x.type||"")!=="file")?"":thumb(w)}<div class="tags" style="margin-bottom:10px"><span class="tag">${esc(yname(w.year))}</span><span class="tag">${esc(TYPES[w.type]||w.type)}</span>${w.award?`<span class="tag t">${esc(w.award_title)}</span>`:""}</div>
-   <p>${esc(w.description)}</p><p class="by" style="margin-top:10px">إعداد: ${esc(w.student_name)}</p><div class="fv">${fv}</div>`;
+  $("dB").innerHTML=`${vis.length?vis.map(mediaHtml).join(""):thumb(w)}<div class="tags" style="margin:8px 0"><span class="tag">${esc(yname(w.year))}</span><span class="tag">${esc(TYPES[w.type]||w.type)}</span>${w.award?`<span class="tag t">${esc(w.award_title||"فائز")}</span>`:""}</div>
+   <p>${esc(w.description)}</p><p class="by" style="margin-top:10px">إعداد: ${esc(w.student_name)}</p>${oth.map(linkHtml).join("")}`;
   $("dlg").showModal();
 }
+$("dlg").addEventListener("close",()=>{$("dB").innerHTML=""}); /* يوقف تشغيل الفيديو عند الإغلاق */
 document.querySelectorAll("[data-close]").forEach(b=>b.onclick=()=>b.closest("dialog").close());
-document.querySelectorAll("dialog").forEach(d=>d.addEventListener("click",e=>{if(e.target===d)d.close()}));
+document.querySelectorAll("dialog").forEach(d=>d.addEventListener("click",e=>{if(e.target===d&&d.id!=="pinD")d.close()}));
 
 $("yr").textContent=new Date().getFullYear();
-renderAuth();renderMine();loadWorks();
-if(sb){sb.auth.getSession().then(({data})=>setUser(data.session?.user||null));sb.auth.onAuthStateChange((_e,s)=>setUser(s?.user||null))}
+renderAuth();renderMine();
+loadWorks().then(()=>{const h=location.hash&&document.getElementById(decodeURIComponent(location.hash.slice(1)));if(h)setTimeout(()=>h.scrollIntoView(),50)});
+if(sb){sb.auth.getSession().then(({data})=>setUser(data.session?.user||null));sb.auth.onAuthStateChange((_e,s)=>{if((s?.user?.id||null)!==(user?.id||null))setUser(s?.user||null)})}
 </script>
 </body>
 </html>
