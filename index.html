@@ -221,32 +221,13 @@ footer{background:var(--navy);color:#B8C6EA;text-align:center;padding:26px 0;fon
 
 <!-- دخول -->
 <dialog id="authD">
-  <div class="dh"><h3 id="aTitle">مرحباً بك في اليعسوب</h3><button class="x" data-close aria-label="إغلاق">×</button></div>
-  <form class="db" id="authF" novalidate>
-    <button class="btn line" style="width:100%;padding:11px;gap:12px;font-size:18px" type="button" id="gBtn">
-      <svg width="22" height="22" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3A12 12 0 1 1 24 12c3 0 5.8 1.1 7.9 3l5.7-5.7A20 20 0 1 0 44 24c0-1.3-.1-2.6-.4-3.9z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8A12 12 0 0 1 24 12c3 0 5.8 1.1 7.9 3l5.7-5.7A20 20 0 0 0 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2A12 12 0 0 1 12.7 28l-6.5 5A20 20 0 0 0 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3a12 12 0 0 1-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z"/></svg>
-      الدخول بحساب Gmail الخاص بك
-    </button>
-    <p class="hint" style="text-align:center;margin-top:6px">بضغطة واحدة، بدون كلمة مرور جديدة</p>
-    <div class="or">أو بالبريد وكلمة المرور</div>
-    <div class="tabs" role="tablist"><button type="button" role="tab" id="tIn" aria-selected="true">تسجيل الدخول</button><button type="button" role="tab" id="tUp" aria-selected="false">حساب جديد</button></div>
-    <div id="upWrap" hidden>
-      <label for="aName">الاسم الرباعي</label><input id="aName" autocomplete="name">
-      <label for="aYear">الفرقة / التخصص</label><select id="aYear"></select>
-    </div>
-    <label for="aMail">البريد الإلكتروني</label><input id="aMail" type="email" autocomplete="email" inputmode="email">
-    <div id="pwWrap"><label for="aPass">كلمة المرور (8 أحرف فأكثر)</label><input id="aPass" type="password" autocomplete="current-password"></div>
+  <div class="dh"><h3>دخول الطالبة</h3><button class="x" data-close aria-label="إغلاق">×</button></div>
+  <form class="db" id="authF">
+    <label for="aName">الاسم الرباعي</label><input id="aName" autocomplete="name" required>
+    <label for="aYear">الفرقة / التخصص</label><select id="aYear"></select>
+    <p class="hint" style="margin-top:8px">بدون كلمة مرور. اكتبي اسمك بنفس الطريقة في كل مرة، وتظهر لك مشاريعك من أي جهاز.</p>
     <p class="err" id="aErr" role="alert"></p>
-    <button class="btn" style="width:100%" id="aGo" type="submit">دخول</button>
-    <div class="alt"><button type="button" class="lnk" id="forgot">نسيت كلمة المرور؟</button><button type="button" class="lnk" id="magic">الدخول برابط على بريدي بدون كلمة مرور</button></div>
-  </form>
-</dialog>
-<dialog id="pwD">
-  <div class="dh"><h3>كلمة مرور جديدة</h3></div>
-  <form class="db" id="pwF">
-    <label for="nPass">اكتبي كلمة المرور الجديدة (8 أحرف فأكثر)</label><input id="nPass" type="password" autocomplete="new-password" minlength="8" required>
-    <p class="err" id="nErr" role="alert"></p>
-    <button class="btn" style="width:100%" type="submit">حفظ والدخول</button>
+    <button class="btn" style="width:100%" type="submit">دخول</button>
   </form>
 </dialog>
 
@@ -290,7 +271,7 @@ const DEMO = [
  {id:4,title:"فيديو شرح آلية عمل الأنسولين",student_name:"يوسف حسن عادل",year:3,type:"video",description:"فيديو متحرك يبسّط مسار الإشارة داخل الخلية."}
 ];
 
-const sb = window.supabase ? window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY) : null;
+const sb = window.supabase ? window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY,{auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false}}) : null;
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? "").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const url = u => /^https?:\/\//i.test(u||"") ? u : "";
@@ -298,98 +279,50 @@ const toast = m => {const t=$("toast");t.textContent=m;t.classList.add("on");set
 const yname = y => YEARS[y-1]||"";
 let works=[], mine=[], user=null, fy=0, ft="", term="";
 
-/* ---------- الحساب ---------- */
+/* ---------- الدخول بالاسم والفرقة (بدون كلمة مرور) ---------- */
+const PK="yaasoub_profile";
+function getProfile(){try{const p=JSON.parse(localStorage.getItem(PK)||"null");return p&&p.name&&p.year?p:null}catch(_){return null}}
 function renderAuth(){
-  if(!user){ $("authBox").innerHTML='<button class="btn gold sm" id="inBtn">دخول</button>'; $("inBtn").onclick=()=>openAuth(); return; }
-  const n=(user.user_metadata?.full_name||user.email||"؟");
-  $("authBox").innerHTML=`<span class="av">${esc(n.charAt(0))}</span><span class="nm">${esc(n.split(" ").slice(0,2).join(" "))}</span><button class="out" id="outBtn">خروج</button>`;
-  $("outBtn").onclick=async()=>{await sb.auth.signOut()};
+  if(!user){$("authBox").innerHTML='<button class="btn gold sm" id="inBtn">دخول</button>';$("inBtn").onclick=openAuth;return}
+  $("authBox").innerHTML=`<span class="av">${esc(user.name.charAt(0))}</span><span class="nm">${esc(user.name.split(" ").slice(0,2).join(" "))}</span><button class="out" id="outBtn">خروج</button>`;
+  $("outBtn").onclick=()=>{try{localStorage.removeItem(PK)}catch(_){}setUser(null);toast("تم تسجيل الخروج")};
 }
 function renderMine(){
   const box=$("mineBox");
-  if(!user){ box.innerHTML='<div class="top"><p>سجّلي دخولك لرفع مشروعك ومتابعة حالة مشاريعك.</p><button class="btn" id="mIn">تسجيل الدخول</button></div>'; $("mIn").onclick=()=>openAuth(); return; }
-  box.innerHTML=`<div class="top"><p>مشاريعي المرفوعة (${mine.length})</p><button class="btn gold" id="mUp">+ رفع مشروع جديد</button></div>
+  if(!user){box.innerHTML='<div class="top"><p>سجّلي دخولك بالاسم والفرقة لرفع مشروعك ومتابعة مشاريعك.</p><button class="btn" id="mIn">دخول</button></div>';$("mIn").onclick=openAuth;return}
+  box.innerHTML=`<div class="top"><p>${esc(user.name)} · ${esc(yname(user.year))}<br>مشاريعي المرفوعة (${mine.length})</p><button class="btn gold" id="mUp">+ رفع مشروع جديد</button></div>
    <div class="grid">${mine.length?mine.map(w=>{const s=STATUS[w.status]||STATUS.pending;return `
     <article class="card">${thumb(w)}<div class="body">
       <div class="tags"><span class="tag ${s[0]}">${s[1]}</span><span class="tag">${esc(yname(w.year))}</span>${w.claims_award?`<span class="tag t">${w.award?"فائز":"ادّعاء جائزة قيد التحقق"}</span>`:""}</div>
       <h3>${esc(w.title)}</h3><button class="btn line sm" data-id="${esc(w.id)}" data-src="mine">عرض</button></div></article>`}).join(""):'<div class="empty">لم ترفعي أي مشروع بعد.</div>'}</div>`;
   $("mUp").onclick=openUpload;
 }
-function setUser(u){user=u;renderAuth();loadMine()}
 async function loadMine(){
-  mine=[]; if(user&&sb){const {data}=await sb.from("works").select("*").eq("user_id",user.id).order("created_at",{ascending:false}); mine=data||[]}
+  mine=[];
+  if(user&&sb){const {data,error}=await sb.rpc("get_my_works",{p_name:user.name,p_year:user.year});if(error)toast("تعذّر تحميل مشاريعك");else mine=data||[]}
   renderMine();
 }
-let mode="in";
-const REDIRECT=location.origin+location.pathname;
-const MODES={in:{b:"دخول",pw:1,up:0},up:{b:"إنشاء الحساب",pw:1,up:1},fg:{b:"إرسال رابط استعادة كلمة المرور",pw:0,up:0},ml:{b:"إرسال رابط الدخول إلى بريدي",pw:0,up:0}};
+function setUser(u){user=u;renderAuth();loadMine()}
 $("aYear").innerHTML=YEARS.map((y,i)=>`<option value="${i+1}">${y}</option>`).join("");
-function setMode(m){
-  mode=m; const c=MODES[m];
-  $("tIn").setAttribute("aria-selected",m==="in"); $("tUp").setAttribute("aria-selected",m==="up");
-  $("upWrap").hidden=!c.up; $("pwWrap").hidden=!c.pw; $("aGo").textContent=c.b; $("aErr").textContent="";
-  $("aPass").autocomplete=m==="up"?"new-password":"current-password";
-  $("aTitle").textContent={fg:"استعادة كلمة المرور",ml:"الدخول برابط البريد"}[m]||"مرحباً بك في اليعسوب";
-  $("forgot").hidden=m!=="in"; $("magic").hidden=m==="ml"||m==="fg";
-}
-function openAuth(m="in"){setMode(m);$("authD").showModal()}
-$("tIn").onclick=()=>setMode("in"); $("tUp").onclick=()=>setMode("up");
-$("forgot").onclick=()=>setMode("fg"); $("magic").onclick=()=>setMode("ml");
-function authMsg(e){
-  const t=(e.message||"").toLowerCase();
-  if(t.includes("invalid login"))return "البريد أو كلمة المرور غير صحيحة. لو نسيتِ كلمة المرور اضغطي «نسيت كلمة المرور؟».";
-  if(t.includes("not confirmed"))return "فعّلي بريدك أولاً من رسالة التأكيد، وراجعي الرسائل غير المرغوبة.";
-  if(t.includes("not authorized"))return "إرسال البريد غير مفعّل بعد، يلزم إعداد SMTP في Supabase.";
-  if(t.includes("rate limit")||t.includes("security purposes"))return "محاولات كثيرة، انتظري دقيقة ثم حاولي مجدداً.";
-  if(t.includes("password"))return "كلمة المرور ضعيفة، استخدمي 8 أحرف على الأقل.";
-  return "حدث خطأ، حاولي مرة أخرى.";
-}
-$("authF").addEventListener("submit",async e=>{
-  e.preventDefault(); const err=$("aErr"); err.textContent="";
-  if(!sb){err.textContent="تعذّر الاتصال بالخادم";return}
-  const email=$("aMail").value.trim().toLowerCase(), password=$("aPass").value, btn=$("aGo");
-  if(!/^\S+@\S+\.\S+$/.test(email)){err.textContent="اكتبي بريداً إلكترونياً صحيحاً";return}
-  btn.disabled=true;
-  try{
-    if(mode==="up"){
-      const full_name=$("aName").value.trim().replace(/\s+/g," ");
-      if(full_name.split(" ").length<4){err.textContent="اكتبي الاسم الرباعي كاملاً";return}
-      if(password.length<8){err.textContent="كلمة المرور 8 أحرف على الأقل";return}
-      const {data,error}=await sb.auth.signUp({email,password,options:{emailRedirectTo:REDIRECT,data:{full_name,year:+$("aYear").value}}});
-      if(error){err.textContent=authMsg(error);return}
-      if(data.user&&data.user.identities&&data.user.identities.length===0){err.textContent="هذا البريد مسجّل بالفعل. اضغطي «تسجيل الدخول» ثم «نسيت كلمة المرور؟».";return}
-      $("authD").close(); toast(data.session?"أهلاً بك في اليعسوب":"تم إرسال رسالة تأكيد إلى بريدك. اضغطي الرابط فيها ثم سجّلي الدخول");
-    }else if(mode==="in"){
-      if(!password){err.textContent="اكتبي كلمة المرور";return}
-      const {error}=await sb.auth.signInWithPassword({email,password});
-      if(error){err.textContent=authMsg(error);return}
-      $("authD").close();
-    }else if(mode==="fg"){
-      const {error}=await sb.auth.resetPasswordForEmail(email,{redirectTo:REDIRECT});
-      if(error){err.textContent=authMsg(error);return}
-      $("authD").close(); toast("لو البريد مسجّل ستصلك رسالة بها رابط كلمة مرور جديدة");
-    }else{
-      const {error}=await sb.auth.signInWithOtp({email,options:{emailRedirectTo:REDIRECT,shouldCreateUser:true}});
-      if(error){err.textContent=authMsg(error);return}
-      $("authD").close(); toast("أرسلنا رابط الدخول إلى بريدك. افتحيه من نفس الجهاز");
-    }
-  }finally{btn.disabled=false}
+function openAuth(){$("aErr").textContent="";$("authD").showModal()}
+$("authF").addEventListener("submit",e=>{
+  e.preventDefault();
+  const name=$("aName").value.trim().replace(/\s+/g," "), year=+$("aYear").value;
+  if(name.split(" ").length<4){$("aErr").textContent="اكتبي الاسم الرباعي كاملاً";return}
+  try{localStorage.setItem(PK,JSON.stringify({name,year}))}catch(_){}
+  $("authD").close();setUser({name,year});toast("أهلاً بك، تم فتح مساحتك");$("mine").scrollIntoView();
 });
-$("pwF").addEventListener("submit",async e=>{
-  e.preventDefault(); const p=$("nPass").value;
-  if(p.length<8){$("nErr").textContent="8 أحرف على الأقل";return}
-  const {error}=await sb.auth.updateUser({password:p});
-  if(error){$("nErr").textContent=authMsg(error);return}
-  $("pwD").close(); e.target.reset(); toast("تم حفظ كلمة المرور الجديدة");
-});
-$("gBtn").onclick=async()=>{const {error}=await sb.auth.signInWithOAuth({provider:"google",options:{redirectTo:REDIRECT}}); if(error)$("aErr").textContent="دخول Google غير مفعّل بعد في Supabase"};
 
 /* ---------- الرفع ---------- */
 $("uY").innerHTML=YEARS.map((y,i)=>`<option value="${i+1}">${y}</option>`).join("");
 $("uTy").innerHTML=Object.entries(TYPES).map(([k,v])=>`<option value="${k}">${v}</option>`).join("");
 $("uA").onchange=e=>{$("awWrap").hidden=!e.target.checked};
 const MAX=50*1024*1024, EXTS=["jpg","jpeg","png","webp","gif","pdf","ppt","pptx","doc","docx","mp4","mov","webm","m4v"];
-function openUpload(){ $("uN").value=user?.user_metadata?.full_name||""; $("uY").value=user?.user_metadata?.year||1; $("uErr").textContent=""; $("pg").hidden=true; $("upD").showModal(); }
+function openUpload(){
+  if(!user){openAuth();return}
+  $("uN").value=user.name;$("uN").readOnly=true;$("uY").value=user.year;$("uY").disabled=true;
+  $("uErr").textContent="";$("pg").hidden=true;$("upD").showModal();
+}
 async function shrink(file){
   if(!/^image\/(jpeg|png|webp)$/.test(file.type)||file.size<400*1024)return file;
   try{
@@ -400,18 +333,17 @@ async function shrink(file){
     return blob&&blob.size<file.size?new File([blob],"img.webp",{type:"image/webp"}):file;
   }catch(_){return file}
 }
-async function putFile(path,file,onp){
-  const {data:{session}}=await sb.auth.getSession(); if(!session)throw new Error("auth");
+function putFile(path,file,onp){
   return new Promise((res,rej)=>{
     const x=new XMLHttpRequest();
     x.open("POST",`${SUPABASE_URL}/storage/v1/object/${BUCKET}/${path}`);
-    x.setRequestHeader("Authorization","Bearer "+session.access_token);
+    x.setRequestHeader("Authorization","Bearer "+SUPABASE_ANON_KEY);
     x.setRequestHeader("apikey",SUPABASE_ANON_KEY);
     x.setRequestHeader("x-upsert","false");
     x.setRequestHeader("cache-control","max-age=3600");
     x.setRequestHeader("Content-Type",file.type||"application/octet-stream");
     x.upload.onprogress=ev=>ev.lengthComputable&&onp(ev.loaded/ev.total);
-    x.onload=()=>x.status<300?res():rej(new Error(x.responseText||x.status));
+    x.onload=()=>x.status<300?res():rej(new Error(x.responseText||String(x.status)));
     x.onerror=()=>rej(new Error("network"));
     x.send(file);
   });
@@ -433,20 +365,19 @@ $("upF").addEventListener("submit",async e=>{
     if(file){
       file=await shrink(file);
       const ext=(file.name.split(".").pop()||"bin").replace(/[^a-z0-9]/gi,"").toLowerCase();
-      const path=`${user.id}/${Date.now()}-${Math.random().toString(36).slice(2,7)}.${ext}`;
+      const path=`u/${Date.now()}-${Math.random().toString(36).slice(2,8)}.${ext}`;
       pg.hidden=false; bar.style.width="0";
       await putFile(path,file,f=>{bar.style.width=Math.round(f*100)+"%";btn.textContent="جارٍ الرفع "+Math.round(f*100)+"%"});
-      file_url=sb.storage.from(BUCKET).getPublicUrl(path).data.publicUrl;
+      file_url=`${SUPABASE_URL}/storage/v1/object/public/${BUCKET}/${path}`;
       if(file.type.startsWith("image/"))image_url=file_url;
     }
     btn.textContent="جارٍ الحفظ...";
-    const row={title:$("uT").value.trim(),student_name:$("uN").value.trim(),year:+$("uY").value,type:$("uTy").value,description:$("uD").value.trim(),file_url,image_url,claims_award:claims,award_title:claims?$("uAT").value.trim():null};
+    const row={title:$("uT").value.trim(),student_name:user.name,year:user.year,type:$("uTy").value,description:$("uD").value.trim(),file_url,image_url,claims_award:claims,award_title:claims?$("uAT").value.trim():null};
     const {error}=await sb.from("works").insert(row);
-    if(error){err.textContent="تعذّر حفظ المشروع. تأكدي أنك مسجّلة الدخول وحاولي مجدداً";return}
-    if(!user.user_metadata?.year)sb.auth.updateUser({data:{full_name:row.student_name,year:row.year}});
+    if(error){err.textContent=String(error.message).includes("daily_limit")?"وصلتِ للحد اليومي (10 مشاريع). حاولي غداً.":"تعذّر حفظ المشروع، حاولي مرة أخرى";return}
     e.target.reset();$("awWrap").hidden=true;$("upD").close();toast("تم الإرسال، وسيظهر بعد مراجعة المشرف");loadMine();
   }catch(ex){
-    err.textContent=String(ex.message||"").includes("auth")?"انتهت الجلسة، سجّلي الدخول مرة أخرى":"تعذّر رفع الملف. تأكدي من الاتصال ومن إعداد التخزين ثم حاولي مجدداً";
+    err.textContent="تعذّر رفع الملف. تأكدي من الاتصال ثم حاولي مجدداً";
   }finally{btn.disabled=false;btn.textContent="إرسال للمراجعة";pg.hidden=true}
 });
 
@@ -467,10 +398,9 @@ const match=w=>!term||[w.title,w.student_name,w.description].join(" ").includes(
 
 function draw(){
   const win=works.filter(w=>w.award&&match(w)).sort((a,b)=>a.award-b.award);
-  $("winners").style.display=works.some(w=>w.award)?"":"none";
   $("wgrid").innerHTML=win.length?win.map(w=>`
     <button class="win r${w.award}" data-id="${esc(w.id)}"><span class="medal"><b>${w.award}</b>المركز ${["","الأول","الثاني","الثالث"][w.award]||w.award}</span>${thumb(w)}
-    <div class="body"><span class="award">${esc(w.award_title)}</span><h3>${esc(w.title)}</h3><span class="by">${esc(w.student_name)} · ${esc(yname(w.year))}</span></div></button>`).join(""):'<div class="empty">لا نتائج مطابقة.</div>';
+    <div class="body"><span class="award">${esc(w.award_title)}</span><h3>${esc(w.title)}</h3><span class="by">${esc(w.student_name)} · ${esc(yname(w.year))}</span></div></button>`).join(""):'<div class="empty">'+(term?'لا نتائج مطابقة.':'لا توجد مشاريع فائزة حتى الآن. ستظهر هنا إبداعات الفائزين في مسابقات الجامعة بعد اعتمادها.')+'</div>';
 
   $("ygrid").innerHTML=YEARS.slice(0,5).map((y,i)=>`<button class="ycard" data-y="${i+1}" aria-pressed="${fy===i+1}"><span class="yn">${i+1}</span><h3>${i===4?"الخامسة فارم دي":"الفرقة "+YSHORT[i]}</h3><span>${works.filter(w=>w.year===i+1).length} عمل</span></button>`).join("");
 
@@ -509,8 +439,9 @@ document.querySelectorAll("[data-close]").forEach(b=>b.onclick=()=>b.closest("di
 document.querySelectorAll("dialog").forEach(d=>d.addEventListener("click",e=>{if(e.target===d)d.close()}));
 
 $("yr").textContent=new Date().getFullYear();
-renderAuth();renderMine();loadWorks();
-if(sb){sb.auth.getSession().then(({data})=>setUser(data.session?.user||null));sb.auth.onAuthStateChange((ev,s)=>{if(ev==="PASSWORD_RECOVERY")$("pwD").showModal();setUser(s?.user||null)})}
+const saved=getProfile();
+if(saved)setUser(saved);else{renderAuth();renderMine()}
+loadWorks();
 </script>
 </body>
 </html>
