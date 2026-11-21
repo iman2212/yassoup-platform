@@ -170,7 +170,7 @@ footer{background:var(--navy);color:#B8C6EA;text-align:center;padding:26px 0;fon
   <div class="wrap bar">
     <a href="#top" class="logo"><svg><use href="#fly"/></svg>اليعسوب</a>
     <nav class="nav">
-      <a href="#winners" class="g">الفائزة</a><a href="#years">الفرق</a><a href="#clinical">فارم دي كلينكال</a><a href="#mine">مساحتي</a>
+      <a href="#winners" class="g">الفائزة</a><a href="#years">الفرق</a><a href="#clinical">فارم دي كلينيكال</a><a href="#mine">مساحتي</a>
     </nav>
     <div class="hs"><input id="q" type="search" placeholder="ابحثي باسم الطالبة أو المشروع" aria-label="بحث"></div>
     <div class="me" id="authBox"></div>
@@ -201,7 +201,7 @@ footer{background:var(--navy);color:#B8C6EA;text-align:center;padding:26px 0;fon
 
   <section id="clinical">
     <div class="clin">
-      <div class="sh"><h2>ركن فارم دي كلينكال</h2><span>مشاريع وحالات طلاب PharmD Clinical</span></div>
+      <div class="sh"><h2>ركن فارم دي كلينيكال</h2><span>مشاريع طلاب شعبة فارم دي كلينيكال من كل الفرق</span></div>
       <div class="grid" id="cgrid"></div>
     </div>
   </section>
@@ -224,7 +224,8 @@ footer{background:var(--navy);color:#B8C6EA;text-align:center;padding:26px 0;fon
   <div class="dh"><h3>دخول الطالبة</h3><button class="x" data-close aria-label="إغلاق">×</button></div>
   <form class="db" id="authF">
     <label for="aName">الاسم الرباعي</label><input id="aName" autocomplete="name" required>
-    <label for="aYear">الفرقة / التخصص</label><select id="aYear"></select>
+    <label for="aYear">الفرقة</label><select id="aYear"></select>
+    <label for="aDiv">الشعبة</label><select id="aDiv"></select>
     <p class="hint" style="margin-top:8px">بدون كلمة مرور. اكتبي اسمك بنفس الطريقة في كل مرة، وتظهر لك مشاريعك من أي جهاز.</p>
     <p class="err" id="aErr" role="alert"></p>
     <button class="btn" style="width:100%" type="submit">دخول</button>
@@ -241,6 +242,7 @@ footer{background:var(--navy);color:#B8C6EA;text-align:center;padding:26px 0;fon
       <div><label for="uY">الفرقة / التخصص</label><select id="uY" required></select></div>
       <div><label for="uTy">نوع الإبداع</label><select id="uTy" required></select></div>
     </div>
+    <p class="hint" style="margin-top:8px">الشعبة: <b id="uDv"></b></p>
     <label for="uD">وصف مختصر</label><textarea id="uD" rows="3" required maxlength="1200"></textarea>
     <label for="uL">رابط المشروع أو التصميم (اختياري)</label><input id="uL" type="url" placeholder="https://">
     <label for="uF">أو ارفعي ملفاً: صورة، PDF، PowerPoint، أو فيديو (حتى 50 ميجا)</label><input id="uF" type="file" accept="image/*,.pdf,.ppt,.pptx,.doc,.docx,video/*">
@@ -260,14 +262,16 @@ const SUPABASE_URL = "https://oibsajvayvflexhqwgwt.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9pYnNhanZheXZmbGV4aHF3Z3d0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI2OTUxNjAsImV4cCI6MjEwODI3MTE2MH0.X0OW7016FvJlGaMvbHtnTUXNRt38ymnA5HCMdfiDeSk";
 const BUCKET = "works";
 
-const YEARS = ["الفرقة الأولى","الفرقة الثانية","الفرقة الثالثة","الفرقة الرابعة","الفرقة الخامسة فارم دي","فارم دي كلينكال"];
+const YEARS = ["الفرقة الأولى","الفرقة الثانية","الفرقة الثالثة","الفرقة الرابعة","الفرقة الخامسة"];
+const DIVS = {pharmd:"فارم دي",clinical:"فارم دي كلينيكال"};
+const dname = d => DIVS[d]||DIVS.pharmd;
 const YSHORT = ["الأولى","الثانية","الثالثة","الرابعة","الخامسة"];
 const TYPES = {design:"تصميم",research:"بحث",video:"فيديو",initiative:"مبادرة"};
 const STATUS = {pending:["wait","قيد المراجعة"],approved:["ok","معتمد"],rejected:["no","مرفوض"]};
 const DEMO = [
  {id:1,title:"بوستر التوعية بالمضادات الحيوية",student_name:"مريم خالد أحمد",year:2,type:"design",description:"تصاميم توعوية بألوان هادئة وخطوط عربية واضحة.",award:1,award_title:"المركز الأول في مسابقة التصميم الجامعية"},
  {id:2,title:"استخلاص مضادات الأكسدة من قشور الرمان",student_name:"أحمد علي محمود",year:4,type:"research",description:"بحث معملي يقارن ثلاث طرق للاستخلاص.",award:2,award_title:"المركز الثاني في ملتقى البحث العلمي"},
- {id:3,title:"مبادرة «دوائي في أمان»",student_name:"نور إبراهيم سعيد",year:6,type:"initiative",description:"حملة ميدانية لمراجعة أدوية كبار السن.",award:3,award_title:"المركز الثالث في مسابقة المبادرات"},
+ {id:3,title:"مبادرة «دوائي في أمان»",student_name:"نور إبراهيم سعيد",year:5,division:"clinical",type:"initiative",description:"حملة ميدانية لمراجعة أدوية كبار السن.",award:3,award_title:"المركز الثالث في مسابقة المبادرات"},
  {id:4,title:"فيديو شرح آلية عمل الأنسولين",student_name:"يوسف حسن عادل",year:3,type:"video",description:"فيديو متحرك يبسّط مسار الإشارة داخل الخلية."}
 ];
 
@@ -277,11 +281,11 @@ const esc = s => String(s ?? "").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",
 const url = u => /^https?:\/\//i.test(u||"") ? u : "";
 const toast = m => {const t=$("toast");t.textContent=m;t.classList.add("on");setTimeout(()=>t.classList.remove("on"),4000)};
 const yname = y => YEARS[y-1]||"";
-let works=[], mine=[], user=null, fy=0, ft="", term="";
+let works=[], mine=[], user=null, fy=0, fd="", ft="", term="";
 
 /* ---------- الدخول بالاسم والفرقة (بدون كلمة مرور) ---------- */
 const PK="yaasoub_profile";
-function getProfile(){try{const p=JSON.parse(localStorage.getItem(PK)||"null");return p&&p.name&&p.year?p:null}catch(_){return null}}
+function getProfile(){try{const p=JSON.parse(localStorage.getItem(PK)||"null");return p&&p.name&&p.year>=1&&p.year<=5&&DIVS[p.division]?p:null}catch(_){return null}}
 function renderAuth(){
   if(!user){$("authBox").innerHTML='<button class="btn gold sm" id="inBtn">دخول</button>';$("inBtn").onclick=openAuth;return}
   $("authBox").innerHTML=`<span class="av">${esc(user.name.charAt(0))}</span><span class="nm">${esc(user.name.split(" ").slice(0,2).join(" "))}</span><button class="out" id="outBtn">خروج</button>`;
@@ -290,27 +294,28 @@ function renderAuth(){
 function renderMine(){
   const box=$("mineBox");
   if(!user){box.innerHTML='<div class="top"><p>سجّلي دخولك بالاسم والفرقة لرفع مشروعك ومتابعة مشاريعك.</p><button class="btn" id="mIn">دخول</button></div>';$("mIn").onclick=openAuth;return}
-  box.innerHTML=`<div class="top"><p>${esc(user.name)} · ${esc(yname(user.year))}<br>مشاريعي المرفوعة (${mine.length})</p><button class="btn gold" id="mUp">+ رفع مشروع جديد</button></div>
+  box.innerHTML=`<div class="top"><p>${esc(user.name)} · ${esc(yname(user.year))} · ${esc(dname(user.division))}<br>مشاريعي المرفوعة (${mine.length})</p><button class="btn gold" id="mUp">+ رفع مشروع جديد</button></div>
    <div class="grid">${mine.length?mine.map(w=>{const s=STATUS[w.status]||STATUS.pending;return `
     <article class="card">${thumb(w)}<div class="body">
-      <div class="tags"><span class="tag ${s[0]}">${s[1]}</span><span class="tag">${esc(yname(w.year))}</span>${w.claims_award?`<span class="tag t">${w.award?"فائز":"ادّعاء جائزة قيد التحقق"}</span>`:""}</div>
+      <div class="tags"><span class="tag ${s[0]}">${s[1]}</span><span class="tag">${esc(yname(w.year))}</span><span class="tag">${esc(dname(w.division))}</span>${w.claims_award?`<span class="tag t">${w.award?"فائز":"ادّعاء جائزة قيد التحقق"}</span>`:""}</div>
       <h3>${esc(w.title)}</h3><button class="btn line sm" data-id="${esc(w.id)}" data-src="mine">عرض</button></div></article>`}).join(""):'<div class="empty">لم ترفعي أي مشروع بعد.</div>'}</div>`;
   $("mUp").onclick=openUpload;
 }
 async function loadMine(){
   mine=[];
-  if(user&&sb){const {data,error}=await sb.rpc("get_my_works",{p_name:user.name,p_year:user.year});if(error)toast("تعذّر تحميل مشاريعك");else mine=data||[]}
+  if(user&&sb){const {data,error}=await sb.rpc("get_my_works",{p_name:user.name,p_year:user.year,p_division:user.division});if(error)toast("تعذّر تحميل مشاريعك");else mine=data||[]}
   renderMine();
 }
 function setUser(u){user=u;renderAuth();loadMine()}
 $("aYear").innerHTML=YEARS.map((y,i)=>`<option value="${i+1}">${y}</option>`).join("");
+$("aDiv").innerHTML=Object.entries(DIVS).map(([k,v])=>`<option value="${k}">${v}</option>`).join("");
 function openAuth(){$("aErr").textContent="";$("authD").showModal()}
 $("authF").addEventListener("submit",e=>{
   e.preventDefault();
-  const name=$("aName").value.trim().replace(/\s+/g," "), year=+$("aYear").value;
+  const name=$("aName").value.trim().replace(/\s+/g," "), year=+$("aYear").value, division=$("aDiv").value;
   if(name.split(" ").length<4){$("aErr").textContent="اكتبي الاسم الرباعي كاملاً";return}
-  try{localStorage.setItem(PK,JSON.stringify({name,year}))}catch(_){}
-  $("authD").close();setUser({name,year});toast("أهلاً بك، تم فتح مساحتك");$("mine").scrollIntoView();
+  try{localStorage.setItem(PK,JSON.stringify({name,year,division}))}catch(_){}
+  $("authD").close();setUser({name,year,division});toast("أهلاً بك، تم فتح مساحتك");$("mine").scrollIntoView();
 });
 
 /* ---------- الرفع ---------- */
@@ -320,7 +325,7 @@ $("uA").onchange=e=>{$("awWrap").hidden=!e.target.checked};
 const MAX=50*1024*1024, EXTS=["jpg","jpeg","png","webp","gif","pdf","ppt","pptx","doc","docx","mp4","mov","webm","m4v"];
 function openUpload(){
   if(!user){openAuth();return}
-  $("uN").value=user.name;$("uN").readOnly=true;$("uY").value=user.year;$("uY").disabled=true;
+  $("uN").value=user.name;$("uN").readOnly=true;$("uY").value=user.year;$("uY").disabled=true;$("uDv").textContent=dname(user.division);
   $("uErr").textContent="";$("pg").hidden=true;$("upD").showModal();
 }
 async function shrink(file){
@@ -372,7 +377,7 @@ $("upF").addEventListener("submit",async e=>{
       if(file.type.startsWith("image/"))image_url=file_url;
     }
     btn.textContent="جارٍ الحفظ...";
-    const row={title:$("uT").value.trim(),student_name:user.name,year:user.year,type:$("uTy").value,description:$("uD").value.trim(),file_url,image_url,claims_award:claims,award_title:claims?$("uAT").value.trim():null};
+    const row={title:$("uT").value.trim(),student_name:user.name,year:user.year,division:user.division,type:$("uTy").value,description:$("uD").value.trim(),file_url,image_url,claims_award:claims,award_title:claims?$("uAT").value.trim():null};
     const {error}=await sb.from("works").insert(row);
     if(error){err.textContent=String(error.message).includes("daily_limit")?"وصلتِ للحد اليومي (10 مشاريع). حاولي غداً.":"تعذّر حفظ المشروع، حاولي مرة أخرى";return}
     e.target.reset();$("awWrap").hidden=true;$("upD").close();toast("تم الإرسال، وسيظهر بعد مراجعة المشرف");loadMine();
@@ -392,7 +397,7 @@ const fext=w=>((String(w.file_url||"").split("?")[0].split(".").pop())||"").toLo
 const FT={pdf:"PDF",ppt:"PowerPoint",pptx:"PowerPoint",doc:"Word",docx:"Word",mp4:"فيديو",mov:"فيديو",webm:"فيديو",m4v:"فيديو"};
 const thumb=w=>{const u=url(w.image_url),t=!u&&FT[fext(w)];return `<div class="thumb">${u?`<img src="${esc(u)}" alt="${esc(w.title)}" loading="lazy">`:'<svg><use href="#fly"/></svg>'}${t?`<span class="fl">${t}</span>`:""}</div>`};
 const card=w=>`<article class="card">${thumb(w)}<div class="body">
-  <div class="tags"><span class="tag">${esc(yname(w.year))}</span><span class="tag">${esc(TYPES[w.type]||w.type)}</span>${w.award?'<span class="tag t">فائز</span>':""}</div>
+  <div class="tags"><span class="tag">${esc(yname(w.year))}</span><span class="tag">${esc(dname(w.division))}</span><span class="tag">${esc(TYPES[w.type]||w.type)}</span>${w.award?'<span class="tag t">فائز</span>':""}</div>
   <h3>${esc(w.title)}</h3><div class="by">${esc(w.student_name)}</div><button class="btn sm" data-id="${esc(w.id)}">التفاصيل</button></div></article>`;
 const match=w=>!term||[w.title,w.student_name,w.description].join(" ").includes(term);
 
@@ -400,26 +405,28 @@ function draw(){
   const win=works.filter(w=>w.award&&match(w)).sort((a,b)=>a.award-b.award);
   $("wgrid").innerHTML=win.length?win.map(w=>`
     <button class="win r${w.award}" data-id="${esc(w.id)}"><span class="medal"><b>${w.award}</b>المركز ${["","الأول","الثاني","الثالث"][w.award]||w.award}</span>${thumb(w)}
-    <div class="body"><span class="award">${esc(w.award_title)}</span><h3>${esc(w.title)}</h3><span class="by">${esc(w.student_name)} · ${esc(yname(w.year))}</span></div></button>`).join(""):'<div class="empty">'+(term?'لا نتائج مطابقة.':'لا توجد مشاريع فائزة حتى الآن. ستظهر هنا إبداعات الفائزين في مسابقات الجامعة بعد اعتمادها.')+'</div>';
+    <div class="body"><span class="award">${esc(w.award_title)}</span><h3>${esc(w.title)}</h3><span class="by">${esc(w.student_name)} · ${esc(yname(w.year))} · ${esc(dname(w.division))}</span></div></button>`).join(""):'<div class="empty">'+(term?'لا نتائج مطابقة.':'لا توجد مشاريع فائزة حتى الآن. ستظهر هنا إبداعات الفائزين في مسابقات الجامعة بعد اعتمادها.')+'</div>';
 
-  $("ygrid").innerHTML=YEARS.slice(0,5).map((y,i)=>`<button class="ycard" data-y="${i+1}" aria-pressed="${fy===i+1}"><span class="yn">${i+1}</span><h3>${i===4?"الخامسة فارم دي":"الفرقة "+YSHORT[i]}</h3><span>${works.filter(w=>w.year===i+1).length} عمل</span></button>`).join("");
+  $("ygrid").innerHTML=YEARS.map((y,i)=>`<button class="ycard" data-y="${i+1}" aria-pressed="${fy===i+1}"><span class="yn">${i+1}</span><h3>${esc(y)}</h3><span>${works.filter(w=>w.year===i+1).length} عمل</span></button>`).join("");
 
   $("fbar").innerHTML=`<button class="chip" data-fy="0" aria-pressed="${!fy}">كل الفرق</button>`
    +YSHORT.map((y,i)=>`<button class="chip" data-fy="${i+1}" aria-pressed="${fy===i+1}">${y}</button>`).join("")
+   +`<span class="sep"></span><button class="chip" data-fd="" aria-pressed="${!fd}">كل الشعب</button>`+Object.entries(DIVS).map(([k,v])=>`<button class="chip" data-fd="${k}" aria-pressed="${fd===k}">${v}</button>`).join("")
    +`<span class="sep"></span><button class="chip" data-ft="" aria-pressed="${!ft}">كل الأنواع</button>`
    +Object.entries(TYPES).map(([k,v])=>`<button class="chip" data-ft="${k}" aria-pressed="${ft===k}">${v}</button>`).join("");
 
-  const list=works.filter(w=>w.year<=5&&(!fy||w.year===fy)&&(!ft||w.type===ft)&&match(w));
+  const list=works.filter(w=>(!fy||w.year===fy)&&(!fd||(w.division||"pharmd")===fd)&&(!ft||w.type===ft)&&match(w));
   $("count").textContent=list.length+" عمل";
   $("grid").innerHTML=list.length?list.map(card).join(""):'<div class="empty">لا توجد أعمال مطابقة.</div>';
 
-  const cl=works.filter(w=>w.year===6&&match(w));
+  const cl=works.filter(w=>w.division==="clinical"&&match(w));
   $("cgrid").innerHTML=cl.length?cl.map(card).join(""):'<div class="empty" style="color:#B8C6EA">لا توجد مشاريع في هذا الركن بعد.</div>';
 }
 
 document.addEventListener("click",e=>{
   const t=e.target, y=t.closest("[data-y]"); if(y){fy=fy===+y.dataset.y?0:+y.dataset.y;draw();$("works").scrollIntoView();return}
   const cf=t.closest("[data-fy]"); if(cf){fy=+cf.dataset.fy;draw();return}
+  const cd=t.closest("[data-fd]"); if(cd){fd=cd.dataset.fd;draw();return}
   const ct=t.closest("[data-ft]"); if(ct){ft=ct.dataset.ft;draw();return}
   const d=t.closest("[data-id]"); if(d)show(d.dataset.id,d.dataset.src);
 });
@@ -429,7 +436,7 @@ function show(id,src){
   const w=(src==="mine"?mine:works).find(x=>String(x.id)===String(id)); if(!w)return;
   const f=url(w.file_url);
   $("dT").textContent=w.title;
-  $("dB").innerHTML=`${thumb(w)}<div class="tags" style="margin-bottom:10px"><span class="tag">${esc(yname(w.year))}</span><span class="tag">${esc(TYPES[w.type]||w.type)}</span>${w.award?`<span class="tag t">${esc(w.award_title)}</span>`:""}</div>
+  $("dB").innerHTML=`${thumb(w)}<div class="tags" style="margin-bottom:10px"><span class="tag">${esc(yname(w.year))}</span><span class="tag">${esc(dname(w.division))}</span><span class="tag">${esc(TYPES[w.type]||w.type)}</span>${w.award?`<span class="tag t">${esc(w.award_title)}</span>`:""}</div>
    <p>${esc(w.description)}</p><p class="by" style="margin-top:10px">إعداد: ${esc(w.student_name)}</p>
    ${f&&["mp4","mov","webm","m4v"].includes(fext(w))?`<video controls preload="metadata" src="${esc(f)}"></video>`:""}
    ${f?`<a class="btn gold" style="margin-top:14px" href="${esc(f)}" target="_blank" rel="noopener noreferrer">فتح / تحميل العمل</a>`:""}`;
